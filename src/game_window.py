@@ -1,6 +1,8 @@
 import pygame
 import sys
-from sprite_sheet import Character
+
+from sprite_sheet import SpriteSheet
+
 
 # Game window set-up
 class GameWindow:
@@ -34,25 +36,38 @@ class GameWindow:
 
     # Main game loop. Keeps window open until quit
     def run(self):
-        self.draw_background()
-        self.draw_trees()
-        self.draw_mountains()
 
         bunny_sprite = "../assets/images/bunny_sprite_sheet.png"
-        bunny = Character(bunny_sprite)
-        # show frame image
-        frame_0 = bunny.get_sprite(0, 55, 74, 2)
-        frame_1 = bunny.get_sprite(1, 55, 74, 2)
+        bunny = SpriteSheet(bunny_sprite)
 
-        self.display.blit(frame_0, (0, 0))
-        self.display.blit(frame_1, (110, 0)) # scale * width
+        animation_steps = 4
+        animation_cooldown = 150  # how quickly animation runs (milliseconds)
+        frame = 0
 
+        bunny_animation_list = bunny.sprite_animation(animation_steps, 55, 74, 2, row_index=2)
+        last_update = pygame.time.get_ticks()  # time of execution
 
         running = True
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+            self.draw_background()
+            self.draw_trees()
+            self.draw_mountains()
+
+            # update animation
+            current_time = pygame.time.get_ticks()
+
+            if current_time - last_update >= animation_cooldown:
+                frame = (frame + 1)
+                last_update = current_time  # resets time
+                if frame >= len(bunny_animation_list):
+                    frame = 0
+
+            # show frame image
+            self.display.blit(bunny_animation_list[frame], (0, 0))  # scale * width -----------
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(60)  # Limit to 60 frames per second
