@@ -27,10 +27,16 @@ class GameWindow:
             # Tree brown trunk (x pos, y pos, width, height):
             pygame.draw.rect(self.display, (139, 69, 19), (x + 20, 400, 10, 20))
 
+    def draw_mountains(self):
+        for x in range(50, self.DISPLAY_WIDTH - 50, 500):
+            pygame.draw.polygon(self.display, (200, 200, 200), [(x + 150, 175), (x + 350, 50), (x + 550, 175)])
+            pygame.draw.polygon(self.display, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
+
     # Main game loop. Keeps window open until quit
     def run(self):
         self.draw_background()
         self.draw_trees()
+        self.draw_mountains()
 
         running = True
         while running:
