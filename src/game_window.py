@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+from sprite_sheet import Character
 
 # Game window set-up
 class GameWindow:
@@ -37,6 +37,16 @@ class GameWindow:
         self.draw_background()
         self.draw_trees()
         self.draw_mountains()
+
+        bunny_sprite = "../assets/images/bunny_sprite_sheet.png"
+        bunny = Character(bunny_sprite)
+        # show frame image
+        frame_0 = bunny.get_sprite(0, 55, 74, 2)
+        frame_1 = bunny.get_sprite(1, 55, 74, 2)
+
+        self.display.blit(frame_0, (0, 0))
+        self.display.blit(frame_1, (110, 0)) # scale * width
+
 
         running = True
         while running:
