@@ -13,9 +13,17 @@ class GameWindow:
         pygame.display.set_caption("Snowpult")
         clock = pygame.time.Clock()  # ----------------
 
+    def draw_background(self):
+        background_image = pygame.image.load('../assets/images/snowy_forest_background.jpg').convert()
+        background_image = pygame.transform.scale(background_image, (self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
+        # Draw background image
+        self.display.blit(background_image, (0, 0))
+
     # Main game loop. Keeps window open until quit
-    @staticmethod
-    def run():
+
+    def run(self):
+        self.draw_background()
+
         running = True
         while running:
             for event in pygame.event.get():
