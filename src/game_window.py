@@ -14,13 +14,11 @@ class GameWindow:
         clock = pygame.time.Clock()  # ----------------
 
     def draw_background(self):
-        background_image = pygame.image.load('../assets/images/snowy_forest_background.jpg').convert()
-        background_image = pygame.transform.scale(background_image, (self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
-        # Draw background image
-        self.display.blit(background_image, (0, 0))
+        self.display.fill((135, 206, 235))  # Blue sky
+        # Snow layer (x pos, y pos, width, height):
+        pygame.draw.rect(self.display, (255, 255, 255), (0, 150, self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
 
     # Main game loop. Keeps window open until quit
-
     def run(self):
         self.draw_background()
 
