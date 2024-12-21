@@ -17,9 +17,10 @@ class Movement:
                     y_speed -= move_amount
                 elif event.key == pygame.K_DOWN:
                     y_speed += move_amount
-            elif event.type == pygame.KEYUP:
-                if event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN):
+            elif event.type == pygame.KEYUP: # keeps smooth running, so that speed only resets in relevant direction
+                if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
                     x_speed = 0
+                if event.key in (pygame.K_UP, pygame.K_DOWN):
                     y_speed = 0
 
         x += x_speed

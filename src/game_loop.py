@@ -6,8 +6,8 @@ from event_handler import Movement
 from game_window import GameWindow
 
 
-# main game loop
 class GameLoop:
+    # initialises game window and sprite properties
     def __init__(self, display_width, display_height, sprite_width, sprite_height, sprite_scale, row_index):
         self.game_window = GameWindow(display_width, display_height)  # GameWindow instance
         self.DISPLAY_WIDTH = display_width
@@ -25,18 +25,16 @@ class GameLoop:
         animation_cooldown = 150  # how quickly animation runs (milliseconds)
         frame = 0
 
-        x = 0
-        y = 0
+        x, y = 0, 0
 
         # stationary sprite
-        x_speed = 0
-        y_speed = 0
+        x_speed, y_speed = 0, 0
 
         bunny_animation_list = bunny.sprite_animation(animation_steps, self.sprite_width, self.sprite_height,
                                                       self.sprite_scale, self.row_index)
         last_update = pygame.time.get_ticks()  # time of execution
 
-        # Keeps window open until quit
+        # # main game loop - runs until quit
         running = True
         while running:
 
@@ -46,17 +44,15 @@ class GameLoop:
 
             x, y, x_speed, y_speed, running = Movement.event_handler(x, y, x_speed, y_speed, running)
 
-            # Keep the bunny within screen bounds
+            # Keep the sprite within screen bounds
             x = max(0, min(self.DISPLAY_WIDTH - (self.sprite_width * 2), x))
             y = max(0, min(self.DISPLAY_HEIGHT - (self.sprite_height * 2), y))
 
             current_time = pygame.time.get_ticks()
 
             if current_time - last_update >= animation_cooldown:
-                frame = (frame + 1)
+                frame = (frame + 1) % len(bunny_animation_list)  # Loops back to the first frame
                 last_update = current_time  # resets time
-                if frame >= len(bunny_animation_list):
-                    frame = 0
 
             # animation
             self.game_window.display.blit(bunny_animation_list[frame], (x, y))
