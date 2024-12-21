@@ -1,17 +1,13 @@
 import pygame
-import sys
-
-from sprite_sheet import SpriteSheet
 
 
-# Game window set-up
+# Game window set-up and background
 class GameWindow:
     def __init__(self, display_width, display_height):
         pygame.init()  # Initialise pygame
         self.DISPLAY_WIDTH = display_width
         self.DISPLAY_HEIGHT = display_height
         self.display = pygame.display.set_mode((self.DISPLAY_WIDTH, self.DISPLAY_HEIGHT))
-
         pygame.display.set_caption("Snowpult")
         self.clock = pygame.time.Clock()  # Manages frame rate
 
@@ -34,48 +30,6 @@ class GameWindow:
             pygame.draw.polygon(self.display, (200, 200, 200), [(x + 150, 175), (x + 350, 50), (x + 550, 175)])
             pygame.draw.polygon(self.display, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
 
-    # Main game loop. Keeps window open until quit
-    def run(self):
-
-        bunny_sprite = "../assets/images/bunny_sprite_sheet.png"
-        bunny = SpriteSheet(bunny_sprite)
-
-        animation_steps = 4
-        animation_cooldown = 150  # how quickly animation runs (milliseconds)
-        frame = 0
-
-        bunny_animation_list = bunny.sprite_animation(animation_steps, 55, 74, 2, row_index=2)
-        last_update = pygame.time.get_ticks()  # time of execution
-
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-
-            self.draw_background()
-            self.draw_trees()
-            self.draw_mountains()
-
-            # update animation
-            current_time = pygame.time.get_ticks()
-
-            if current_time - last_update >= animation_cooldown:
-                frame = (frame + 1)
-                last_update = current_time  # resets time
-                if frame >= len(bunny_animation_list):
-                    frame = 0
-
-            # show frame image
-            self.display.blit(bunny_animation_list[frame], (0, 0))  # scale * width -----------
-
-            pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
-            self.clock.tick(60)  # Limit to 60 frames per second
-
-        pygame.quit()
-        sys.exit()
-
 
 if __name__ == '__main__':
-    snowpult = GameWindow(1200, 700)
-    snowpult.run()
+    pass
