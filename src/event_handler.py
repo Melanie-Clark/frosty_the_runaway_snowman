@@ -1,11 +1,11 @@
 import pygame
 import sys
 
-
+# ---------------------only SPACE and y needed for snowball-----------------
 class Movement:
 
     @staticmethod
-    def event_handler(x, y, x_speed, y_speed, running, move_amount=10):  # 0,0 stationary sprite
+    def event_handler(x, y, x_speed, y_speed, move_amount=10):  # 0,0 stationary sprite
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 # running = False - # is running even used anywhere??-------------
@@ -20,7 +20,7 @@ class Movement:
                     y_speed -= move_amount
                 elif event.key == pygame.K_DOWN:
                     y_speed += move_amount
-                elif event.key == pygame.K_SPACE:  # ---------------add just for snowball -----------
+                elif event.key == pygame.K_SPACE:
                     y_speed -= move_amount
             elif event.type == pygame.KEYUP:  # keeps smooth running, so that speed only resets in relevant direction
                 if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
@@ -31,4 +31,5 @@ class Movement:
         x += x_speed
         y += y_speed
 
-        return x, y, x_speed, y_speed, running
+
+        return x, y, x_speed, y_speed
