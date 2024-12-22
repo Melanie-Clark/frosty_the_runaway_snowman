@@ -2,14 +2,16 @@ import pygame
 
 
 class SpriteSheet:
-    def __init__(self, sprite_sheet):
+    def __init__(self, sprite_sheet, flipped):
         self.sprite_sheet = pygame.image.load(sprite_sheet).convert_alpha()
+        self.flipped = flipped
 
     def get_sprite(self, frame, y, width, height, scale, rotation):
         image = pygame.Surface((width, height)).convert()
         image.blit(self.sprite_sheet, (0, 0), ((frame * width), y, width, height))  # Draw sprite by frame
         image = pygame.transform.scale(image, (width * scale, height * scale))
         image = pygame.transform.rotate(image, rotation)
+        image = pygame.transform.flip(image, self.flipped, False)
         image.set_colorkey((0, 0, 0))  # set sprite transparent background
         return image
 
