@@ -18,25 +18,43 @@ class GameLoop:
         self.scene = Scene(self.DISPLAY)  # Scene instance
 
     def run(self):
-        bunny_sprite = SpriteSheet("../assets/images/bunny_sprite_sheet.png")
-        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png")
-        snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png")
-        snowmen_sprite = SpriteSheet("../assets/images/img.png")
+        bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png", False)
+        bunny_sprite_right = SpriteSheet("../assets/images/bunny_sprite_sheet.png", True)
+        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png", False)
+        snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png", False)
 
         # cooldown - how quickly animation runs (milliseconds)
-        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 72, 500, 350, 0.25, 0, 3, 10, "left", 270, 5,
-                               5, 60, 65)
-        # snowmen = sprite.Animal(snowmen_sprite, 150, DISPLAY_WIDTH, DISPLAY_HEIGHT // 4, 97, 126, 2, 1, 5, 0)
-        snowman = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 3, 16, 16, 6, 0, 6, 4, "right", 0, 0, 0, 100,
-                                95)
-        bunny = sprite.Animal(bunny_sprite, 150, DISPLAY_WIDTH, DISPLAY_HEIGHT // 2, 55, 74, 2, 2, 4, 4, "left", 0, 8,
-                              55, 100, 95)
+        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 60, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
+                               3, 55, 55)
 
-        entities = [snowball, bunny, snowman]
+        bunny1 = sprite.Animal(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4, 3,
+                               "left", 0, 8,
+                               55, 100, 95)
+        bunny2 = sprite.Animal(bunny_sprite_right, 150, DISPLAY_WIDTH // 3.2, DISPLAY_HEIGHT // 1.6, 55, 74, 2, 2, 4,
+                               3.5, "right", 0, 8,
+                               55, 100, 95)
+        snowman1 = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 1.7, 16, 16, 6, 0, 6, 6, "right", 0, 0, 0,
+                                 100,
+                                 95)
+        bunny3 = sprite.Animal(bunny_sprite_left, 150, DISPLAY_WIDTH // 2.3, DISPLAY_HEIGHT // 2.3, 55, 74, 2, 2, 4, 4,
+                               "left", 0, 8,
+                               55, 100, 95)
+        snowman2 = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 2.5, 16, 16, 6, 0, 6, 4, "left", 0, 0, 0,
+                                 100,
+                                 95)
+        bunny4 = sprite.Animal(bunny_sprite_right, 150, DISPLAY_WIDTH // 3, DISPLAY_HEIGHT // 3.9, 55, 74, 2, 2, 4, 5,
+                               "right", 0, 8,
+                               55, 100, 95)
+        snowman3 = sprite.Animal(snowman_sprite, 150, DISPLAY_WIDTH // 3.8, DISPLAY_HEIGHT // 4.1, 16, 16, 6, 0, 6,
+                                 2.53, "right", 0, 0, 0, 100,
+                                 95)
+
+        entities = [snowman3, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball]
 
         # main game loop - runs until quit
         while self.running:
             self.draw()
+
 
             for entity in entities:
                 if not entity.update():
@@ -53,8 +71,8 @@ class GameLoop:
 
     def draw(self):
         self.scene.draw_background()
-        self.scene.draw_trees()
         self.scene.draw_mountains()
+        self.scene.draw_trees()
 
 
 if __name__ == '__main__':
