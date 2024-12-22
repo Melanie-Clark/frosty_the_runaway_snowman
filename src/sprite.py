@@ -25,11 +25,9 @@ class Entity:
                                                                  self.sprite_height,
                                                                  self.sprite_scale, self.row_index, rotation)
 
-    def animation(self, entity):
-        return self.animation_list
 
     @abstractmethod
-    def update(self, running):
+    def update(self):
         pass
 
     def update_frame(self):
@@ -38,37 +36,29 @@ class Entity:
             self.frame = (self.frame + 1) % len(self.animation_list)  # Loops back to the first frame
             self.last_update = current_time  # resets time
 
-
-class Animal(Entity):
-    def update(self, running):
-        self.x, self.y, self.x_speed, self.y_speed, running = Movement.event_handler(self.x, self.y, self.x_speed,
-                                                                                     self.y_speed, running)
-
-        # Keeps the sprite within screen bounds
-        self.x = max(0, min(DISPLAY_WIDTH - (self.sprite_width * 2), self.x))
-        self.y = max(0, min(DISPLAY_HEIGHT - (self.sprite_height * 2), self.y))
-
-        self.update_frame()
-
-        # animation
+    # draw to screen
+    def draw(self):
         GameLoop.DISPLAY.blit(self.animation_list[self.frame], (self.x, self.y))
 
-        return Movement.event_handler(self.x, self.y, self.x_speed, self.y_speed, running)
+class Animal(Entity):
+    def update(self):
+        self.x -= 4
+
+        # Keeps the sprite within screen bounds
+        self.x = max(-self.sprite_width*2, min(DISPLAY_WIDTH, self.x))
+
+        return self.x > -self.sprite_width
+
+        # return Movement.event_handler(self.x, self.y, self.x_speed, self.y_speed, running)
 
 
 class Item(Entity):
 
-    def update(self, running):
-        self.x, self.y, self.x_speed, self.y_speed, running = Movement.event_handler(self.x, self.y, self.x_speed,
-                                                                                     self.y_speed, running)
-
+    def update(self):
+        self.x, self.y, self.x_speed, self.y_speed = Movement.event_handler(self.x, self.y, self.x_speed,
+                                                                                     self.y_speed)
         # Keeps the sprite within screen bounds
         self.x = max(0, min(DISPLAY_WIDTH - 60, self.x))
         self.y = max(0, min(DISPLAY_HEIGHT - 60, self.y))
 
-        self.update_frame()
-
-        # animation
-        GameLoop.DISPLAY.blit(self.animation_list[self.frame], (self.x, self.y))
-
-        return Movement.event_handler(self.x, self.y, self.x_speed, self.y_speed, running)
+        return True
