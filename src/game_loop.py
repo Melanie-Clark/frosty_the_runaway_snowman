@@ -20,11 +20,16 @@ class GameLoop:
     def run(self):
         bunny_sprite = SpriteSheet("../assets/images/bunny_sprite_sheet.png")
         snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png")
+        snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png")
+        snowmen_sprite = SpriteSheet("../assets/images/img.png")
 
         # cooldown - how quickly animation runs (milliseconds)
-        bunny = sprite.Animal(bunny_sprite, 150, DISPLAY_WIDTH, DISPLAY_HEIGHT // 2, 55, 74, 2, 2, 4, 0)
-        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT, 500, 300, 0.25, 0, 3, 270)
-        entities = [bunny, snowball]
+        bunny = sprite.Animal(bunny_sprite, 150, DISPLAY_WIDTH, DISPLAY_HEIGHT // 2, 55, 74, 2, 2, 4, 4, "left", 0)
+        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT-72, 500, 350, 0.25, 0, 3, 10, "left", 270)
+        snowman = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 3, 16, 16, 6, 0, 6, 4, "right", 0)
+        # snowmen = sprite.Animal(snowmen_sprite, 150, DISPLAY_WIDTH, DISPLAY_HEIGHT // 4, 97, 126, 2, 1, 5, 0)
+
+        entities = [bunny, snowball, snowman]
 
         # main game loop - runs until quit
         while self.running:
