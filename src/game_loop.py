@@ -3,6 +3,7 @@ from global_config import *
 from scene import Scene
 import sprite
 from sprite_sheet import SpriteSheet
+from health import Health
 
 
 class GameLoop:
@@ -16,6 +17,7 @@ class GameLoop:
         self.clock = pygame.time.Clock()  # Manages frame rate
         self.running = True
         self.scene = Scene(self.DISPLAY)  # Scene instance
+        self.health = Health(self.DISPLAY)  # Scene instance
 
     def run(self):
         bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png", False)
@@ -24,7 +26,7 @@ class GameLoop:
         snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png", False)
 
         # cooldown - how quickly animation runs (milliseconds)
-        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 60, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
+        snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 50, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
                                3, 55, 55)
 
         bunny1 = sprite.Animal(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4, 3,
@@ -55,7 +57,6 @@ class GameLoop:
         while self.running:
             self.draw()
 
-
             for entity in entities:
                 if not entity.update():
                     entities.remove(entity)
@@ -73,6 +74,8 @@ class GameLoop:
         self.scene.draw_background()
         self.scene.draw_mountains()
         self.scene.draw_trees()
+        self.health.draw()
+
 
 
 if __name__ == '__main__':
