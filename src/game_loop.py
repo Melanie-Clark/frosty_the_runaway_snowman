@@ -17,7 +17,7 @@ class GameLoop:
         self.clock = pygame.time.Clock()  # Manages frame rate
         self.running = True
         self.scene = Scene(self.DISPLAY)  # Scene instance
-        self.health = Health(self.DISPLAY)  # Scene instance
+        self.health = Health(self.DISPLAY)  # Health instance
 
     def run(self):
         bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png", False)
@@ -29,25 +29,25 @@ class GameLoop:
         snowball = sprite.Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 50, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
                                3, 55, 55)
 
-        bunny1 = sprite.Animal(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4, 3,
+        bunny1 = sprite.Obstacle(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4, 3,
                                "left", 0, 8,
                                55, 100, 95)
-        bunny2 = sprite.Animal(bunny_sprite_right, 150, DISPLAY_WIDTH // 3.2, DISPLAY_HEIGHT // 1.6, 55, 74, 2, 2, 4,
+        bunny2 = sprite.Obstacle(bunny_sprite_right, 150, DISPLAY_WIDTH // 3.2, DISPLAY_HEIGHT // 1.6, 55, 74, 2, 2, 4,
                                3.5, "right", 0, 8,
                                55, 100, 95)
-        snowman1 = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 1.7, 16, 16, 6, 0, 6, 6, "right", 0, 0, 0,
+        snowman1 = sprite.Target(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 1.7, 16, 16, 6, 0, 6, 6, "right", 0, 0, 0,
                                  100,
                                  95)
-        bunny3 = sprite.Animal(bunny_sprite_left, 150, DISPLAY_WIDTH // 2.3, DISPLAY_HEIGHT // 2.3, 55, 74, 2, 2, 4, 4,
+        bunny3 = sprite.Obstacle(bunny_sprite_left, 150, DISPLAY_WIDTH // 2.3, DISPLAY_HEIGHT // 2.3, 55, 74, 2, 2, 4, 4,
                                "left", 0, 8,
                                55, 100, 95)
-        snowman2 = sprite.Animal(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 2.5, 16, 16, 6, 0, 6, 4, "left", 0, 0, 0,
+        snowman2 = sprite.Target(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 2.5, 16, 16, 6, 0, 6, 4, "left", 0, 0, 0,
                                  100,
                                  95)
-        bunny4 = sprite.Animal(bunny_sprite_right, 150, DISPLAY_WIDTH // 3, DISPLAY_HEIGHT // 3.9, 55, 74, 2, 2, 4, 5,
+        bunny4 = sprite.Obstacle(bunny_sprite_right, 150, DISPLAY_WIDTH // 3, DISPLAY_HEIGHT // 3.9, 55, 74, 2, 2, 4, 5,
                                "right", 0, 8,
                                55, 100, 95)
-        snowman3 = sprite.Animal(snowman_sprite, 150, DISPLAY_WIDTH // 3.8, DISPLAY_HEIGHT // 4.1, 16, 16, 6, 0, 6,
+        snowman3 = sprite.Target(snowman_sprite, 150, DISPLAY_WIDTH // 3.8, DISPLAY_HEIGHT // 4.1, 16, 16, 6, 0, 6,
                                  2.53, "right", 0, 0, 0, 100,
                                  95)
 
@@ -58,15 +58,16 @@ class GameLoop:
             self.draw()
 
             for entity in entities:
-                if not entity.update():
-                    entities.remove(entity)
-                else:
-                    entity.draw()
-                    entity.update_frame()
-                    if not isinstance(entity,
-                                      sprite.Item):  # checks if entity is not an instance or child of item class
-                        snowball.collision(entity)
+                entity.update()
+                entity.draw()
+                entity.update_frame()
+                if not isinstance(entity,
+                                  sprite.Item):  # checks if entity is not an instance or child of item class
+                    if not snowball.collision(entity):
+                        self.running = False
+                        print("Game Over!")   # Need to link to score and don't quit ---------------
 
+            self.health.draw()
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
 
@@ -74,7 +75,7 @@ class GameLoop:
         self.scene.draw_background()
         self.scene.draw_mountains()
         self.scene.draw_trees()
-        self.health.draw()
+
 
 
 

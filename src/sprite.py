@@ -3,7 +3,13 @@ import pygame
 from global_config import *
 from event_handler import Movement
 from game_loop import GameLoop
+from src.health import Health
 
+
+# from health import Health
+
+
+# ----------CONSIDER STANDARDISING GAMELOOP.DISPLAY (circular display) VS SELF.DISPLAY - scene/health
 
 class Entity:
     def __init__(self, sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps, speed,
@@ -36,6 +42,7 @@ class Entity:
         self.collision_y_offset = collision_y_offset
         self.collision_width = collision_width
         self.collision_height = collision_height
+        # self.health = Health(GameLoop.DISPLAY)  # Health instance
 
     @abstractmethod
     def update(self):
@@ -61,39 +68,55 @@ class Entity:
 
 # --------------separate bunny from snowman - bunny deducts from score
 
-class Animal(Entity):
+class Obstacle(Entity):
     def update(self):
-        # Move the animal based on direction
         if self.direction == "right":
             self.x += self.speed  # Move to the right
         elif self.direction == "left":
             self.x -= self.speed  # Move to the left
 
-        # Reset the bunny or snowman when they go off-screen
+        # Resets when entity moves off-screen
         if self.x > DISPLAY_WIDTH:  # If the entity moves off the right edge
             self.x = -self.sprite_width  # Reset to the left edge
         elif self.x < -self.sprite_width:  # If the entity moves off the left edge
             self.x = DISPLAY_WIDTH  # Reset to the right edge
 
-        return True  # this isn't needed - adjust entities from game_loop ------------------------
+
+class Target(Entity):
+    def update(self):
+        if self.direction == "right":
+            self.x += self.speed  # Move to the right
+        elif self.direction == "left":
+            self.x -= self.speed  # Move to the left
+
+        # Resets when entity moves off-screen
+        if self.x > DISPLAY_WIDTH:  # If the entity moves off the right edge
+            self.x = -self.sprite_width  # Reset to the left edge
+        elif self.x < -self.sprite_width:  # If the entity moves off the left edge
+            self.x = DISPLAY_WIDTH  # Reset to the right edge
 
 
 class Item(Entity):
+
+    # ----------------doubtful this is needed--adjust accordingly-------------------------------------------
+    def __init__(self, sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps, speed,
+                 direction, rotation, collision_x_offset, collision_y_offset, collision_width, collision_height,
+                 x_speed=0, y_speed=0):
+        super().__init__(sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps,
+                         speed, direction, rotation, collision_x_offset, collision_y_offset, collision_width,
+                         collision_height, x_speed, y_speed)
 
     def update(self):
         self.x, self.y, self.x_speed, self.y_speed = Movement.event_handler(self.x, self.y, self.x_speed,
                                                                             self.y_speed)
 
-        # Reset the bunny or snowman when they go off-screen
-        if self.y < 0:  # If the entity moves off the top of the screem
+        # Resets snowball when it goes off-screen
+        if self.y < 0:  # If the snowball moves off the top of the screen
             self.y = self.initial_y  # Reset to the bottom edge
             self.y_speed = 0
 
         # # Keeps the sprite within screen bounds
-        self.x = max(0, min(DISPLAY_WIDTH - 60, self.x))
-        # self.y = max(0, min(DISPLAY_HEIGHT - 60, self.y))
-
-        return True
+        self.x = max(0, min(DISPLAY_WIDTH - 50, self.x))  # 50 needs to e hard-coded -------------------------------
 
     def collision(self, entity):
         self_rect = pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
@@ -101,14 +124,24 @@ class Item(Entity):
         entity_rect = pygame.Rect(entity.x + self.collision_x_offset, entity.y + self.collision_y_offset,
                                   entity.collision_width, entity.collision_height)
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
-            self.score += 1
-            print('score', self.score)
-            self.y = DISPLAY_HEIGHT - 60
+            self.y = DISPLAY_HEIGHT - 50  # 50 needs to e hard-coded ---------------------------------------------
             self.y_speed = 0
             self.collision_state = True
-            # If no collision, reset the collision state
+            if isinstance(entity, Target):
+                self.score += 1
+                print('Total Score:', self.score)
+            else:
+                if Health.remaining_health >= 1:
+                    Health.remaining_health -= 1
+                else:
+                    return False
+
+                # Health.draw(GameLoop.DISPLAY)
+                print('Remaining Health:', Health.remaining_health)
+        # If no collision, reset the collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
+        return True
 
 
 if __name__ == '__main__':
