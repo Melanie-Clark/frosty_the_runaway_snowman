@@ -3,10 +3,7 @@ import pygame
 from global_config import *
 from event_handler import Movement
 from game_loop import GameLoop
-from src.health import Health
-
-
-# from health import Health
+from sprite_sheet import SpriteSheet
 
 
 # ----------CONSIDER STANDARDISING GAMELOOP.DISPLAY (circular display) VS SELF.DISPLAY - scene/health
@@ -43,6 +40,39 @@ class Entity:
         self.collision_width = collision_width
         self.collision_height = collision_height
         # self.health = Health(GameLoop.DISPLAY)  # Health instance
+        # self.health = health
+
+    @staticmethod
+    def initialise_entities():
+        bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png", False)
+        bunny_sprite_right = SpriteSheet("../assets/images/bunny_sprite_sheet.png", True)
+        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png", False)
+        snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png", False)
+
+        # cooldown - how quickly animation runs (milliseconds) ------------------------RE-ORDER
+        snowball = Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 50, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
+                        3, 55, 55)
+
+        bunny1 = Obstacle(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4,
+                          3, "left", 0, 8,
+                          55, 100, 95)
+        bunny2 = Obstacle(bunny_sprite_right, 150, DISPLAY_WIDTH // 3.2, DISPLAY_HEIGHT // 1.6, 55, 74, 2, 2, 4,
+                          3.5, "right", 0, 8,
+                          55, 100, 95)
+        snowman1 = Target(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 1.7, 16, 16, 6, 0, 6, 6, "right", 0, 0, 0,
+                          100, 95)
+        bunny3 = Obstacle(bunny_sprite_left, 150, DISPLAY_WIDTH // 2.3, DISPLAY_HEIGHT // 2.3, 55, 74, 2, 2, 4,
+                          4, "left", 0, 8,
+                          55, 100, 95)
+        snowman2 = Target(snowman_sprite, 150, 0, DISPLAY_HEIGHT // 2.5, 16, 16, 6, 0, 6, 4, "left", 0, 0, 0,
+                          100, 95)
+        bunny4 = Obstacle(bunny_sprite_right, 150, DISPLAY_WIDTH // 3, DISPLAY_HEIGHT // 3.9, 55, 74, 2, 2, 4, 5,
+                          "right", 0, 8,
+                          55, 100, 95)
+        snowman3 = Target(snowman_sprite, 150, DISPLAY_WIDTH // 3.8, DISPLAY_HEIGHT // 4.1, 16, 16, 6, 0, 6,
+                          2.53, "right", 0, 0, 0, 100, 95)
+
+        return snowman3, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball
 
     @abstractmethod
     def update(self):
@@ -61,12 +91,6 @@ class Entity:
         # pygame.draw.rect(GameLoop.DISPLAY, (255, 0, 0),
         #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset, self.collision_width, self.collision_height), 2)
 
-    # def get_collision_rect(self):
-    #     # returns collision box
-    #     return pygame.Rect(self.x, self.y, self.collision_width, self.collision_height)
-
-
-# --------------separate bunny from snowman - bunny deducts from score
 
 class Obstacle(Entity):
     def update(self):
@@ -98,14 +122,6 @@ class Target(Entity):
 
 class Item(Entity):
 
-    # ----------------doubtful this is needed--adjust accordingly-------------------------------------------
-    def __init__(self, sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps, speed,
-                 direction, rotation, collision_x_offset, collision_y_offset, collision_width, collision_height,
-                 x_speed=0, y_speed=0):
-        super().__init__(sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps,
-                         speed, direction, rotation, collision_x_offset, collision_y_offset, collision_width,
-                         collision_height, x_speed, y_speed)
-
     def update(self):
         self.x, self.y, self.x_speed, self.y_speed = Movement.event_handler(self.x, self.y, self.x_speed,
                                                                             self.y_speed)
@@ -116,28 +132,23 @@ class Item(Entity):
             self.y_speed = 0
 
         # # Keeps the sprite within screen bounds
-        self.x = max(0, min(DISPLAY_WIDTH - 50, self.x))  # 50 needs to e hard-coded -------------------------------
+        self.x = max(0, min(DISPLAY_WIDTH - 50, self.x))  # 50 needs to be hard-coded -------------------------------
 
-    def collision(self, entity):
+    def collision(self, entity, health): # receives health instance, so can be called during collision
         self_rect = pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
                                 self.collision_width, self.collision_height)
         entity_rect = pygame.Rect(entity.x + self.collision_x_offset, entity.y + self.collision_y_offset,
                                   entity.collision_width, entity.collision_height)
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
-            self.y = DISPLAY_HEIGHT - 50  # 50 needs to e hard-coded ---------------------------------------------
+            self.y = DISPLAY_HEIGHT - 50  # 50 needs to be hard-coded ---------------------------------------------
             self.y_speed = 0
             self.collision_state = True
             if isinstance(entity, Target):
                 self.score += 1
                 print('Total Score:', self.score)
             else:
-                if Health.remaining_health >= 1:
-                    Health.remaining_health -= 1
-                else:
-                    return False
-
-                # Health.draw(GameLoop.DISPLAY)
-                print('Remaining Health:', Health.remaining_health)
+                print('collision', health)
+                return health.take_damage()
         # If no collision, reset the collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
