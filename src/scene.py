@@ -1,5 +1,5 @@
 import pygame
-from global_config import *
+from global_config import DISPLAY_WIDTH, DISPLAY_HEIGHT
 
 
 # Game window set-up and background
@@ -14,7 +14,7 @@ class Scene:
 
     def draw_trees(self):
         for x in range(25, DISPLAY_WIDTH - 25, DISPLAY_WIDTH // 10):
-            # vertices: [x-y (starting point),.....
+            # vertices: [x-y (starting point),.....]
             pygame.draw.polygon(self.display, (34, 139, 34),
                                 [(x, 200), (x + 25, 100),
                                  (x + 50, 200)])  # green tree triangle - 3 points filled with colour

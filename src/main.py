@@ -1,8 +1,9 @@
 import pygame
-from global_config import *
+from global_config import DISPLAY_WIDTH, DISPLAY_HEIGHT, FPS
 from scene import Scene
-from sprite import *  # check if all methods
+from entity import * # should be inidividual classes - circular imports Entity, Item, Obstacle, Target  # check if all methods
 from health import Health
+
 
 
 class GameLoop:
@@ -19,8 +20,8 @@ class GameLoop:
         self.health = Health(self.DISPLAY)  # Health instance
 
     def run(self):
-        snowman3, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball = Entity.initialise_entities()
-        entities = [snowman3, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball]
+        snowman3, reindeer1, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball = Entity.initialise_entities()
+        entities = [snowman3, reindeer1, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball]
 
         # main game loop - runs until quit
         while self.running:
@@ -32,7 +33,7 @@ class GameLoop:
                 entity.update_frame()
                 if not isinstance(entity,
                                   Item):  # checks if entity is not an instance or child of item class
-                    if not snowball.collision(entity, self.health): # passes health instance
+                    if not snowball.handle_collision(entity, self.health): # passes health instance
                         self.running = False
 
             self.health.draw()

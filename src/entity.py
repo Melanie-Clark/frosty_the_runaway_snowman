@@ -1,14 +1,12 @@
-from abc import abstractmethod
 import pygame
-from global_config import *
+from main import GameLoop
+from global_config import DISPLAY_WIDTH, DISPLAY_HEIGHT
+from abc import ABC, abstractmethod
 from event_handler import Movement
-from game_loop import GameLoop
 from sprite_sheet import SpriteSheet
 
 
-# ----------CONSIDER STANDARDISING GAMELOOP.DISPLAY (circular display) VS SELF.DISPLAY - scene/health
-
-class Entity:
+class Entity(ABC):
     def __init__(self, sprite_sheet, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index, steps, speed,
                  direction, rotation, collision_x_offset, collision_y_offset, collision_width, collision_height,
                  x_speed=0, y_speed=0):
@@ -39,23 +37,28 @@ class Entity:
         self.collision_y_offset = collision_y_offset
         self.collision_width = collision_width
         self.collision_height = collision_height
-        # self.health = Health(GameLoop.DISPLAY)  # Health instance
-        # self.health = health
 
+    # should this belong to sprite_sheet ---------------------------------
     @staticmethod
     def initialise_entities():
+        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png", False)
         bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png", False)
         bunny_sprite_right = SpriteSheet("../assets/images/bunny_sprite_sheet.png", True)
-        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png", False)
+
+        reindeer_sprite_left = SpriteSheet("../assets/images/reindeer_sprite_sheet.png", False)
+
         snowman_sprite = SpriteSheet("../assets/images/snowman_sprite_sheet.png", False)
 
-        # cooldown - how quickly animation runs (milliseconds) ------------------------RE-ORDER
+        # cooldown - how quickly animation runs (milliseconds) ------------------------RE-ORDER ----- use random for speed, x, y coords--
         snowball = Item(snowball_sprite, 250, 0, DISPLAY_HEIGHT - 50, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
                         3, 55, 55)
 
         bunny1 = Obstacle(bunny_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 55, 74, 2, 2, 4,
                           3, "left", 0, 8,
                           55, 100, 95)
+        reindeer1 = Obstacle(reindeer_sprite_left, 150, DISPLAY_WIDTH // 1.2, DISPLAY_HEIGHT // 1.5, 128, 128, 1, 2, 2,
+                             3, "left", 0, 8,
+                             55, 100, 95)
         bunny2 = Obstacle(bunny_sprite_right, 150, DISPLAY_WIDTH // 3.2, DISPLAY_HEIGHT // 1.6, 55, 74, 2, 2, 4,
                           3.5, "right", 0, 8,
                           55, 100, 95)
@@ -72,7 +75,7 @@ class Entity:
         snowman3 = Target(snowman_sprite, 150, DISPLAY_WIDTH // 3.8, DISPLAY_HEIGHT // 4.1, 16, 16, 6, 0, 6,
                           2.53, "right", 0, 0, 0, 100, 95)
 
-        return snowman3, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball
+        return snowman3, reindeer1, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball
 
     @abstractmethod
     def update(self):
@@ -87,11 +90,11 @@ class Entity:
     # draw to screen
     def draw(self):
         GameLoop.DISPLAY.blit(self.animation_list[self.frame], (self.x, self.y))
-        # used for debugging - puts red box around each sprite
+        # used for debugging (puts red box around each sprite)
         # pygame.draw.rect(GameLoop.DISPLAY, (255, 0, 0),
         #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset, self.collision_width, self.collision_height), 2)
 
-
+# update methods the same in Obstacle and Target, but need to defined differently somehow - could be in instantiation, rather than separate classes?
 class Obstacle(Entity):
     def update(self):
         if self.direction == "right":
@@ -99,11 +102,11 @@ class Obstacle(Entity):
         elif self.direction == "left":
             self.x -= self.speed  # Move to the left
 
-        # Resets when entity moves off-screen
-        if self.x > DISPLAY_WIDTH:  # If the entity moves off the right edge
-            self.x = -self.sprite_width  # Reset to the left edge
-        elif self.x < -self.sprite_width:  # If the entity moves off the left edge
-            self.x = DISPLAY_WIDTH  # Reset to the right edge
+        # Resets if entity moves off-screen
+        if self.x > DISPLAY_WIDTH:
+            self.x = -self.sprite_width  # Resets to left edge
+        elif self.x < -self.sprite_width:
+            self.x = DISPLAY_WIDTH
 
 
 class Target(Entity):
@@ -113,11 +116,11 @@ class Target(Entity):
         elif self.direction == "left":
             self.x -= self.speed  # Move to the left
 
-        # Resets when entity moves off-screen
-        if self.x > DISPLAY_WIDTH:  # If the entity moves off the right edge
-            self.x = -self.sprite_width  # Reset to the left edge
-        elif self.x < -self.sprite_width:  # If the entity moves off the left edge
-            self.x = DISPLAY_WIDTH  # Reset to the right edge
+        # Resets if entity moves off-screen
+        if self.x > DISPLAY_WIDTH:
+            self.x = -self.sprite_width  # Resets to left edge
+        elif self.x < -self.sprite_width:
+            self.x = DISPLAY_WIDTH
 
 
 class Item(Entity):
@@ -125,31 +128,37 @@ class Item(Entity):
     def update(self):
         self.x, self.y, self.x_speed, self.y_speed = Movement.event_handler(self.x, self.y, self.x_speed,
                                                                             self.y_speed)
-
-        # Resets snowball when it goes off-screen
-        if self.y < 0:  # If the snowball moves off the top of the screen
-            self.y = self.initial_y  # Reset to the bottom edge
+        # Resets snowball when if it goes off-screen
+        if self.y < 0 - self.collision_height:
+            self.y = self.initial_y  # Resets to initial position on y-axis
             self.y_speed = 0
 
         # # Keeps the sprite within screen bounds
-        self.x = max(0, min(DISPLAY_WIDTH - 50, self.x))  # 50 needs to be hard-coded -------------------------------
+        self.x = max(0, min(DISPLAY_WIDTH - self.collision_width, self.x))
 
-    def collision(self, entity, health): # receives health instance, so can be called during collision
+    def collision_boundaries(self, entity):
         self_rect = pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
                                 self.collision_width, self.collision_height)
         entity_rect = pygame.Rect(entity.x + self.collision_x_offset, entity.y + self.collision_y_offset,
-                                  entity.collision_width, entity.collision_height)
-        if self_rect.colliderect(entity_rect) and self.collision_state == False:
-            self.y = DISPLAY_HEIGHT - 50  # 50 needs to be hard-coded ---------------------------------------------
+                                  entity.collision_width, entity.collision_height // 2)
+        return self_rect, entity_rect
+
+    def handle_collision(self, entity, health):  # receives health instance, so can be called during collision
+        self_rect, entity_rect = self.collision_boundaries(entity)
+
+        # colliderect() - pygame method to check if two rects collide
+        if self_rect.colliderect(
+                entity_rect) and self.collision_state == False:  # extra parameter False required to prevent a collision everytime the rects collide in one hit
+            # resets item after collision on y-axis
+            self.y = DISPLAY_HEIGHT - self.collision_height
             self.y_speed = 0
             self.collision_state = True
             if isinstance(entity, Target):
                 self.score += 1
                 print('Total Score:', self.score)
             else:
-                print('collision', health)
                 return health.take_damage()
-        # If no collision, reset the collision state
+        # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
         return True
