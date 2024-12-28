@@ -12,7 +12,7 @@ class GameLoop:
 
     def __init__(self):
         pygame.init()  # Initialise pygame
-        pygame.display.set_caption("Snowball Fake Santa")  # --------------game name------
+        pygame.display.set_caption("Snowball Frenzy: Fake Santa")
         self.clock = pygame.time.Clock()  # Manages frame rate
         self.running = True
         self.scene = Scene(self.screen)  # Scene instance
@@ -20,25 +20,22 @@ class GameLoop:
         self.score = Score(self.screen)  # Score instance
 
     def run(self):
-        red_santa, snowman3, reindeer1, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball = Entity.initialise_entities()
-        entities = [red_santa, snowman3, reindeer1, bunny4, bunny1, snowman2, bunny3, snowman1, bunny2, snowball]
+        green_santa, red_santa, reindeer1, bunny4, bunny1, snowman2, bunny3, bunny2, snowball = Entity.initialise_entities()
+        entities = [green_santa, red_santa, reindeer1, bunny4, bunny1, snowman2, bunny3, bunny2, snowball]
 
         # main game loop - runs until quit
         while self.running:
             self.draw()
             self.score.draw()
+            self.health.draw()
 
             for entity in entities:
                 entity.update()
-
                 entity.draw()
                 entity.update_frame()
-                if not isinstance(entity,
-                                  Item):  # checks if entity is not an instance or child of item class
-                    if not snowball.handle_collision(entity, self.health, self.score):  # passes health and score instance
-                        self.running = False
 
-            self.health.draw()
+                if not isinstance(entity, Item):  # checks entity is not an instance or child of item class
+                    snowball.handle_collision(entity, self.health, self.score)
 
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance

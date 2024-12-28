@@ -2,22 +2,20 @@ import pygame
 
 
 class SpriteSheet:
-    def __init__(self, sprite_sheet, flipped):
+    def __init__(self, sprite_sheet, flipped=False):
         self.sprite_sheet = pygame.image.load(sprite_sheet).convert_alpha()
         self.flipped = flipped
 
     def get_sprite(self, frame, y, width, height, scale, rotation):
-        image = pygame.Surface((width, height)).convert()
-        image.blit(self.sprite_sheet, (0, 0), ((frame * width), y, width, height))  # Draw sprite by frame
-        image = pygame.transform.scale(image, (width * scale, height * scale))
-        image = pygame.transform.rotate(image,
-                                        rotation)  # should this be in initialised in entity?------------and only in Item?
-        image = pygame.transform.flip(image, self.flipped,
-                                      False)  # should this be in initialised in entity?------------
-        image.set_colorkey((0, 0, 0))  # set sprite transparent background
-        return image
+        sprite = self.sprite_sheet.subsurface(
+            ((frame * width), y, width, height)).convert_alpha()  # extracts sprite by frame
+        sprite = pygame.transform.scale(sprite, (width * scale, height * scale))
+        sprite = pygame.transform.rotate(sprite, rotation)
+        sprite = pygame.transform.flip(sprite, self.flipped, False)
+        sprite.set_colorkey((0, 0, 0))  # set sprite transparent background
+        return sprite
 
-    def sprite_animation(self, steps, width, height, scale, row_index, rotation):
+    def sprite_animation(self, steps, width, height, scale, row_index, rotation=0):
         animation_list = []
         animations_steps = steps  # i.e. how many images are idle
         y = height * row_index  # sets y-axis to start of row number

@@ -16,14 +16,10 @@ class Health:
             self.screen.blit(heart_health, ((num * 15) + x, y))
 
     def take_damage(self, score, damage=1):
-        if self.current_health > 1:
-            self.current_health -= damage
-            print('Remaining health:', self.current_health)
-            return True
-        else:
+        self.current_health -= damage
+        print('Remaining health:', self.current_health)
+        if self.current_health == 0:
             score.game_over()
-            return True
-        # REMOVE RETURN STATEMENTS ---------AND ON MAIN SCREEN-
 
 
 if __name__ == '__main__':
