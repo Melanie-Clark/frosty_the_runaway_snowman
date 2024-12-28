@@ -10,8 +10,10 @@ class SpriteSheet:
         image = pygame.Surface((width, height)).convert()
         image.blit(self.sprite_sheet, (0, 0), ((frame * width), y, width, height))  # Draw sprite by frame
         image = pygame.transform.scale(image, (width * scale, height * scale))
-        image = pygame.transform.rotate(image, rotation)
-        image = pygame.transform.flip(image, self.flipped, False)
+        image = pygame.transform.rotate(image,
+                                        rotation)  # should this be in initialised in entity?------------and only in Item?
+        image = pygame.transform.flip(image, self.flipped,
+                                      False)  # should this be in initialised in entity?------------
         image.set_colorkey((0, 0, 0))  # set sprite transparent background
         return image
 

@@ -3,8 +3,8 @@ import pygame
 
 class Health:
 
-    def __init__(self, display, max_health=5):
-        self.display = display
+    def __init__(self, screen, max_health=5):
+        self.screen = screen
         self.max_health = max_health
         self.current_health = max_health
 
@@ -13,16 +13,17 @@ class Health:
         heart_health = pygame.transform.scale(heart_health, (50, 50))
         x, y = (10, 10)
         for num in range(1, self.current_health + 1):
-            self.display.blit(heart_health, ((num * 15) + x, y))
+            self.screen.blit(heart_health, ((num * 15) + x, y))
 
-    def take_damage(self, damage=1):
+    def take_damage(self, score, damage=1):
         if self.current_health > 1:
             self.current_health -= damage
             print('Remaining health:', self.current_health)
             return True
         else:
-            print("Game Over!")  # Need to link to score and don't quit ---------------
-            return False
+            score.game_over()
+            return True
+        # REMOVE RETURN STATEMENTS ---------AND ON MAIN SCREEN-
 
 
 if __name__ == '__main__':

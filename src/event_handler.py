@@ -10,8 +10,9 @@ class Movement:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+
+            if event.type == pygame.KEYDOWN: # action once per key press
+                if event.key == pygame.K_LEFT: # -----------change so can only shoot up in a straight line
                     x_speed -= move_amount
                 elif event.key == pygame.K_RIGHT:
                     x_speed += move_amount
