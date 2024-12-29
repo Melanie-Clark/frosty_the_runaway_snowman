@@ -1,5 +1,5 @@
 import pygame
-from global_config import WINDOW_WIDTH, WINDOW_HEIGHT
+from src.core.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 # Game window set-up and background
@@ -25,6 +25,11 @@ class Scene:
         for x in range(50, WINDOW_WIDTH - 50, 500):
             pygame.draw.polygon(self.display, (200, 200, 200), [(x + 150, 175), (x + 350, 50), (x + 550, 175)])
             pygame.draw.polygon(self.display, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
+
+    def draw_scene(self):
+        self.draw_background()
+        self.draw_mountains()
+        self.draw_trees()
 
 
 if __name__ == '__main__':

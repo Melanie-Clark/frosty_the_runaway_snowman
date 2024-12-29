@@ -2,10 +2,10 @@ import pygame
 
 
 class Score:
-    def __init__(self, screen):
+    def __init__(self, screen, score=0):
         self.screen = screen
-        self.score = 0
-        self.total_score = 0
+        self.score = score
+        self.total_score = score
         self.size = 40
         self.font_name = "Verdana"
         self.color = "red"
