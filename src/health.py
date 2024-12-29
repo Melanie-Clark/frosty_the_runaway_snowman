@@ -19,7 +19,7 @@ class Health:
         self.current_health -= damage
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
-            score.game_over()
+            return "game_over"
 
 
 if __name__ == '__main__':

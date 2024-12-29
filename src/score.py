@@ -22,10 +22,3 @@ class Score:
         score_text = self.font.render(f"Score: {self.total_score}", True, self.color)
         self.screen.blit(self.green_santa, (700, 5))
         self.screen.blit(score_text, (500, 5))
-
-    def game_over(self):
-        print("Game Over")
-        game_over_font = pygame.font.SysFont(self.font_name, 100)
-        score_text = game_over_font.render(f"Total Score: {self.total_score}", True, self.color)
-        self.screen.blit(score_text, (400, 350))
-        # STOP SPEED or go to Game Over menu----------------------------------
