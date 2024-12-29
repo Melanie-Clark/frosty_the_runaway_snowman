@@ -1,17 +1,17 @@
 import pygame
 
 from src.core.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
+from src.events.event_handler import Movement
 
 
 class GameOver:
-    def __init__(self, screen, scene, health, score, timer, quit_game):
+    def __init__(self, screen, scene, health, score, timer):
         self.screen = screen
         self.scene = scene
         self.color = "red" # initialise once for game
         self.score = score
         self.health = health
         self.timer = timer
-        self.quit_game = quit_game
 
 
     # split into different methods -------------------------------------------------
@@ -46,7 +46,7 @@ class GameOver:
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.quit_game()
+                    Movement.quit_game()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.score.total_score = self.score.score
