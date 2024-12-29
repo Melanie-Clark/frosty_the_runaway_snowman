@@ -1,8 +1,6 @@
 import pygame
 import sys
 
-from src.main import GameLoop
-
 
 class Movement:
 
@@ -10,8 +8,7 @@ class Movement:
     def event_handler(x, y, x_speed, y_speed, space_pressed, move_amount=10):  # 0,0 stationary sprite
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                GameLoop.quit_game()
-
+                Movement.quit_game()
             if event.type == pygame.KEYDOWN:  # action once per key press
                 if event.key == pygame.K_LEFT and not space_pressed:  # stops snowball moving once thrown
                     x_speed -= move_amount
@@ -28,3 +25,9 @@ class Movement:
         y += y_speed
 
         return x, y, x_speed, y_speed, space_pressed
+
+
+    @staticmethod
+    def quit_game():
+        pygame.quit()
+        sys.exit()

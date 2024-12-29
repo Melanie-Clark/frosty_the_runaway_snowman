@@ -1,14 +1,9 @@
 import pygame
-import random
-from global_config import WINDOW_WIDTH, WINDOW_HEIGHT
-from sprites import SpriteSheet
 
-from main import GameLoop
+from src.core.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN
+from src.events.sprites import SpriteSheet
 from abc import ABC, abstractmethod
-from event_handler import Movement
-
-from health import Health
-from score import Score
+from src.events.event_handler import Movement
 
 
 class Entity(ABC):
@@ -46,14 +41,15 @@ class Entity(ABC):
     @staticmethod
     def initialise_entities():
         # Loads spritesheets
-        snowball_sprite = SpriteSheet("../assets/images/snowball_sprite_sheet.png")
-        bunny_sprite_left = SpriteSheet("../assets/images/bunny_sprite_sheet.png")
-        bunny_sprite_right = SpriteSheet("../assets/images/bunny_sprite_sheet.png", True)
-        elf_sprite_right = SpriteSheet("../assets/images/elf_sprite_sheet.png", True)
-        snow_thief_sprite = SpriteSheet("../assets/images/snow_thief_sprite_sheet.png", True)
-        reindeer_sprite_left = SpriteSheet("../assets/images/reindeer_sprite_sheet.png")
-        red_santa_sprite = SpriteSheet("../assets/images/red_santa_sprite_sheet.png")
-        green_santa_sprite = SpriteSheet("../assets/images/green_santa_sprite_sheet.png")
+        snowball_sprite = SpriteSheet("../assets/sprite_sheets/snowball_sprite_sheet.png")
+        bunny_sprite_left = SpriteSheet("../assets/sprite_sheets/bunny_sprite_sheet.png")
+        bunny_sprite_right = SpriteSheet("../assets/sprite_sheets/bunny_sprite_sheet.png", True)
+        elf_sprite_right = SpriteSheet("../assets/sprite_sheets/elf_sprite_sheet.png", True)
+        snow_thief_sprite = SpriteSheet("../assets/sprite_sheets/snow_thief_sprite_sheet.png", True)
+        reindeer_sprite_left = SpriteSheet("../assets/sprite_sheets/reindeer_sprite_sheet.png")
+        red_santa_sprite = SpriteSheet("../assets/sprite_sheets/red_santa_sprite_sheet.png")
+        green_santa_sprite = SpriteSheet("../assets/sprite_sheets/green_santa_sprite_sheet.png")
+        cheeky_thief_sprite = SpriteSheet("../assets/sprite_sheets/cheeky_sprite_sprite_sheet.png")
 
         # cooldown - how quickly animation runs (milliseconds) ------------------------RE-ORDER ----- use random for speed, x, y coords--
         snowball = Item(snowball_sprite, 250, 0, WINDOW_HEIGHT - 55, 500, 350, 0.22, 0, 3, 10, "left", 270, 5,
@@ -65,9 +61,12 @@ class Entity(ABC):
         #                   random.randint(1, 4), random.choice(["left", "right"]), 0, 10,
         #                   55, 92, 90))
 
-        bunny1 = Obstacle(bunny_sprite_left, 150, WINDOW_WIDTH // 1.2, WINDOW_HEIGHT // 1.5, 55, 74, 2, 2, 4,
-                          3, "left", 0, 10,
-                          55, 92, 90)
+        bunny1 = Obstacle(cheeky_thief_sprite, 150, WINDOW_WIDTH // 1.2, WINDOW_HEIGHT // 1.5, 93.5, 140, 0.75, 1, 5,
+                          5, "right", 0, 5,
+                          5, 65, 85)
+        # bunny1 = Obstacle(bunny_sprite_left, 150, WINDOW_WIDTH // 1.2, WINDOW_HEIGHT // 1.5, 55, 74, 2, 2, 4,
+        #                   3, "left", 0, 10,
+        #                   55, 92, 90)
         bunny2 = Obstacle(bunny_sprite_right, 150, WINDOW_WIDTH // 3.2, WINDOW_HEIGHT // 1.6, 55, 74, 2, 2, 4,
                           3.5, "right", 0, 10,
                           55, 92, 90)
@@ -103,12 +102,12 @@ class Entity(ABC):
             self.last_update = current_time  # resets time
 
     # draw to screen
-    def draw(self):
-        GameLoop.screen.blit(self.animation_list[self.frame], (self.x, self.y))  # draws to screen
+    def draw(self, screen):
+        SCREEN.blit(self.animation_list[self.frame], (self.x, self.y))  # draws to screen
         # uncomment to debug collisions (puts red box around each sprite)
-        pygame.draw.rect(GameLoop.screen, (255, 0, 0),
-                         pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
-                                     self.collision_width, self.collision_height), 2)
+        # pygame.draw.rect(SCREEN, (255, 0, 0),
+        #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
+        #                              self.collision_width, self.collision_height), 2)
 
 
 # update methods the same in Obstacle and Target, but need to defined differently somehow - could be in instantiation, rather than separate classes?
@@ -173,14 +172,15 @@ class Item(Entity):
             self.y = WINDOW_HEIGHT - self.collision_height
             self.y_speed = 0
             self.collision_state = True
+            self.space_pressed = False
             if isinstance(entity, Target):
                 score.increment_score()
             else:
-                return health.take_damage(score)
+                return health.take_damage()
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
-        return "game"
+        return True
 
 
 if __name__ == '__main__':

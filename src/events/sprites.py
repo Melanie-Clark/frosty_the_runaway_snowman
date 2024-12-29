@@ -17,7 +17,7 @@ class SpriteSheet:
 
     def sprite_animation(self, steps, width, height, scale, row_index, rotation=0):
         animation_list = []
-        animations_steps = steps  # i.e. how many images are idle
+        animations_steps = steps  # i.e. how many sprite_sheets are idle
         y = height * row_index  # sets y-axis to start of row number
 
         for x_axis in range(animations_steps):
