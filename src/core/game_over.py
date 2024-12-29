@@ -54,7 +54,7 @@ class GameOver:
                         self.timer.start_ticks = pygame.time.get_ticks()
                         return True
                     elif event.key == pygame.K_q:
-                        self.quit_game()
+                        Movement.quit_game()
 
 if __name__ == '__main__':
     pass
