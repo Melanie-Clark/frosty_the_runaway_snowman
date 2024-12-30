@@ -26,7 +26,6 @@ class Movement:
 
         return x, y, x_speed, y_speed, space_pressed
 
-
     @staticmethod
     def quit_game():
         pygame.quit()

@@ -13,7 +13,7 @@ class GameLoop:
     # initialises game window and sprite properties
     def __init__(self):
         pygame.init()  # Initialise pygame
-        pygame.display.set_caption("Double Trouble: Snowball Santa")
+        pygame.display.set_caption("Runaway snowman")
         self.clock = pygame.time.Clock()  # Manages frame rate
         self.running = True
         self.scene = Scene(SCREEN)  # Scene instance
@@ -23,8 +23,8 @@ class GameLoop:
         self.game_over = GameOver(SCREEN, self.scene, self.health, self.score, self.timer)  # Game Over instance
 
     def run(self):
-        green_santa, red_santa, reindeer1, elf, bunny1, snow_thief, bunny3, bunny2, snowball = Entity.initialise_entities()
-        entities = [green_santa, red_santa, reindeer1, elf, bunny1, snow_thief, bunny3, bunny2, snowball]
+        entities, runaway_snowman, snowball = Entity.initialise_entities()
+        all_entities = entities + [runaway_snowman, snowball]
 
         # main game loop - runs until quit
         self.running = True
@@ -34,22 +34,23 @@ class GameLoop:
             self.health.draw()
 
             if not self.timer.countdown_timer():
-                self.game_over.draw_game_over_screen()
+                self.game_over.draw_game_over_screen(runaway_snowman)
 
-            for entity in entities:
+            for entity in all_entities:
                 entity.update()
-                entity.draw(SCREEN)
+                entity.check_sprite_position()
+                entity.draw()
                 entity.update_frame()
 
                 if not isinstance(entity, Item):  # checks entity is not an instance or child of item class
                     self.running = snowball.handle_collision(entity, self.health, self.score)
                     if not self.running:
-                        self.game_over.draw_game_over_screen()
+                        self.game_over.draw_game_over_screen(runaway_snowman)
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
 
-        self.game_over.draw_game_over_screen()
+        self.game_over.draw_game_over_screen(runaway_snowman)
 
 
 if __name__ == '__main__':
