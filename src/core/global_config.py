@@ -6,3 +6,6 @@ WINDOW_HEIGHT = 720
 SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 FPS = 60
+
+FONT_NAME = "Verdana"
+COLOR = "red"
