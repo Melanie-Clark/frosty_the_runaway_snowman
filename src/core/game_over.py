@@ -53,7 +53,7 @@ class GameOver:
                         self.score.total_score = self.score.score
                         self.health.current_health = self.health.max_health
                         self.timer.start_ticks = pygame.time.get_ticks()
-                        runaway_snowman.speed = 2
+                        runaway_snowman.speed = runaway_snowman.initial_min_speed
                         return True
                     elif event.key == pygame.K_q:
                         Movement.quit_game()
