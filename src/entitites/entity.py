@@ -9,7 +9,7 @@ from src.events.event_handler import Movement
 
 class Entity(ABC):  # inherits functionality from pygames Sprite class
     def __init__(self, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
-                 steps, min_speed, max_speed, rotation, collision_x_offset, collision_y_offset, collision_width,
+                 steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
                  collision_height,
                  x_speed=0, y_speed=0):
         self.sprite_sheet = sprite_sheet
@@ -32,7 +32,7 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         self.x_speed = x_speed
         self.y_speed = y_speed
         self.animation_list = self.sprite_sheet.sprite_animation(steps, sprite_width, sprite_height, sprite_scale,
-                                                                 row_index, rotation)
+                                                                 row_index)
         self.collision_state = False
         self.space_pressed = False
 
@@ -60,36 +60,35 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         reindeer_group = [
             (FlyingObstacle(reindeer_sprite, "left", 200, random_x_position + (i * sprite_width["reindeer"]), -20,
                             sprite_width["reindeer"], sprite_height["reindeer"], 1, 2, 2,
-                            3, 3, 0, 20, 18, 100, 110)) for i in range(5)]
+                            3, 3, 20, 18, 100, 110)) for i in range(5)]
 
         bunny_group = [(Obstacle(bunny_sprite, random.choice(["left", "right"]), 150,
                                  random.randint(0 - sprite_width["bunny"], WINDOW_WIDTH + sprite_width["bunny"]),
                                  random.randint(400, WINDOW_HEIGHT - (sprite_height["bunny"] * 3)),
                                  sprite_width["bunny"], sprite_height["bunny"], 2, 2, 4,
-                                 2, 5, 0, 10, 55, 92, 90)) for _ in range(2)]
+                                 2, 5, 10, 55, 92, 90)) for _ in range(2)]
 
         runaway_snowman = Target(runaway_snowman_sprite, random.choice(["left", "right"]), 150,
-                                 random_x_position, random.randint(210, WINDOW_HEIGHT // 2), sprite_width["snowman"],
-                                 sprite_height["snowman"], 0.75, 1, 5, 2, 2, 0, 5, 5, 62, 85)
+                                 random_x_position, random.randint(200, WINDOW_HEIGHT // 2), sprite_width["snowman"],
+                                 sprite_height["snowman"], 0.75, 1, 5, 2, 2, 5, 5, 62, 85)
 
         elf_group = [
             (Obstacle(elf_sprite, random.choice(["left", "right"]), 100,
                       random.randint(0 - 32, WINDOW_WIDTH + sprite_width["elf"]),
                       random.randint(180, WINDOW_HEIGHT - (sprite_height["elf"] * 3)), sprite_width["elf"],
                       sprite_height["elf"], 2, 2, 6, 3,
-                      6, 0, 8, 26, 46, 102)) for _ in range(3)]
+                      6, 8, 26, 46, 102)) for _ in range(3)]
 
         red_santa = Obstacle(red_santa_sprite, random.choice(["left", "right"]), 75,
                              random.randint(0 - 64, WINDOW_WIDTH + sprite_width["red_santa"]),
                              random.randint(180, WINDOW_HEIGHT - (sprite_height["red_santa"] * 3)),
                              sprite_width["red_santa"],
                              sprite_height["red_santa"], 1.75, 2,
-                             4, 3, 5, 0, 25, 5, 60, 108)
+                             4, 3, 5, 25, 5, 60, 108)
 
-        # snowball doesnt need direction ---------------------------------------------------------------others dont need rotation
         snowball = Item(snowball_sprite, "left", 250, WINDOW_WIDTH // 2, WINDOW_HEIGHT - 55, sprite_width["snowball"],
                         sprite_height["snowball"], 0.22, 0, 3, 10, 10,
-                        270, 5, 3, 55, 55)
+                        5, 3, 55, 55, 270)
 
         return [*reindeer_group, *elf_group, red_santa, *bunny_group], runaway_snowman, snowball
 
@@ -150,7 +149,7 @@ class Target(Entity):
         # Resets if entity moves off-screen
         if self.x > WINDOW_WIDTH:
             self.x = WINDOW_WIDTH  # Resets to left edge
-            self.y = random.randint(210, WINDOW_HEIGHT // 2)
+            self.y = random.randint(200, WINDOW_HEIGHT // 2)
             # if target goes off-screen, it returns from the same side
             if self.direction == "left":
                 self.direction = "right"
@@ -158,7 +157,7 @@ class Target(Entity):
                 self.direction = "left"
         elif self.x < -self.sprite_width:
             self.x = -self.sprite_width
-            self.y = random.randint(210, WINDOW_HEIGHT // 2)
+            self.y = random.randint(200, WINDOW_HEIGHT // 2)
             if self.direction == "left":
                 self.direction = "right"
             else:
@@ -166,6 +165,16 @@ class Target(Entity):
 
 
 class Item(Entity):
+    def __init__(self, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
+                 steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width, collision_height,
+                 rotation):
+        super().__init__(sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
+                         steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
+                         collision_height)
+        self.rotation = rotation
+        self.animation_list = self.sprite_sheet.sprite_animation(steps, sprite_width, sprite_height, sprite_scale,
+                                                                 row_index, rotation)
+
     def update(self):
         self.x, self.y, self.x_speed, self.y_speed, self.space_pressed = Movement.event_handler(self.x, self.y,
                                                                                                 self.x_speed,
