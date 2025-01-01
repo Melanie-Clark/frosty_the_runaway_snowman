@@ -9,3 +9,4 @@ FPS = 60
 
 FONT_NAME = "Verdana"
 COLOR = "red"
+INSTRUCTIONS_COLOR = "dark green"

@@ -4,14 +4,24 @@ from src.events.event_handler import Movement
 
 
 class GameOver:
-    def __init__(self, screen, scene, health, score, timer):
+    def __init__(self, screen, scene, health, score, timer, font_size=40):
         self.screen = screen
         self.scene = scene
         self.score = score
         self.health = health
         self.timer = timer
-        self.font = pygame.font.SysFont(FONT_NAME, 40)
+        self.font = pygame.font.SysFont(FONT_NAME, font_size)
         self.large_font = pygame.font.SysFont(FONT_NAME, 80)
+
+    # text for the game over screen
+    def game_over_text(self):
+        game_over = self.large_font.render('Game Over', True, COLOR)
+        incremental_score = self.font.render(f'Score: {self.score.incremental_score}', True, COLOR)
+        health = self.font.render(f'Health: {self.health.current_health}', True, COLOR)
+        total_score = self.font.render(f'TOTAL SCORE: {self.score.total_score(self.health)}', True, COLOR)
+        play_again = self.font.render('P - Play again', True, COLOR)
+        quit_option = self.font.render('Q - Quit', True, COLOR)
+        return game_over, incremental_score, health, total_score, play_again, quit_option
 
     def draw_game_over_screen(self, runaway_snowman):
         print("Game Over")
@@ -43,16 +53,6 @@ class GameOver:
 
         pygame.display.update()
         self.game_over_event_handler(runaway_snowman)
-
-    # text for the game over screen
-    def game_over_text(self):
-        game_over = self.large_font.render('Game Over', True, COLOR)
-        incremental_score = self.font.render(f'Score: {self.score.incremental_score}', True, COLOR)
-        health = self.font.render(f'Health: {self.health.current_health}', True, COLOR)
-        total_score = self.font.render(f'TOTAL SCORE: {self.score.total_score(self.health)}', True, COLOR)
-        play_again = self.font.render('P - Play again', True, COLOR)
-        quit_option = self.font.render('Q - Quit', True, COLOR)
-        return game_over, incremental_score, health, total_score, play_again, quit_option
 
     # Event handling for quit or play again
     def game_over_event_handler(self, runaway_snowman):
