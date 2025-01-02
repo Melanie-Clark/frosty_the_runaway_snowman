@@ -1,14 +1,14 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, FEATURE_COLOR, INSTRUCTIONS_COLOR, TITLE_FONT, \
-    INSTRUCTIONS_FONT, TITLE_HEIGHT, SCREEN
+from src.config.global_config import WINDOW_WIDTH, INSTRUCTIONS_COLOR, INSTRUCTIONS_FONT, SCREEN
 from src.events.event_handler import Movement
-from src.utils.utils import Frosty
+from src.utils.utils import Frosty, Title
 
 
 class WelcomeScreen:
     def __init__(self, scene):
         self.scene = scene
         self.frosty = Frosty()
+        self.welcome_title = Title()
         self.title = "Frosty: The runaway snowman!"
         self.welcome_text = ("The aim of the game is to throw snowballs\n"
                              "at Frosty the runaway snowman.\n\n"
@@ -17,15 +17,9 @@ class WelcomeScreen:
                              "But be careful...\n"
                              "...each time you hit Frosty, he gets faster!\n\n"
                              "Use the left/right arrow keys to move\n"
-                             "the snowball at the bottom of the screen\n"
-                             "and SPACEBAR to throw the snowball.\n\n"
+                             "the snowball at the bottom of the screen.\n"
+                             "Press SPACEBAR to throw the snowball.\n\n"
                              "Press P to Play or Q to Quit")
-
-    @staticmethod
-    def draw_title(title):
-        title_font = TITLE_FONT.render(title, False,
-                                       FEATURE_COLOR)  # antialias (TRUE smooth text)
-        SCREEN.blit(title_font, (WINDOW_WIDTH // 2 - title_font.get_width() // 2, TITLE_HEIGHT))
 
     def draw_welcome_text(self, y_start_pos):
         for line in self.welcome_text.splitlines():
@@ -36,7 +30,7 @@ class WelcomeScreen:
     # draws everything required for welcome screen
     def draw_welcome_screen(self, game):
         self.scene.draw_scene()
-        self.draw_title(self.title)
+        self.welcome_title.draw_title(self.title)
         self.frosty.draw_frosty(200)
         self.draw_welcome_text(230)
         pygame.display.update()
