@@ -1,13 +1,12 @@
 import pygame
 from src.config.global_config import WINDOW_WIDTH, FEATURE_COLOR, INSTRUCTIONS_COLOR, TITLE_FONT, \
-    INSTRUCTIONS_FONT, TITLE_HEIGHT
+    INSTRUCTIONS_FONT, TITLE_HEIGHT, SCREEN
 from src.events.event_handler import Movement
 from src.utils.utils import Frosty
 
 
 class WelcomeScreen:
-    def __init__(self, screen, scene):
-        self.screen = screen
+    def __init__(self, scene):
         self.scene = scene
         self.frosty = Frosty()
         self.title = "Frosty: The runaway snowman!"
@@ -22,15 +21,16 @@ class WelcomeScreen:
                              "and SPACEBAR to throw the snowball.\n\n"
                              "Press P to Play or Q to Quit")
 
-    def draw_title(self, title):
+    @staticmethod
+    def draw_title(title):
         title_font = TITLE_FONT.render(title, False,
                                        FEATURE_COLOR)  # antialias (TRUE smooth text)
-        self.screen.blit(title_font, (WINDOW_WIDTH // 2 - title_font.get_width() // 2, TITLE_HEIGHT))
+        SCREEN.blit(title_font, (WINDOW_WIDTH // 2 - title_font.get_width() // 2, TITLE_HEIGHT))
 
     def draw_welcome_text(self, y_start_pos):
         for line in self.welcome_text.splitlines():
             welcome_text = INSTRUCTIONS_FONT.render(line, False, INSTRUCTIONS_COLOR)
-            self.screen.blit(welcome_text, (WINDOW_WIDTH // 2 - welcome_text.get_width() // 2, y_start_pos))
+            SCREEN.blit(welcome_text, (WINDOW_WIDTH // 2 - welcome_text.get_width() // 2, y_start_pos))
             y_start_pos += welcome_text.get_height()  # Moves to the next line position
 
     # draws everything required for welcome screen
