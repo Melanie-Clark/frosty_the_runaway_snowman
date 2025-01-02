@@ -1,5 +1,5 @@
 import pygame
-from src.core.global_config import WINDOW_WIDTH, FONT_NAME, COLOR
+from src.config.global_config import WINDOW_WIDTH, FEATURE_COLOR, FEATURE_FONT
 
 
 class Timer:
@@ -8,8 +8,6 @@ class Timer:
         self.start_ticks = pygame.time.get_ticks()  # Starting tick
         self.max_time = timer
         self.timer = timer
-        self.size = 40
-        self.font = pygame.font.SysFont(FONT_NAME, self.size)
 
     def countdown_timer(self):
         # Calculates remaining time
@@ -20,7 +18,7 @@ class Timer:
         return True
 
     def draw(self, seconds):
-        countdown = self.font.render(f"Time remaining: {seconds}", True, COLOR)
+        countdown = FEATURE_FONT.render(f"Time remaining: {seconds}", False, FEATURE_COLOR)
         countdown_rect = countdown.get_rect()  # puts text into a rectangle
         countdown_rect.topright = (WINDOW_WIDTH - 10, 0)  # Positions rectangle in top-right corner
         self.screen.blit(countdown, countdown_rect)
