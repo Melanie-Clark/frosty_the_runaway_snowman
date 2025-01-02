@@ -1,10 +1,11 @@
 import pygame
 
+from src.config.global_config import SCREEN
+
 
 class Health:
 
-    def __init__(self, screen, max_health=5):
-        self.screen = screen
+    def __init__(self, max_health=5):
         self.max_health = max_health
         self.current_health = max_health
 
@@ -13,7 +14,7 @@ class Health:
         heart_health = pygame.transform.scale(heart_health, (50, 50))
         x, y = (10, 10)
         for num in range(1, self.current_health + 1):
-            self.screen.blit(heart_health, ((num * 15) + x, y))
+            SCREEN.blit(heart_health, ((num * 15) + x, y))
 
     def take_damage(self, damage=1):
         self.current_health -= damage
