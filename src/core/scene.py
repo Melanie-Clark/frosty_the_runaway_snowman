@@ -5,6 +5,7 @@ from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN
 # Game window set-up and background
 class Scene:
 
+    # draws blue sky and snow background
     @staticmethod
     def draw_background():
         SCREEN.fill((135, 206, 235))  # Blue sky
@@ -27,6 +28,7 @@ class Scene:
             pygame.draw.polygon(SCREEN, (200, 200, 200), [(x + 150, 175), (x + 350, 50), (x + 550, 175)])
             pygame.draw.polygon(SCREEN, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
 
+    # draws complete scene
     def draw_scene(self):
         self.draw_background()
         self.draw_mountains()

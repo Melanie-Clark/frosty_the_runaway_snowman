@@ -16,6 +16,7 @@ class Timer:
             return False
         return True
 
+    # draws time remaining to screen as it countdowns
     @staticmethod
     def draw(seconds):
         countdown = FEATURE_FONT.render(f"Time remaining: {seconds}", False, FEATURE_COLOR)
