@@ -2,6 +2,7 @@ import pygame
 
 from src.config.global_config import FPS
 from src.core.scene import Scene
+from src.core.sound import Sound
 from src.core.welcome_screen import WelcomeScreen
 from src.entitites.entity import Entity
 from src.core.health import Health
@@ -66,6 +67,7 @@ class GameLoop:
         self.game_over.draw_game_over_screen(frosty)
 
     def run(self):
+        Sound().music()
         self.welcome_screen.draw_welcome_screen(self)
 
 

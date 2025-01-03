@@ -76,3 +76,4 @@ Run the `main.py` python file to start the game and snowball Frosty the runaway 
 - Elf spritesheet: [itch.io-Millennial Voxel Forge](https://millennial-voxel-forge.itch.io/elf-hero)
 - Bunny spritesheet: [itch.io-HRedBird](https://hredbird.itch.io/bunny-sprite-sheet)
 - Heart health: [Wikipedia](https://en.m.wikipedia.org/wiki/File:Heart_left-highlight_jon_01.svg)
+- Music: [itch.io-FablefLy Music](https://fablefly-music.itch.io/its-snowtime)
