@@ -7,7 +7,7 @@ from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN, TITLE_
 class Frosty:
     @staticmethod
     def load_frosty(scale):
-        target_image = pygame.image.load("../assets/images/frosty.png").convert_alpha()
+        target_image = pygame.image.load("../assets/images/game_play_imgs/frosty.png").convert_alpha()
         target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
         return target_image
 
