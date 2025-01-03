@@ -1,9 +1,10 @@
 import random
 import pygame
-from pygame.examples.sprite_texture import sprite
 from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
+from src.core.sound import Sound
 from src.entitites.entity import Target, Entity
 from src.entitites.sprites import AnimatedSprite
+from src.events.event_handler import Movement
 
 
 class Snowball(Entity):
@@ -15,7 +16,6 @@ class Snowball(Entity):
         super().__init__(sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
                          steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
                          collision_height)
-        self.sprite_width = sprite
         self.animation_list = self.sprite_sheet.sprite_animation(steps, sprite_width, sprite_height, sprite_scale,
                                                                  row_index, rotation)
 
@@ -27,10 +27,10 @@ class Snowball(Entity):
         return snowball
 
     def update(self):
-        self.x, self.y, self.x_speed, self.y_speed, self.space_pressed = self.movement.event_handler(self.x, self.y,
-                                                                                                     self.x_speed,
-                                                                                                     self.y_speed,
-                                                                                                     self.space_pressed)
+        self.x, self.y, self.x_speed, self.y_speed, self.space_pressed = Movement.event_handler(self.x, self.y,
+                                                                                                self.x_speed,
+                                                                                                self.y_speed,
+                                                                                                self.space_pressed)
 
     def check_sprite_position(self):
         # Resets snowball when if it goes off-screen
@@ -55,19 +55,18 @@ class Snowball(Entity):
         if self_rect.colliderect(
                 entity_rect) and self.collision_state == False:  # extra parameter False required to prevent a collision everytime the rects collide in one hit
             # resets item after collision on y-axis
-            self.y = WINDOW_HEIGHT - self.collision_height  # resets snowball on y-axis
-            self.y_speed = 0  # resets snowball speed
+            self.y = WINDOW_HEIGHT - self.collision_height
+            self.y_speed = 0
             self.collision_state = True
             self.space_pressed = False
             if isinstance(entity, Target):
-                # Sound.sound_effect("../assets/sounds/ouch.mp3")
+                Sound.sound_effect("../assets/sounds/ouch.mp3")
                 score.increment_score()
 
                 # resets frosty to disappear and re-enter from left or right side, increases speed
                 entity.x = random.choice((0, WINDOW_WIDTH))
-                entity.y = random.randint(200, 400)  # entity.min_y_range, entity.max_y_range
-                entity.speed += 0.70
-
+                entity.y = random.randint(entity.min_y_range, entity.max_y_range)
+                entity.speed += 0.65
             else:
                 return health.take_damage()
         # If no collision, reset collision state
