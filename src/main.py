@@ -2,6 +2,7 @@ import pygame
 
 from src.config.global_config import FPS
 from src.core.scene import Scene
+from src.core.sound import Sound
 from src.core.welcome_screen import WelcomeScreen
 from src.entitites.entity import Entity
 from src.core.health import Health
@@ -43,7 +44,8 @@ class GameLoop:
             self.score.draw()
             self.health.draw()
 
-            if not self.timer.countdown_timer():
+            result, seconds = self.timer.countdown_timer()
+            if not result:
                 self.load_game_over(frosty)
 
             for entity in all_entities:
@@ -53,7 +55,7 @@ class GameLoop:
                 entity.update_frame()
 
                 if not isinstance(entity, Snowball):  # checks entity is not an instance or child of item class
-                    self.running = snowball.handle_collision(entity, self.health, self.score)
+                    self.running = snowball.handle_collision(entity, self.health, self.score, seconds)
                     if not self.running:
                         self.load_game_over(frosty)
 
@@ -62,9 +64,11 @@ class GameLoop:
 
     # loads the game over screen and functionality
     def load_game_over(self, frosty):
+        self.running = True
         self.game_over.draw_game_over_screen(frosty)
 
     def run(self):
+        Sound().music()
         self.welcome_screen.draw_welcome_screen(self)
 
 

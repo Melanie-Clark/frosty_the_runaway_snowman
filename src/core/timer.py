@@ -13,8 +13,8 @@ class Timer:
         seconds = self.timer - (pygame.time.get_ticks() - self.start_ticks) // 1000
         self.draw(seconds)
         if seconds < 0:
-            return False
-        return True
+            return False, seconds
+        return True, seconds
 
     # draws time remaining to screen as it countdowns
     @staticmethod
