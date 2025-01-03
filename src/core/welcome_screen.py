@@ -41,12 +41,10 @@ class WelcomeScreen:
     def welcome_screen_event_handler(game):
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    Movement.quit_game()
-                elif event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         game.game_loop()
-                    elif event.key == pygame.K_q:
+                    elif event.key == pygame.K_q or event.type == pygame.QUIT:
                         Movement.quit_game()
 
 
