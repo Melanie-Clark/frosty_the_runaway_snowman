@@ -47,7 +47,7 @@ The total score is calculated as follows:\
 Click below to see the game in action!
 
 <a href="https://www.youtube.com/watch?v=0D62W5GX_c0
-" target="_blank"><img src="http://img.youtube.com/vi/0D62W5GX_c0.jpg"
+" target="_blank"><img src="http://img.youtube.com/vi/0D62W5GX_c0/0.jpg"
 alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="10" /></a>
 
 ## Game screenshots
