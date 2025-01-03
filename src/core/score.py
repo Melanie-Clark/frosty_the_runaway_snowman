@@ -31,7 +31,7 @@ class Score:
 
         total_score = self.incremental_score + health.current_health + bonus
         print("Total score:", total_score)
-        return total_score, self.time_bonus
+        return total_score, bonus
 
     # resets time_bonus for play again
     def reset_time_bonus(self):
