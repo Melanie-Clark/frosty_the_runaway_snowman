@@ -42,14 +42,20 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         self.collision_state = False
         self.space_pressed = False
 
+    # Loads spritesheets
     @staticmethod
-    def initialise_entities():
-        # Loads spritesheets
+    def initialise_spritesheets():
         bunny_sprite = AnimatedSprite("../assets/sprite_sheets/bunny_sprite_sheet.png")
         elf_sprite = AnimatedSprite("../assets/sprite_sheets/elf_sprite_sheet.png")
         reindeer_sprite = AnimatedSprite("../assets/sprite_sheets/reindeer_sprite_sheet.png")
         red_santa_sprite = AnimatedSprite("../assets/sprite_sheets/red_santa_sprite_sheet.png")
         frosty_sprite = AnimatedSprite("../assets/sprite_sheets/frosty_sprite_sheet.png", True)
+        return bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite
+
+    @staticmethod
+    def initialise_entities():
+        # Loads spritesheets
+        bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite = Entity.initialise_spritesheets()
 
         sprite_width = {"reindeer": 128, "elf": 32, "red_santa": 64, "bunny": 55, "snowman": 93.5}
         sprite_height = {"reindeer": 128, "elf": 64, "red_santa": 64, "bunny": 74, "snowman": 140}
