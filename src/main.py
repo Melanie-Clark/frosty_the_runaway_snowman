@@ -1,6 +1,6 @@
 import pygame
 
-from src.config.global_config import FPS, SCREEN
+from src.config.global_config import FPS
 from src.core.scene import Scene
 from src.core.welcome_screen import WelcomeScreen
 from src.entitites.entity import Entity
@@ -39,7 +39,6 @@ class GameLoop:
 
         # main game loop - runs until quit
         while self.running:
-
             self.scene.draw_scene()
             self.score.draw()
             self.health.draw()
@@ -60,8 +59,6 @@ class GameLoop:
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
-
-        self.load_game_over(frosty)
 
     # loads the game over screen and functionality
     def load_game_over(self, frosty):

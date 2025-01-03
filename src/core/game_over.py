@@ -46,6 +46,8 @@ class GameOver:
     def game_over_event_handler(self, frosty):
         while True:
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    Movement.quit_game()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.score.incremental_score = self.score.score
@@ -53,7 +55,7 @@ class GameOver:
                         self.timer.reset()
                         frosty.speed = frosty.initial_min_speed
                         return True
-                    elif event.key == pygame.K_q or event.type == pygame.QUIT:
+                    elif event.key == pygame.K_q:
                         Movement.quit_game()
 
 
