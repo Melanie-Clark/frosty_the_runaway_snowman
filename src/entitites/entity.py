@@ -2,10 +2,8 @@ import pygame
 import random
 
 from src.config.global_config import WINDOW_WIDTH, SCREEN
-from src.core.sound import Sound
 from src.entitites.sprites import AnimatedSprite
 from abc import ABC, abstractmethod
-from src.events.event_handler import Movement
 
 
 class Entity(ABC):  # inherits functionality from pygames Sprite class
@@ -44,9 +42,6 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         self.collision_state = False
         self.space_pressed = False
 
-        self.movement = Movement()
-        self.sound = Sound()
-
     @staticmethod
     def initialise_entities():
         # Loads spritesheets
@@ -61,13 +56,12 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
 
         random_x_position = random.randint(0, WINDOW_WIDTH)
 
-        bunny_group = [(Obstacle(bunny_sprite, random.choice(["left", "right"]), 150,
+        bunny = Obstacle(bunny_sprite, random.choice(["left", "right"]), 150,
                                  random.randint(0 - sprite_width["bunny"], WINDOW_WIDTH + sprite_width["bunny"]),
                                  400, 500,
                                  sprite_width["bunny"], sprite_height["bunny"],
                                  2, 2, 4, 2, 5,
-                                 10, 55, 92, 90))
-                       for _ in range(1)]
+                                 10, 55, 92, 90)
 
         elf_group = [(Obstacle(elf_sprite, random.choice(["left", "right"]), 100,
                                random.randint(0 - sprite_width["elf"], WINDOW_WIDTH + sprite_width["elf"]),
@@ -102,7 +96,7 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
                         0.75, 1, 5, 2,
                         2, 5, 5, 62, 85)
 
-        return [*reindeer_group, *elf_group, red_santa, *bunny_group], frosty
+        return [*reindeer_group, *elf_group, red_santa, bunny], frosty
 
     @abstractmethod
     def check_sprite_position(self):

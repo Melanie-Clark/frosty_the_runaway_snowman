@@ -62,17 +62,20 @@ class Snowball(Entity):
             if isinstance(entity, Target):
                 Sound.sound_effect("../assets/sounds/ouch.mp3")
                 score.increment_score()
-
-                # resets frosty to disappear and re-enter from left or right side, increases speed
-                entity.x = random.choice((0, WINDOW_WIDTH))
-                entity.y = random.randint(entity.min_y_range, entity.max_y_range)
-                entity.speed += 0.65
+                self.reset_frosty(entity)
             else:
                 return health.take_damage()
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
         return True
+
+    @staticmethod
+    def reset_frosty(entity):
+        # resets frosty to disappear and re-enter from left or right side, increases speed
+        entity.x = random.choice((0, WINDOW_WIDTH))
+        entity.y = random.randint(entity.min_y_range, entity.max_y_range)
+        entity.speed += 0.65
 
 
 if __name__ == '__main__':

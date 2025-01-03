@@ -54,6 +54,7 @@ class GameOver:
                         self.health.current_health = self.health.max_health
                         self.timer.reset()
                         frosty.speed = frosty.initial_min_speed
+                        pygame.event.clear() # clears event queues, so can be replayed
                         return True
                     elif event.key == pygame.K_q:
                         Movement.quit_game()
