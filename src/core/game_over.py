@@ -1,73 +1,59 @@
 import pygame
-from src.core.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, FONT_NAME, COLOR
+from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, FEATURE_COLOR, INSTRUCTIONS_COLOR, FEATURE_FONT, \
+    SCREEN
 from src.events.event_handler import Movement
+from src.utils.utils import Title
 
 
 class GameOver:
-    def __init__(self, screen, scene, health, score, timer):
-        self.screen = screen
+    def __init__(self, scene, health, score, timer=None):
         self.scene = scene
         self.score = score
         self.health = health
         self.timer = timer
-        self.font = pygame.font.SysFont(FONT_NAME, 40)
-        self.large_font = pygame.font.SysFont(FONT_NAME, 80)
-
-    def draw_game_over_screen(self, runaway_snowman):
-        print("Game Over")
-        self.scene.draw_scene()
-        self.health.draw()
-        self.score.draw()
-
-        game_over, incremental_score, health, total_score, play_again, quit_option = self.game_over_text()
-
-        # draws final score, game over, stats, play again and quit_option onto screen
-        self.screen.blit(game_over,
-                         (WINDOW_WIDTH // 2 - game_over.get_width() // 2,
-                          WINDOW_HEIGHT // 2 - (game_over.get_height() * 1.25)))
-        self.screen.blit(incremental_score, (
-            WINDOW_WIDTH // 2 - incremental_score.get_width() // 2,
-            WINDOW_HEIGHT // 2))
-        self.screen.blit(health, (
-            WINDOW_WIDTH // 2 - health.get_width() // 2,
-            WINDOW_HEIGHT // 2 + health.get_height()))
-        self.screen.blit(total_score, (
-            WINDOW_WIDTH // 2 - total_score.get_width() // 2,
-            WINDOW_HEIGHT // 2 + (total_score.get_height() * 2.25)))
-        self.screen.blit(play_again, (
-            WINDOW_WIDTH // 3 - play_again.get_width() // 2,
-            WINDOW_HEIGHT // 1.25 + play_again.get_height()))
-        self.screen.blit(quit_option,
-                         (((WINDOW_WIDTH // 3) * 2) - quit_option.get_width() // 2,
-                          WINDOW_HEIGHT // 1.25 + quit_option.get_height()))
-
-        pygame.display.update()
-        self.game_over_event_handler(runaway_snowman)
+        self.game_over_title = Title()
+        self.title = "Game Over"
 
     # text for the game over screen
     def game_over_text(self):
-        game_over = self.large_font.render('Game Over', True, COLOR)
-        incremental_score = self.font.render(f'Score: {self.score.incremental_score}', True, COLOR)
-        health = self.font.render(f'Health: {self.health.current_health}', True, COLOR)
-        total_score = self.font.render(f'TOTAL SCORE: {self.score.total_score(self.health)}', True, COLOR)
-        play_again = self.font.render('P - Play again', True, COLOR)
-        quit_option = self.font.render('Q - Quit', True, COLOR)
-        return game_over, incremental_score, health, total_score, play_again, quit_option
+        incremental_score = FEATURE_FONT.render(f'Score: {self.score.incremental_score}', False, FEATURE_COLOR)
+        health = FEATURE_FONT.render(f'Health: {self.health.current_health}', False, FEATURE_COLOR)
+        total_score = FEATURE_FONT.render(f'TOTAL SCORE: {self.score.total_score(self.health)}', False, FEATURE_COLOR)
+        options = FEATURE_FONT.render('Press P to Play or Q to Quit', False, INSTRUCTIONS_COLOR)
+        return [incremental_score, health, total_score], options
+
+    def draw_game_over_screen(self, frosty):
+        print("Game Over")
+        self.scene.draw_scene()
+
+        game_over_text, options = self.game_over_text()
+
+        # draws final score, game over, stats, play again and quit_option onto screen
+        self.game_over_title.draw_title(self.title)
+
+        # draws score, health remaining and total to screen
+        for i, text in enumerate(game_over_text, start=-1):
+            SCREEN.blit(text, (WINDOW_WIDTH // 2 - text.get_width() // 2,
+                               WINDOW_HEIGHT // 2 + text.get_height() * i))
+
+        SCREEN.blit(options, (WINDOW_WIDTH // 2 - options.get_width() // 2,
+                              WINDOW_HEIGHT // 1.25 + options.get_height()))
+
+        pygame.display.update()
+        self.game_over_event_handler(frosty)
 
     # Event handling for quit or play again
-    def game_over_event_handler(self, runaway_snowman):
+    def game_over_event_handler(self, frosty):
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    Movement.quit_game()
-                elif event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         self.score.incremental_score = self.score.score
                         self.health.current_health = self.health.max_health
-                        self.timer.start_ticks = pygame.time.get_ticks()
-                        runaway_snowman.speed = runaway_snowman.initial_min_speed
+                        self.timer.reset()
+                        frosty.speed = frosty.initial_min_speed
                         return True
-                    elif event.key == pygame.K_q:
+                    elif event.key == pygame.K_q or event.type == pygame.QUIT:
                         Movement.quit_game()
 
 

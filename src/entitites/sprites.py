@@ -6,6 +6,7 @@ class AnimatedSprite:
         self.sprite_sheet = pygame.image.load(sprite_sheet).convert_alpha()
         self.flipped = flipped
 
+    # loads and scales sprite
     def get_sprite(self, frame, y, width, height, scale, rotation):
         sprite = self.sprite_sheet.subsurface(
             ((frame * width), y, width, height)).convert_alpha()  # extracts sprite by frame
