@@ -62,6 +62,7 @@ class GameLoop:
 
     # loads the game over screen and functionality
     def load_game_over(self, frosty):
+        self.running = True
         self.game_over.draw_game_over_screen(frosty)
 
     def run(self):

@@ -50,11 +50,11 @@ class GameOver:
                     Movement.quit_game()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
+                        pygame.event.clear() # clears event queues, so can be replayed
                         self.score.incremental_score = self.score.score
                         self.health.current_health = self.health.max_health
                         self.timer.reset()
                         frosty.speed = frosty.initial_min_speed
-                        pygame.event.clear() # clears event queues, so can be replayed
                         return True
                     elif event.key == pygame.K_q:
                         Movement.quit_game()
