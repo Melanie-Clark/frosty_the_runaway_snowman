@@ -1,12 +1,13 @@
 import pygame
 
+from src.core.score.high_score import HighScore
 from src.config.global_config import FPS
 from src.core.scene import Scene
 from src.core.sound import Sound
 from src.core.welcome_screen import WelcomeScreen
 from src.entitites.entity import Entity
 from src.core.health import Health
-from src.core.score import Score
+from src.core.score.score import Score
 from src.core.timer import Timer
 from src.core.game_over import GameOver
 from src.entitites.snowball import Snowball
@@ -25,6 +26,7 @@ class GameLoop:
         self.score = Score()  # Score instance
         self.welcome_screen = WelcomeScreen(self.scene)  # Welcome screen instance
         self.game_over = GameOver(self.scene, self.health, self.score, self.timer)  # Game Over instance
+        self.high_score = HighScore()  # High score instance
 
     # initialises entities for use in game loop
     @staticmethod
@@ -68,8 +70,9 @@ class GameLoop:
         self.game_over.draw_game_over_screen(frosty)
 
     def run(self):
-        Sound().music()
-        self.welcome_screen.draw_welcome_screen(self)
+        self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
+        Sound().music()  # starts background music
+        self.welcome_screen.draw_welcome_screen(self)  # welcome screen
 
 
 if __name__ == '__main__':
