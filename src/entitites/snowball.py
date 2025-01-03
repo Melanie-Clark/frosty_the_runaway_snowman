@@ -49,7 +49,8 @@ class Snowball(Entity):
                                   entity.collision_width, entity.collision_height // 2)
         return self_rect, entity_rect
 
-    def handle_collision(self, entity, health, score):  # receives health instance, so can be called during collision
+    def handle_collision(self, entity, health, score,
+                         seconds):  # receives health instance, so can be called during collision
         self_rect, entity_rect = self.collision_boundaries(entity)
         # colliderect() - pygame method to check if two rects collide
         if self_rect.colliderect(
@@ -61,7 +62,7 @@ class Snowball(Entity):
             self.space_pressed = False
             if isinstance(entity, Target):
                 Sound.sound_effect("../assets/sounds/ouch.mp3")
-                score.increment_score()
+                score.increment_score(seconds)
                 self.reset_frosty(entity)
             else:
                 return health.take_damage()
