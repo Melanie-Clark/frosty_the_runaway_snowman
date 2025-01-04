@@ -1,8 +1,7 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, FEATURE_COLOR, INSTRUCTIONS_COLOR, FEATURE_FONT, \
-    SCREEN
+from src.config.global_config import FEATURE_COLOR, INSTRUCTIONS_COLOR, FEATURE_FONT
 from src.events.event_handler import Movement
-from src.utils.utils import Title
+from src.utils.utils import Draw
 
 
 class GameOver:
@@ -11,37 +10,34 @@ class GameOver:
         self.score = score
         self.health = health
         self.timer = timer
-        self.game_over_title = Title()
+        self.draw = Draw()
         self.title = "Game Over"
 
     # text for the game over screen
     def game_over_text(self):
-        incremental_score = FEATURE_FONT.render(f'Score: {self.score.incremental_score}', False, FEATURE_COLOR)
-        health = FEATURE_FONT.render(f'Health: {self.health.current_health}', False, FEATURE_COLOR)
 
-        total_score, time_bonus = self.score.total_score(self.health)
-        total_score = FEATURE_FONT.render(f'TOTAL SCORE: {total_score}', False, FEATURE_COLOR)
-        time_bonus = FEATURE_FONT.render(f'Time bonus: {time_bonus}', False, FEATURE_COLOR)
+        total_score, time_bonus, high_score, new_high_score = self.score.total_score(self.health)
 
-        options = FEATURE_FONT.render('Press P to Play or Q to Quit', False, INSTRUCTIONS_COLOR)
-        return [incremental_score, health, time_bonus, total_score], options
+        game_over_text = (
+            f"Score: {self.score.incremental_score}\n"
+            f"Health Bonus: {self.health.current_health}\n"
+            f"Time Bonus: {time_bonus}\n"
+            f"TOTAL SCORE: {total_score}\n\n"
+            f"{new_high_score}HIGH SCORE: {high_score}"
+        )
+
+        menu_options = "Press P to Play or Q to Quit"
+        return game_over_text, menu_options
 
     def draw_game_over_screen(self, frosty):
         print("Game Over")
         self.scene.draw_scene()
+        game_over_text, menu_options = self.game_over_text()
 
-        game_over_text, options = self.game_over_text()
-
-        # draws final score, game over, stats, play again and quit_option onto screen
-        self.game_over_title.draw_title(self.title)
-
-        # draws score, health remaining and total to screen
-        for i, text in enumerate(game_over_text, start=-1):
-            SCREEN.blit(text, (WINDOW_WIDTH // 2 - text.get_width() // 2,
-                               WINDOW_HEIGHT // 2 + text.get_height() * i))
-
-        SCREEN.blit(options, (WINDOW_WIDTH // 2 - options.get_width() // 2,
-                              WINDOW_HEIGHT // 1.25 + options.get_height()))
+        # draws game over, final score, stats, play again and quit_option onto screen
+        self.draw.draw_title(self.title)
+        self.draw.draw_text(game_over_text, FEATURE_FONT, FEATURE_COLOR, 250)
+        self.draw.draw_text(menu_options, FEATURE_FONT, INSTRUCTIONS_COLOR, 600)
 
         pygame.display.update()
         self.game_over_event_handler(frosty)
