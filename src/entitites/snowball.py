@@ -2,8 +2,9 @@ import random
 import pygame
 from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
 from src.core.sound import Sound
-from src.entitites.entity import Target, Entity
+from src.entitites.entity import Entity
 from src.entitites.sprites import AnimatedSprite
+from src.entitites.target import Target
 from src.events.event_handler import Movement
 
 
