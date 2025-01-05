@@ -65,6 +65,7 @@ class Snowball(Entity):
                 score.increment_score(seconds)
                 self.reset_frosty(entity)
             else:
+                Sound.sound_effect("../assets/sounds/snowball_hit.mp3")
                 return health.take_damage()
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):

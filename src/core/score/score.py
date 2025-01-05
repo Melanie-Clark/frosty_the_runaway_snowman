@@ -1,4 +1,5 @@
 from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, SCREEN
+from src.core.score.high_score import HighScore
 from src.utils.utils import Frosty
 
 
@@ -31,7 +32,8 @@ class Score:
 
         total_score = self.incremental_score + health.current_health + bonus
         print("Total score:", total_score)
-        return total_score, bonus
+        high_score, new_high_score = HighScore().check_high_score(total_score)
+        return total_score, bonus, high_score, new_high_score
 
     # resets time_bonus for play again
     def reset_time_bonus(self):

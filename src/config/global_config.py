@@ -15,7 +15,7 @@ FEATURE_COLOR = "red"
 INSTRUCTIONS_COLOR = "dark green"
 
 TITLE_FONT = pygame.font.SysFont(FONT_NAME, 60)
-INSTRUCTIONS_FONT = pygame.font.SysFont(FONT_NAME, 25)
+INSTRUCTIONS_FONT = pygame.font.SysFont(FONT_NAME, 22)
 FEATURE_FONT = pygame.font.SysFont(FONT_NAME, 40)
 
 # UI placement

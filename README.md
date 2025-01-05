@@ -2,9 +2,12 @@
 
 Frosty the snowman is on the loose!
 
-Throw as many snowballs as you can at Frosty in 30 seconds.
+The aim of the game is to throw snowballs at Frosty, the naughty runaway snowman before the time runs out
 
 But be careful...each time you hit Frosty, he gets faster!
+
+👀 WATCH OUT! 👀 \
+Santa and his friends reduces heart health — so aim wisely and have fun!
 
 ## Gameplay Mechanics:
 
@@ -20,27 +23,28 @@ Press P to Play or Q to Quit.
 
 The game starts with five health hearts in the top-left corner of the screen.
 
-Hitting an obstacle (Santa, Elf, Reindeer, Bunny) reduces health by 1 heart.
+Hitting Santa or his friends (_elves/reindeers/bunnies_) reduces health by 1 heart.
 
 ### Timer
 
-The player has 30 seconds to score as many snowball hits on Frosty as possible.
+The player has 30 seconds to score as many Frosty snowball hits as possible.
 
 ### Scoring
 
-Total number of successful snowball hits on Frosty the snowman.
+**Score:**\
+Total number of snowball hits on Frosty the runaway snowman.
 
-**Health Bonus:**
+**Health Bonus:**\
 Earn **1 bonus point** for every health heart left at the end of the game.
 
-**Time Bonus:**
-If you hit Frosty 10 or more times, you will receive a time bonus.
-The time bonus is calculated as the number of remaining seconds on the 10th successful hit.
+**Time Bonus:**\
+Hitting Frosty **10 or more times** receives a time bonus.
+
+Time bonus is calculated as the number of remaining seconds on the 10th successful hit.\
 Earn **1 bonus point** for every remaining second on the 10th hit.
 
-The total score is calculated as follows:\
-**TOTAL SCORE: No. of hits + Health bonus + Time bonus**
-
+**TOTAL SCORE:**
+**Total Score = Score + Health Bonus + Time Bonus**
 
 ## Game demo
 
@@ -75,7 +79,7 @@ Refer to `requirements.txt` for all dependencies that need to be installed for t
 
 ### Run
 
-Run the `main.py` python file to start the game and snowball Frosty the runaway snowman!
+Run the `main.py` python file from the `src` folder to start the game and snowball Frosty the runaway snowman!
 
 ## Credits
 
@@ -86,3 +90,4 @@ Run the `main.py` python file to start the game and snowball Frosty the runaway 
 - Bunny spritesheet: [itch.io-HRedBird](https://hredbird.itch.io/bunny-sprite-sheet)
 - Heart health: [Wikipedia](https://en.m.wikipedia.org/wiki/File:Heart_left-highlight_jon_01.svg)
 - Music: [itch.io-FablefLy Music](https://fablefly-music.itch.io/its-snowtime)
+- Snowball hit: [piixabay-Alex_Jauk](https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=279699)
