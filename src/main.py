@@ -5,12 +5,12 @@ from src.config.global_config import FPS
 from src.core.scene import Scene
 from src.core.sound import Sound
 from src.core.welcome_screen import WelcomeScreen
-from src.entitites.entity import Entity
 from src.core.health import Health
 from src.core.score.score import Score
 from src.core.timer import Timer
 from src.core.game_over import GameOver
-from src.entitites.snowball import Snowball
+from src.entities.factory import EntityFactory
+from src.entities.snowball import Snowball
 
 
 class GameLoop:
@@ -31,7 +31,7 @@ class GameLoop:
     # initialises entities for use in game loop
     @staticmethod
     def initialise_entities():
-        entities, frosty = Entity.initialise_entities()
+        entities, frosty = EntityFactory.initialise_entities()
         snowball = Snowball.initialise_entities()
         all_entities = [snowball, frosty] + entities
         return frosty, snowball, all_entities
@@ -48,7 +48,7 @@ class GameLoop:
 
             result, seconds = self.timer.countdown_timer()
             if not result:
-                self.load_game_over(frosty)
+                self.game_over.load_game_over(frosty)
 
             for entity in all_entities:
                 entity.update()
@@ -59,15 +59,10 @@ class GameLoop:
                 if not isinstance(entity, Snowball):  # checks entity is not an instance or child of item class
                     self.running = snowball.handle_collision(entity, self.health, self.score, seconds)
                     if not self.running:
-                        self.load_game_over(frosty)
+                        self.game_over.load_game_over(frosty)
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
-
-    # loads the game over screen and functionality
-    def load_game_over(self, frosty):
-        self.running = True
-        self.game_over.draw_game_over_screen(frosty)
 
     def run(self):
         self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
