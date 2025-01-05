@@ -1,6 +1,7 @@
 import pygame
 
-from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN, TITLE_FONT, FEATURE_COLOR, TITLE_HEIGHT
+from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN, TITLE_FONT, FEATURE_COLOR, TITLE_HEIGHT, \
+    FEATURE_FONT, INSTRUCTIONS_COLOR
 
 
 # used across files such as welcome_screen and score to load and draw the main character Frosty
@@ -35,3 +36,8 @@ class Draw:
             text = font.render(line, False, color)
             SCREEN.blit(text, (WINDOW_WIDTH // 2 - text.get_width() // 2, y_pos))
             y_pos += text.get_height()  # Moves position of next text to the line below
+
+    # draws menu options for welcome and game over screens
+    def draw_menu_options(self):
+        menu_options = "Press P to Play or Q to Quit"
+        self.draw_text(menu_options, FEATURE_FONT, INSTRUCTIONS_COLOR, 650)

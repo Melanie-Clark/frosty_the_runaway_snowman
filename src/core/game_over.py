@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, INSTRUCTIONS_COLOR, FEATURE_FONT
+from src.config.global_config import FEATURE_COLOR, FEATURE_FONT
 from src.events.event_handler import Movement
 from src.utils.utils import Draw
 
@@ -26,18 +26,17 @@ class GameOver:
             f"{new_high_score}HIGH SCORE: {high_score}"
         )
 
-        menu_options = "Press P to Play or Q to Quit"
-        return game_over_text, menu_options
+        return game_over_text
 
     def draw_game_over_screen(self, frosty):
         print("Game Over")
         self.scene.draw_scene()
-        game_over_text, menu_options = self.game_over_text()
+        game_over_text = self.game_over_text()
 
         # draws game over, final score, stats, play again and quit_option onto screen
         self.draw.draw_title(self.title)
         self.draw.draw_text(game_over_text, FEATURE_FONT, FEATURE_COLOR, 250)
-        self.draw.draw_text(menu_options, FEATURE_FONT, INSTRUCTIONS_COLOR, 600)
+        self.draw.draw_menu_options()
 
         pygame.display.update()
         self.game_over_event_handler(frosty)
