@@ -11,11 +11,16 @@ class GameOver:
         self.health = health
         self.timer = timer
         self.draw = Draw()
+        self.running = None
         self.title = "Game Over"
+
+    # loads the game over screen and functionality
+    def load_game_over(self, frosty):
+        self.running = True
+        self.draw_game_over_screen(frosty)
 
     # text for the game over screen
     def game_over_text(self):
-
         total_score, time_bonus, high_score, new_high_score = self.score.total_score(self.health)
 
         game_over_text = (
