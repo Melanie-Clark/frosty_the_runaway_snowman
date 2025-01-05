@@ -1,10 +1,10 @@
 import pygame
 
 from src.config.global_config import SCREEN
+from src.core.naughty_screen import NaughtyScreen
 
 
 class Health:
-
     def __init__(self, max_health=5):
         self.max_health = max_health
         self.current_health = max_health
@@ -22,6 +22,7 @@ class Health:
         self.current_health -= damage
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
+            NaughtyScreen().naughty_screen()
             return False
         return True
 
