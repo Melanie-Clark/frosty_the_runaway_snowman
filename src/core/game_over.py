@@ -14,11 +14,6 @@ class GameOver:
         self.running = None
         self.title = "Game Over"
 
-    # loads the game over screen and functionality
-    def load_game_over(self, frosty):
-        self.running = True
-        self.draw_game_over_screen(frosty)
-
     # text for the game over screen
     def game_over_text(self):
         total_score, time_bonus, high_score, new_high_score = self.score.total_score(self.health)
@@ -33,7 +28,7 @@ class GameOver:
 
         return game_over_text
 
-    def draw_game_over_screen(self, frosty):
+    def draw_game_over_screen(self):
         print("Game Over")
         self.scene.draw_scene()
         game_over_text = self.game_over_text()
@@ -44,10 +39,9 @@ class GameOver:
         self.draw.draw_menu_options()
 
         pygame.display.update()
-        self.game_over_event_handler(frosty)
 
     # Event handling for quit or play again
-    def game_over_event_handler(self, frosty):
+    def game_over_event_handler(self, target, player):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -58,11 +52,18 @@ class GameOver:
                         self.score.incremental_score = self.score.score
                         self.health.current_health = self.health.max_health
                         self.timer.reset()
-                        frosty.speed = frosty.initial_min_speed
                         self.score.reset_time_bonus()
+                        target.speed = target.initial_min_speed
+                        player.reset_player()
                         return True
                     elif event.key == pygame.K_q:
                         Movement.quit_game()
+
+    # loads the game over screen and functionality
+    def load_game_over(self, target, player):
+        self.running = True
+        self.draw_game_over_screen()
+        self.game_over_event_handler(target, player)
 
 
 if __name__ == '__main__':

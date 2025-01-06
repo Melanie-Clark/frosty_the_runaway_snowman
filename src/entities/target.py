@@ -14,10 +14,14 @@ class Target(Entity):
                          collision_height)
         self.min_y_range = min_y_range
         self.max_y_range = max_y_range
-        self.y = random.randint(self.min_y_range, self.max_y_range)
+        self.y = self._get_random_y()
+
+    # protected helper method for use in this class only
+    def _get_random_y(self):
+        return random.randint(self.min_y_range, self.max_y_range)
 
     def check_sprite_position(self):
-        # Resets if entity moves off-screen
+        # Resets if target moves off-screen
         if self.x > WINDOW_WIDTH or self.x < -self.sprite_width:
             if self.direction == "left":
                 self.direction = "right"
@@ -26,11 +30,17 @@ class Target(Entity):
 
             if self.x > WINDOW_WIDTH:
                 self.x = WINDOW_WIDTH  # Resets to left edge
-                self.y = random.randint(self.min_y_range, self.max_y_range)
                 # if target goes off-screen, it returns from the same side
             elif self.x < -self.sprite_width:
                 self.x = -self.sprite_width
-                self.y = random.randint(self.min_y_range, self.max_y_range)
+            self.y = self._get_random_y()
+
+    @staticmethod
+    def reset_target(entity):
+        # resets target to disappear and re-enter from left or right side, increases speed
+        entity.x = random.choice((0, WINDOW_WIDTH))
+        entity.y = random.randint(entity.min_y_range, entity.max_y_range)
+        entity.speed += 0.65
 
 
 if __name__ == "__main__":

@@ -1,16 +1,29 @@
 import random
 
 from src.config.global_config import WINDOW_WIDTH
-from src.entities.entity import Entity
 from src.entities.obstacle import Obstacle, FlyingObstacle
+from src.entities.player import Player
+from src.entities.sprites import AnimatedSprite
 from src.entities.target import Target
 
 
 class EntityFactory:
+
+    # Loads spritesheets
     @staticmethod
-    def initialise_entities():
-        # Loads spritesheets
-        bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite = Entity.initialise_spritesheets()
+    def initialise_spritesheets():
+        bunny_sprite = AnimatedSprite("../assets/sprite_sheets/bunny_sprite_sheet.png")
+        elf_sprite = AnimatedSprite("../assets/sprite_sheets/elf_sprite_sheet.png")
+        reindeer_sprite = AnimatedSprite("../assets/sprite_sheets/reindeer_sprite_sheet.png")
+        red_santa_sprite = AnimatedSprite("../assets/sprite_sheets/red_santa_sprite_sheet.png")
+        frosty_sprite = AnimatedSprite("../assets/sprite_sheets/frosty_sprite_sheet.png", True)
+        snowball_sprite = AnimatedSprite("../assets/sprite_sheets/snowball_sprite_sheet.png")
+        return bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite
+
+    # initialises all entities
+    def initialise_entities(self):
+        bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite = self.initialise_spritesheets()
+        snowball = Player(snowball_sprite)
 
         sprite_width = {"reindeer": 128, "elf": 32, "red_santa": 64, "bunny": 55, "snowman": 93.5}
         sprite_height = {"reindeer": 128, "elf": 64, "red_santa": 64, "bunny": 74, "snowman": 140}
@@ -37,7 +50,7 @@ class EntityFactory:
                              100, 425,
                              sprite_width["red_santa"], sprite_height["red_santa"],
                              1.75, 2, 4, 3, 5,
-                             25, 5, 60, 108)
+                             30, 5, 55, 108)
 
         reindeer_group = [
             (FlyingObstacle(reindeer_sprite, "left", 200,
@@ -51,9 +64,9 @@ class EntityFactory:
                         random_x_position, 200, 400,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
-                        5, 5, 62, 85)
+                        6, 5, 60, 85)
 
-        return [*reindeer_group, *elf_group, red_santa, bunny], frosty
+        return [*reindeer_group, *elf_group, red_santa, bunny], frosty, snowball
 
 
 if __name__ == "__main__":

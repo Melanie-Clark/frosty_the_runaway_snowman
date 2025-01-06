@@ -2,11 +2,11 @@ import pygame
 import random
 
 from src.config.global_config import SCREEN
-from src.entities.sprites import AnimatedSprite
 from abc import ABC, abstractmethod
 
 
-class Entity(ABC):  # inherits functionality from pygames Sprite class
+# Base/Parent class for all entities
+class Entity(ABC):
     def __init__(self, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
                  steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
                  collision_height, x_speed=0, y_speed=0):
@@ -24,7 +24,7 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         self.min_speed = min_speed
         self.max_speed = max_speed
         self.initial_min_speed = min_speed
-        self.speed = random.randint(self.min_speed, self.max_speed)
+        self.speed = self.get_random_speed()
 
         # collision box sizes
         self.collision_x_offset = collision_x_offset
@@ -42,15 +42,8 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
         self.collision_state = False
         self.space_pressed = False
 
-    # Loads spritesheets
-    @staticmethod
-    def initialise_spritesheets():
-        bunny_sprite = AnimatedSprite("../assets/sprite_sheets/bunny_sprite_sheet.png")
-        elf_sprite = AnimatedSprite("../assets/sprite_sheets/elf_sprite_sheet.png")
-        reindeer_sprite = AnimatedSprite("../assets/sprite_sheets/reindeer_sprite_sheet.png")
-        red_santa_sprite = AnimatedSprite("../assets/sprite_sheets/red_santa_sprite_sheet.png")
-        frosty_sprite = AnimatedSprite("../assets/sprite_sheets/frosty_sprite_sheet.png", True)
-        return bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite
+    def get_random_speed(self):
+        return random.randint(self.min_speed, self.max_speed)
 
     @abstractmethod
     def check_sprite_position(self):
@@ -70,13 +63,12 @@ class Entity(ABC):  # inherits functionality from pygames Sprite class
 
     # draw to screen
     def draw(self):
+        sprite = self.animation_list[self.frame]
         if self.direction == "right":
-            flipped_sprite = pygame.transform.flip(self.animation_list[self.frame], True, False)
-        else:
-            flipped_sprite = self.animation_list[self.frame]
+            sprite = pygame.transform.flip(sprite, True, False)
 
-        SCREEN.blit(flipped_sprite, (self.x, self.y))
-        # uncomment to debug collisions (puts red box around each sprite)
+        SCREEN.blit(sprite, (self.x, self.y))
+        # # uncomment to debug collisions (puts red box around each sprite):
         # pygame.draw.rect(SCREEN, (255, 0, 0),
         #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
         #                              self.collision_width, self.collision_height), 2)
