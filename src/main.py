@@ -10,7 +10,7 @@ from src.core.score.score import Score
 from src.core.timer import Timer
 from src.core.game_over import GameOver
 from src.entities.factory import EntityFactory
-from src.entities.snowball import Snowball
+from src.entities.player import Player
 
 
 class GameLoop:
@@ -31,14 +31,13 @@ class GameLoop:
     # initialises entities for use in game loop
     @staticmethod
     def initialise_entities():
-        entities, frosty = EntityFactory.initialise_entities()
-        snowball = Snowball.initialise_entities()
+        entities, frosty, snowball = EntityFactory().initialise_entities()
         all_entities = [snowball, frosty] + entities
         return frosty, snowball, all_entities
 
     def game_loop(self):
         self.timer.reset()  # Resets the timer each time game is started
-        frosty, snowball, all_entities = self.initialise_entities()
+        target, player, all_entities = self.initialise_entities()
 
         # main game loop - runs until quit
         while self.running:
@@ -48,7 +47,7 @@ class GameLoop:
 
             result, seconds = self.timer.countdown_timer()
             if not result:
-                self.game_over.load_game_over(frosty)
+                self.game_over.load_game_over(target, player)
 
             for entity in all_entities:
                 entity.update()
@@ -56,10 +55,10 @@ class GameLoop:
                 entity.draw()
                 entity.update_frame()
 
-                if not isinstance(entity, Snowball):  # checks entity is not an instance or child of item class
-                    self.running = snowball.handle_collision(entity, self.health, self.score, seconds)
+                if not isinstance(entity, Player):  # checks entity is not an instance or child of snowball class
+                    self.running = player.check_collision(entity, self.health, self.score, seconds)
                     if not self.running:
-                        self.game_over.load_game_over(frosty)
+                        self.game_over.load_game_over(target, player)
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second

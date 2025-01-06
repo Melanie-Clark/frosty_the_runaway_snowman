@@ -14,14 +14,19 @@ class Obstacle(Entity):
                          collision_height)
         self.min_y_range = min_y_range
         self.max_y_range = max_y_range
-        self.y = random.randint(self.min_y_range, self.max_y_range)
+        self.y = self._get_random_y()
+
+    # protected helper method for use in this class only
+    def _get_random_y(self):
+        return random.randint(self.min_y_range, self.max_y_range)
+
 
     def check_sprite_position(self):
         # Resets if entity moves off-screen
         if self.x > WINDOW_WIDTH or self.x < -self.sprite_width:
-            self.y = random.randint(self.min_y_range, self.max_y_range)
+            self.y = self._get_random_y()
             self.direction = random.choice(["left", "right"])
-            self.speed = random.randint(self.min_speed, self.max_speed)
+            self.speed = self.get_random_speed()
 
             if self.x > WINDOW_WIDTH:
                 self.x = -self.sprite_width  # Resets to left edge
