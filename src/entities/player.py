@@ -62,7 +62,7 @@ class Player(Entity):
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
             self.reset_player()
             self.collision_state = True
-            self.collision_action(entity, health, score, seconds)
+            return self.collision_action(entity, health, score, seconds)
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
@@ -73,6 +73,7 @@ class Player(Entity):
             self.sound.sound_effect("../assets/sounds/ouch.mp3")
             score.increment_score(seconds)
             entity.reset_target(entity)
+            return True
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
             return health.take_damage()
