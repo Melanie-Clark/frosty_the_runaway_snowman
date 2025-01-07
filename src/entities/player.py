@@ -3,7 +3,7 @@ from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
 from src.core.sound import Sound
 from src.entities.entity import Entity
 from src.entities.target import Target
-from src.events.event_handler import Movement
+from src.events.event_handler import Events
 
 
 class Player(Entity):
@@ -17,13 +17,18 @@ class Player(Entity):
         self.animation_list = self.sprite_sheet.sprite_animation(steps, sprite_width, sprite_height, sprite_scale,
                                                                  row_index, rotation)
         self.sound = Sound()
+        self.x = x
+        self.y = y
+        self.initial_y = y
+        self.speed = min_speed
+        self.initial_speed = min_speed
+        self.events = Events()
+        self.snowball_active = False
 
-    # updates player position and speed based on user input
+    # updates player position based on user input
     def update(self):
-        self.x, self.y, self.x_speed, self.y_speed, self.space_pressed = Movement.event_handler(self.x, self.y,
-                                                                                                self.x_speed,
-                                                                                                self.y_speed,
-                                                                                                self.space_pressed)
+        if self.snowball_active:
+            self.y -= self.speed
 
     # Checks snowball boundaries, and resets where applicable
     def check_sprite_position(self):
@@ -31,14 +36,13 @@ class Player(Entity):
         if self.y < 0 - self.collision_height:
             self.reset_player()
 
-        # Keeps the sprite within screen bounds
         self.x = max(0, min(WINDOW_WIDTH - self.collision_width, self.x))
 
     # resets snowball to its initial y-pos and speed
     def reset_player(self):
         self.y = self.initial_y  # Resets to initial position on y-axis
-        self.y_speed = 0
-        self.space_pressed = False
+        self.speed = self.initial_speed
+        self.snowball_active = False
 
     # returns collision boundaries for snowball and other entity
     def collision_boundaries(self, entity):
@@ -55,28 +59,28 @@ class Player(Entity):
         return self_rect, entity_rect
 
     # receives health instance, so can be called during collision
-    def check_collision(self, entity, health, score, seconds):
+    def check_collision(self, entity, health, score, seconds, game_over, target, player, game):
         self_rect, entity_rect = self.collision_boundaries(entity)
+
         # colliderect() - pygame method to check if two rects collide
         # extra parameter False required to prevent a collision every time the rects collide in one hit
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
             self.reset_player()
             self.collision_state = True
-            return self.collision_action(entity, health, score, seconds)
+            self.collision_action(entity, health, score, seconds, game_over, target, player, game)
+
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
-        return True
 
-    def collision_action(self, entity, health, score, seconds):
+    def collision_action(self, entity, health, score, seconds, game_over, target, player, game):
         if isinstance(entity, Target):
             self.sound.sound_effect("../assets/sounds/ouch.mp3")
             score.increment_score(seconds)
             entity.reset_target(entity)
-            return True
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
-            return health.take_damage()
+            health.take_damage(game_over, target, player, game)
 
 
 if __name__ == '__main__':

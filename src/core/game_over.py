@@ -1,6 +1,6 @@
 import pygame
 from src.config.global_config import FEATURE_COLOR, FEATURE_FONT
-from src.events.event_handler import Movement
+from src.events.event_handler import Events
 from src.utils.utils import Draw
 
 
@@ -13,6 +13,7 @@ class GameOver:
         self.draw = Draw()
         self.running = None
         self.title = "Game Over"
+        self.game_state = "GameOver"
 
     # text for the game over screen
     def game_over_text(self):
@@ -40,30 +41,21 @@ class GameOver:
 
         pygame.display.update()
 
-    # Event handling for quit or play again
-    def game_over_event_handler(self, target, player):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    Movement.quit_game()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_p:
-                        pygame.event.clear()  # clears event queues, so can be replayed
-                        self.score.incremental_score = self.score.score
-                        self.health.current_health = self.health.max_health
-                        self.timer.reset()
-                        self.score.reset_time_bonus()
-                        target.speed = target.initial_min_speed
-                        player.reset_player()
-                        return True
-                    elif event.key == pygame.K_q:
-                        Movement.quit_game()
+    def reset_game(self, target, player):
+        pygame.event.clear()  # clears event queues, so can be replayed
+        self.score.incremental_score = self.score.score
+        self.health.current_health = self.health.max_health
+        self.timer.reset()
+        self.score.reset_time_bonus()
+        target.speed = target.initial_min_speed
+        player.reset_player()
 
     # loads the game over screen and functionality
-    def load_game_over(self, target, player):
-        self.running = True
-        self.draw_game_over_screen()
-        self.game_over_event_handler(target, player)
+    def load_game_over(self, game):
+        while True:
+            self.running = True
+            self.draw_game_over_screen()
+            Events.event_handler(self.game_state, self, game)
 
 
 if __name__ == '__main__':
