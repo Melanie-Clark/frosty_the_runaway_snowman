@@ -39,10 +39,10 @@ class GameLoop:
             entity.draw()
             entity.update_frame()
 
-    def check_collision(self, target_and_obstacles, player, target, seconds):
+    def check_collision(self, target_and_obstacles, player, seconds):
         # checks collision for any obstacle or target
         for entity in target_and_obstacles:
-            player.check_collision(entity, self.health, self.score, seconds, self.game_over, target, player, self)
+            player.check_collision(entity, self.health, self.score, seconds, self.game_over, self)
 
     def game_loop(self):
         self.timer.reset()  # Resets the timer each time game is started
@@ -61,7 +61,7 @@ class GameLoop:
             if not result:
                 self.game_over.load_game_over(self)
 
-            self.check_collision(self.target_and_obstacles, self.player, self.target, seconds)
+            self.check_collision(self.target_and_obstacles, self.player, seconds)
             self.update_entities(self.all_entities)
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
