@@ -23,11 +23,9 @@ class Events:
                         instance.reset_game(game_instance.target, game_instance.player)
                         game_instance.game_loop()
 
-
                 elif game_state == "Naughty":
                     if event.key == pygame.K_c:
                         instance.load_game_over(game_instance)
-
 
                 elif game_state == "Play":
                     if event.key == pygame.K_SPACE:
@@ -38,10 +36,8 @@ class Events:
 
             if keys[pygame.K_LEFT] and not instance.snowball_active:  # stops snowball moving once thrown
                 instance.x -= instance.speed
-                # self.direction = "left"
             elif keys[pygame.K_RIGHT] and not instance.snowball_active:
                 instance.x += instance.speed
-                # self.direction = "right"
 
     @staticmethod
     def quit_game():
