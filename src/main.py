@@ -49,7 +49,7 @@ class GameLoop:
 
         # main game loop - runs until quit
         while self.running:
-            self.scene.draw_scene()
+            self.scene.draw_main_scene()
             self.score.draw()
             self.health.draw()
 
