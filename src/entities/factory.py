@@ -23,7 +23,7 @@ class EntityFactory:
     # initialises all entities
     def initialise_entities(self):
         bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite = self.initialise_spritesheets()
-        snowball = Player(snowball_sprite)
+        player = Player(snowball_sprite)
 
         sprite_width = {"reindeer": 128, "elf": 32, "red_santa": 64, "bunny": 55, "snowman": 93.5}
         sprite_height = {"reindeer": 128, "elf": 64, "red_santa": 64, "bunny": 74, "snowman": 140}
@@ -60,13 +60,17 @@ class EntityFactory:
                             20, 18, 100, 110))
             for i in range(4)]
 
-        frosty = Target(frosty_sprite, random.choice(["left", "right"]), 150,
+        target = Target(frosty_sprite, random.choice(["left", "right"]), 150,
                         random_x_position, 200, 400,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
                         6, 5, 60, 85)
 
-        return [*reindeer_group, *elf_group, red_santa, bunny], frosty, snowball
+        obstacles = [*reindeer_group, *elf_group, red_santa, bunny]
+        all_entities = obstacles + [target, player]
+        target_and_obstacles = obstacles + [target]
+
+        return target, player, all_entities, target_and_obstacles
 
 
 if __name__ == "__main__":

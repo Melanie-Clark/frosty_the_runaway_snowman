@@ -59,7 +59,7 @@ class Player(Entity):
         return self_rect, entity_rect
 
     # receives health instance, so can be called during collision
-    def check_collision(self, entity, health, score, seconds, game_over, target, player, game):
+    def check_collision(self, entity, health, score, seconds, game_over, game):
         self_rect, entity_rect = self.collision_boundaries(entity)
 
         # colliderect() - pygame method to check if two rects collide
@@ -67,20 +67,20 @@ class Player(Entity):
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
             self.reset_player()
             self.collision_state = True
-            self.collision_action(entity, health, score, seconds, game_over, target, player, game)
+            self.collision_action(entity, health, score, seconds, game_over, game)
 
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
 
-    def collision_action(self, entity, health, score, seconds, game_over, target, player, game):
+    def collision_action(self, entity, health, score, seconds, game_over, game):
         if isinstance(entity, Target):
             self.sound.sound_effect("../assets/sounds/ouch.mp3")
             score.increment_score(seconds)
             entity.reset_target(entity)
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
-            health.take_damage(game_over, target, player, game)
+            health.take_damage(game_over, game)
 
 
 if __name__ == '__main__':

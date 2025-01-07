@@ -8,6 +8,7 @@ class Health:
     def __init__(self, max_health=5):
         self.max_health = max_health
         self.current_health = max_health
+        self.naughty_screen = NaughtyScreen()
 
     # draws number of health hearts remaining on game screen in top-left corner
     def draw(self):
@@ -18,13 +19,12 @@ class Health:
             SCREEN.blit(heart_health, ((num * 15) + x, y))
 
     # health reduces by one when an obstacle has been hit
-    def take_damage(self, damage=1):
+    def take_damage(self, game_over, game, damage=1):
         self.current_health -= damage
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
-            NaughtyScreen().naughty_screen()
-            return False
-        return True
+            while True:
+                self.naughty_screen.naughty_screen(game_over, game)
 
 
 if __name__ == '__main__':

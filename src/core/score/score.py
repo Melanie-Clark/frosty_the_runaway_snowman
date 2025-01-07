@@ -1,6 +1,6 @@
 from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, SCREEN
+from src.core.scene import Scene
 from src.core.score.high_score import HighScore
-from src.utils.utils import Frosty
 
 
 # keep track of players score
@@ -19,7 +19,7 @@ class Score:
     # draws score to screen
     def draw(self):
         score_text = FEATURE_FONT.render(f"Score: {self.incremental_score}", False, FEATURE_COLOR)
-        target_image = Frosty.load_frosty(1)
+        target_image = Scene.load_frosty(1)
         SCREEN.blit(target_image, (700, 5))
         SCREEN.blit(score_text, (500, 5))
 

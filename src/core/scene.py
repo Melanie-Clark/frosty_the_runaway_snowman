@@ -34,6 +34,21 @@ class Scene:
         self.draw_mountains()
         self.draw_trees()
 
+    # loads target character
+    @staticmethod
+    def load_frosty(scale=4):
+        target_image = pygame.image.load("../assets/images/game_play_imgs/frosty.png").convert_alpha()
+        target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
+        return target_image
+
+    # draws character left and right side of welcome text
+    def draw_frosty(self, x_border):
+        target_image = self.load_frosty()
+        SCREEN.blit(target_image,
+                    (x_border - target_image.get_width() // 2, WINDOW_HEIGHT // 2))  # draws left-side image
+        SCREEN.blit(target_image, (WINDOW_WIDTH - x_border - target_image.get_width() // 2,
+                                   WINDOW_HEIGHT // 2))  # draws right-side image
+
 
 if __name__ == '__main__':
     pass
