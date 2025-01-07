@@ -31,7 +31,7 @@ class GameOver:
 
     def draw_game_over_screen(self):
         print("Game Over")
-        self.scene.draw_scene()
+        self.scene.draw_main_scene()
         game_over_text = self.game_over_text()
 
         # draws game over, final score, stats, play again and quit_option onto screen

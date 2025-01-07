@@ -22,7 +22,7 @@ class WelcomeScreen:
 
     # draws everything required for welcome screen
     def draw_welcome_screen(self, game):
-        self.scene.draw_scene()
+        self.scene.draw_main_scene()
         self.draw.draw_title(self.title)
         self.scene.draw_frosty(200)
         self.draw.draw_text(self.welcome_text, INSTRUCTIONS_FONT, INSTRUCTIONS_COLOR, 230)

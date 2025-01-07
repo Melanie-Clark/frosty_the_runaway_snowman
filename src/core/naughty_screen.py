@@ -25,7 +25,7 @@ class NaughtyScreen:
 
     def naughty_screen(self, game_over, game):
         print("Health depleted...player is now on the naughty list!")
-        self.scene.draw_scene()
+        self.scene.draw_main_scene()
         naughty_text, menu_options = self.naughty_text()
         self.draw.draw_text(naughty_text, FEATURE_FONT, FEATURE_COLOR, 230)
         self.draw.draw_menu_options(menu_options)

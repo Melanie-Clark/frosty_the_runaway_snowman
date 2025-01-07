@@ -29,7 +29,7 @@ class Scene:
             pygame.draw.polygon(SCREEN, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
 
     # draws complete scene
-    def draw_scene(self):
+    def draw_main_scene(self):
         self.draw_background()
         self.draw_mountains()
         self.draw_trees()
