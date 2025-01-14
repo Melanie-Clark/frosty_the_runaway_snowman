@@ -1,9 +1,8 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT
+from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, PLAY_SCREEN
 from src.core.sound import Sound
 from src.entities.entity import Entity
 from src.entities.target import Target
-from src.events.event_handler import Events
 
 
 class Player(Entity):
@@ -22,8 +21,7 @@ class Player(Entity):
         self.initial_y = y
         self.speed = min_speed
         self.initial_speed = min_speed
-        self.events = Events()
-        self.snowball_active = False
+        self.snowball_active = None
 
     # updates player position based on user input
     def update(self):
@@ -59,7 +57,7 @@ class Player(Entity):
         return self_rect, entity_rect
 
     # receives health instance, so can be called during collision
-    def check_collision(self, entity, health, score, seconds, game_over, game):
+    def check_collision(self, entity, health, score, seconds):
         self_rect, entity_rect = self.collision_boundaries(entity)
 
         # colliderect() - pygame method to check if two rects collide
@@ -67,21 +65,23 @@ class Player(Entity):
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
             self.reset_player()
             self.collision_state = True
-            self.collision_action(entity, health, score, seconds, game_over, game)
+            return self.collision_action(entity, health, score, seconds)
 
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
+        return PLAY_SCREEN
 
-    def collision_action(self, entity, health, score, seconds, game_over, game):
+    def collision_action(self, entity, health, score, seconds):
         if isinstance(entity, Target):
             self.sound.sound_effect("../assets/sounds/ouch.mp3")
             score.increment_score(seconds)
             entity.reset_target(entity)
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
-            health.take_damage(game_over, game)
+            return health.take_damage()
+        return PLAY_SCREEN
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

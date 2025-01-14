@@ -10,6 +10,9 @@ from src.entities.target import Target
 class EntityFactory:
 
     # Loads spritesheets
+    def __init__(self):
+        self.player = None
+
     @staticmethod
     def initialise_spritesheets():
         bunny_sprite = AnimatedSprite("../assets/sprite_sheets/bunny_sprite_sheet.png")
@@ -23,7 +26,7 @@ class EntityFactory:
     # initialises all entities
     def initialise_entities(self):
         bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite = self.initialise_spritesheets()
-        player = Player(snowball_sprite)
+        self.player = Player(snowball_sprite)
 
         sprite_width = {"reindeer": 128, "elf": 32, "red_santa": 64, "bunny": 55, "snowman": 93.5}
         sprite_height = {"reindeer": 128, "elf": 64, "red_santa": 64, "bunny": 74, "snowman": 140}
@@ -67,10 +70,10 @@ class EntityFactory:
                         6, 5, 60, 85)
 
         obstacles = [*reindeer_group, *elf_group, red_santa, bunny]
-        all_entities = obstacles + [target, player]
+        all_entities = obstacles + [target, self.player]
         target_and_obstacles = obstacles + [target]
 
-        return target, player, all_entities, target_and_obstacles
+        return target, self.player, all_entities, target_and_obstacles
 
 
 if __name__ == "__main__":
