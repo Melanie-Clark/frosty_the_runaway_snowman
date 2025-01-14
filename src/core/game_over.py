@@ -1,6 +1,5 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, FEATURE_FONT
-from src.events.event_handler import Events
+from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, GAME_OVER_SCREEN
 from src.utils.utils import Draw
 
 
@@ -13,7 +12,7 @@ class GameOver:
         self.draw = Draw()
         self.running = None
         self.title = "Game Over"
-        self.game_state = "GameOver"
+        self.game_state = GAME_OVER_SCREEN
 
     # text for the game over screen
     def game_over_text(self):
@@ -48,15 +47,9 @@ class GameOver:
         self.timer.reset()
         self.score.reset_time_bonus()
         target.speed = target.initial_min_speed
+        print("Game reset")
         player.reset_player()
 
-    # loads the game over screen and functionality
-    def load_game_over(self, game):
-        while True:
-            self.running = True
-            self.draw_game_over_screen()
-            Events.event_handler(self.game_state, self, game)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

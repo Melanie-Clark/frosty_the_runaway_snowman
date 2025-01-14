@@ -41,7 +41,7 @@ class Scene:
         target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
         return target_image
 
-    # draws character left and right side of welcome text
+    # draws character left and right side of text
     def draw_frosty(self, x_border):
         target_image = self.load_frosty()
         SCREEN.blit(target_image,
@@ -50,5 +50,5 @@ class Scene:
                                    WINDOW_HEIGHT // 2))  # draws right-side image
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

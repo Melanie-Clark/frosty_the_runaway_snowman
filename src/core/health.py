@@ -1,6 +1,6 @@
 import pygame
 
-from src.config.global_config import SCREEN
+from src.config.global_config import SCREEN, PLAY_SCREEN, NAUGHTY_SCREEN
 from src.core.naughty_screen import NaughtyScreen
 
 
@@ -19,13 +19,13 @@ class Health:
             SCREEN.blit(heart_health, ((num * 15) + x, y))
 
     # health reduces by one when an obstacle has been hit
-    def take_damage(self, game_over, game, damage=1):
+    def take_damage(self, damage=1):
         self.current_health -= damage
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
-            while True:
-                self.naughty_screen.naughty_screen(game_over, game)
+            return NAUGHTY_SCREEN
+        return PLAY_SCREEN
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass
