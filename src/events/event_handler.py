@@ -35,11 +35,13 @@ class Events:
                         return GAME_OVER_SCREEN
 
                 elif game_state == GAME_OVER_SCREEN:
-                    game_over_instance.reset_game(game_instance.target, game_instance.player)
-                    if event.key == pygame.K_p:
-                        return GAME_SCREEN
-                    if event.key == pygame.K_m:
-                        return MENU_SCREEN
+                    if event.key == pygame.K_p or event.key == pygame.K_m:
+                        game_over_instance.reset_game(game_instance.target, game_instance.player)
+                        if event.key == pygame.K_p:
+                            return GAME_SCREEN
+                        if event.key == pygame.K_m:
+                            return MENU_SCREEN
+
 
         if game_state == GAME_SCREEN:
             keys = pygame.key.get_pressed()  # Continuous movement when key held down
