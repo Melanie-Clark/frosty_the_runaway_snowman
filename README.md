@@ -1,4 +1,4 @@
-**# Frosty: The Runaway Snowman!
+# Frosty: The Runaway Snowman!
 
 Frosty the snowman has run away and is on the loose!
 
