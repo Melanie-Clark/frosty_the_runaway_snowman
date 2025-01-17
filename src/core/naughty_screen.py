@@ -17,7 +17,7 @@ class NaughtyScreen:
         naughty_text = (
             "Santa and his friends are hurt.\n\n"
             "They can't deliver any presents.\n"
-            "Children are upset.\n\n"
+            "Children are crying!\n\n"
             "You've been put on the\n"
             "NAUGHTY LIST!\n\n"
         )
