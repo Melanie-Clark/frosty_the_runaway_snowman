@@ -1,6 +1,6 @@
-# Frosty: The runaway snowman!
+# Frosty: The Runaway nowman!
 
-Frosty the snowman is on the loose!
+Frosty the snowman has runaway and is on the loose!
 
 The aim of the game is to throw snowballs at Frosty, the naughty runaway snowman before the time runs out
 
@@ -56,13 +56,25 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="
 
 ## Game screenshots
 
-**Welcome screen:**
+**Main menu:**
 
 <img src="assets/images/readme_imgs/welcome_screen_img.png" alt="Frosty: The runaway snowman! Welcome screen" width="400" height="250">
+
+**Instruction screen:**
+
+<img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250">
 
 **Gameplay:**
 
 <img src="assets/images/readme_imgs/game_play_img.png" alt="Game play" width="400" height="250">
+
+**Naughty screen:**
+
+<img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250">
+
+**Times up screen:**
+
+<img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250">
 
 
 **Game Over:**
