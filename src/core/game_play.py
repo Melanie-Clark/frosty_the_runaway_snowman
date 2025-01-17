@@ -33,7 +33,6 @@ class GameLoop:
         self.scene.draw_main_scene()
         self.score.draw()
         self.health.draw()
-        print('GAME PLAY:', timer_running)
         # returns game state
         self.game_state, seconds = self.timer.countdown_timer(timer_running)
 
