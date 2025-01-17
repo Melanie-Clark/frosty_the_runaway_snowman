@@ -5,8 +5,9 @@ from src.core.score.high_score import HighScore
 
 # keep track of players score
 class Score:
-    def __init__(self, score=0):
+    def __init__(self, high_score, score=0):
         self.score = score
+        self.high_score = high_score
         self.incremental_score = score
         self.time_bonus = None
 
@@ -32,7 +33,7 @@ class Score:
 
         total_score = self.incremental_score + health.current_health + bonus
         print("Total score:", total_score)
-        high_score, new_high_score = HighScore().check_high_score(total_score)
+        high_score, new_high_score = self.high_score.check_high_score(total_score)
         return total_score, bonus, high_score, new_high_score
 
     # resets time_bonus for play again
