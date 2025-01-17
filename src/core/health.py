@@ -1,6 +1,6 @@
 import pygame
 
-from src.config.global_config import SCREEN, PLAY_SCREEN, NAUGHTY_SCREEN
+from src.config.global_config import SCREEN, GAME_SCREEN, NAUGHTY_SCREEN
 from src.core.naughty_screen import NaughtyScreen
 
 
@@ -24,7 +24,7 @@ class Health:
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
             return NAUGHTY_SCREEN
-        return PLAY_SCREEN
+        return GAME_SCREEN
 
 
 if __name__ == "__main__":

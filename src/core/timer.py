@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, FEATURE_COLOR, FEATURE_FONT, SCREEN, PLAY_SCREEN, NAUGHTY_SCREEN
+from src.config.global_config import WINDOW_WIDTH, FEATURE_COLOR, FEATURE_FONT, SCREEN, GAME_SCREEN, TIMES_UP_SCREEN
 
 
 class Timer:
@@ -10,15 +10,16 @@ class Timer:
 
     def countdown_timer(self, timer_running):
         if timer_running:
-            # Calculates remaining time
+            # elapsed time
             seconds = self.timer - (pygame.time.get_ticks() - self.start_ticks) // 1000
             self.draw_timer(seconds)
+
             if seconds < 0:
-                return NAUGHTY_SCREEN, seconds
+                return TIMES_UP_SCREEN, seconds
             else:
-                return PLAY_SCREEN, seconds
+                return GAME_SCREEN, seconds
         else:
-            return PLAY_SCREEN, 0
+            return GAME_SCREEN, 0
 
     # draws time remaining to screen as it countdowns
     @staticmethod
@@ -28,10 +29,9 @@ class Timer:
         countdown_rect.topright = (WINDOW_WIDTH - 10, 0)  # Positions rectangle in top-right corner
         SCREEN.blit(countdown, countdown_rect)
 
-    # resets timer ticks and initial starting seconds
+    # resets timer ticks
     def reset(self):
         self.start_ticks = pygame.time.get_ticks()
-        self.timer = self.max_time
 
 
 if __name__ == "__main__":

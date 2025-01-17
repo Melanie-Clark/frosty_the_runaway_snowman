@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, PLAY_SCREEN
+from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, GAME_SCREEN
 from src.core.sound import Sound
 from src.entities.entity import Entity
 from src.entities.target import Target
@@ -70,7 +70,7 @@ class Player(Entity):
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
-        return PLAY_SCREEN
+        return GAME_SCREEN
 
     def collision_action(self, entity, health, score, seconds):
         if isinstance(entity, Target):
@@ -80,7 +80,7 @@ class Player(Entity):
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
             return health.take_damage()
-        return PLAY_SCREEN
+        return GAME_SCREEN
 
 
 if __name__ == "__main__":
