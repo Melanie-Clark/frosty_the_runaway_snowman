@@ -1,5 +1,5 @@
-from src.config.global_config import WINDOW_WIDTH, SCREEN, TITLE_FONT, FEATURE_COLOR, TITLE_HEIGHT, \
-    FEATURE_FONT, INSTRUCTIONS_COLOR
+from src.config.global_config import WINDOW_WIDTH, SCREEN, TITLE_FONT, TITLE_HEIGHT, \
+    MENU_COLOR, FEATURE_COLOR, INSTRUCTIONS_FONT
 
 
 # class available for use across the game project
@@ -14,10 +14,14 @@ class Draw:
     @staticmethod
     def draw_text(text, font, color, y_pos):
         for line in text.splitlines():
-            text = font.render(line, False, color)
+            text = font.render(line, True, color)
             SCREEN.blit(text, (WINDOW_WIDTH // 2 - text.get_width() // 2, y_pos))
             y_pos += text.get_height()  # Moves position of next text to the line below
 
     # draws menu options for welcome and game over screens
-    def draw_menu_options(self, menu_options="Press P to Play or Q to Quit"):
-        self.draw_text(menu_options, FEATURE_FONT, INSTRUCTIONS_COLOR, 650)
+    def draw_menu_options(self, menu_options="[M] Main menu   [P] Play   [Q] Quit"):
+        self.draw_text(menu_options, INSTRUCTIONS_FONT, MENU_COLOR, 660)
+
+
+if __name__ == "__main__":
+    pass

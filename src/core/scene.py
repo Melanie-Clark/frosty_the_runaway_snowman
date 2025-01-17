@@ -1,9 +1,15 @@
 import pygame
+import random
+
 from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, SCREEN
 
 
 # Game window set-up and background
 class Scene:
+    def __init__(self):
+        self.snowflakes = [
+            {"x": random.randint(0, WINDOW_WIDTH), "y": random.randint(0, WINDOW_HEIGHT), "speed": random.randint(2, 4)}
+            for _ in range(250)]  # number of snowflakes
 
     # draws blue sky and snow background
     @staticmethod
@@ -28,11 +34,22 @@ class Scene:
             pygame.draw.polygon(SCREEN, (200, 200, 200), [(x + 150, 175), (x + 350, 50), (x + 550, 175)])
             pygame.draw.polygon(SCREEN, (220, 220, 220), [(x, 200), (x + 200, 50), (x + 450, 200)])
 
+    # draws snow moving down at varying speed
+    def draw_snow(self):
+        for flake in self.snowflakes:
+            flake["y"] += flake["speed"]
+
+            if flake["y"] > WINDOW_HEIGHT:
+                flake["y"] = 0
+                flake["x"] = random.randint(0, WINDOW_WIDTH)
+            pygame.draw.circle(SCREEN, (255, 255, 255), (flake["x"], flake["y"]), 2.5)
+
     # draws complete scene
     def draw_main_scene(self):
         self.draw_background()
         self.draw_mountains()
         self.draw_trees()
+
 
     # loads target character
     @staticmethod
@@ -41,14 +58,14 @@ class Scene:
         target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
         return target_image
 
-    # draws character left and right side of welcome text
+    # draws character left and right side of text
     def draw_frosty(self, x_border):
         target_image = self.load_frosty()
         SCREEN.blit(target_image,
-                    (x_border - target_image.get_width() // 2, WINDOW_HEIGHT // 2))  # draws left-side image
+                    (x_border - target_image.get_width() // 2, WINDOW_HEIGHT // 2.5))  # draws left-side image
         SCREEN.blit(target_image, (WINDOW_WIDTH - x_border - target_image.get_width() // 2,
-                                   WINDOW_HEIGHT // 2))  # draws right-side image
+                                   WINDOW_HEIGHT // 1.8))  # draws right-side image
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

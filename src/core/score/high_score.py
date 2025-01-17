@@ -31,11 +31,10 @@ class HighScore:
             if score > int(first_row["High Score"]):
                 high_score = score
                 self.new_high_score = "NEW! "
-                print(f"NEW Player High Score: {high_score}")
                 self.update_high_score(high_score)
             else:
-                self.new_high_score = ""
                 high_score = int(first_row["High Score"])
+
         return high_score, self.new_high_score
 
     # updates the high score file with new high score
@@ -44,6 +43,9 @@ class HighScore:
             spreadsheet = csv.DictWriter(csv_file, fieldnames=self.field_names)
             spreadsheet.writeheader()
             spreadsheet.writerows([{"High Score": high_score, "Level": 1}])
+
+    def reset_high_score(self):
+        self.new_high_score = ""
 
 
 if __name__ == "__main__":
