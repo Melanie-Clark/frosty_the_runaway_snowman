@@ -1,8 +1,8 @@
-# Frosty: The Runaway nowman!
+**# Frosty: The Runaway Snowman!
 
-Frosty the snowman has runaway and is on the loose!
+Frosty the snowman has run away and is on the loose!
 
-The aim of the game is to throw snowballs at Frosty, the naughty runaway snowman before the time runs out
+The aim of the game is to throw snowballs at Frosty before the time runs out.
 
 But be careful...each time you hit Frosty, he gets faster!
 
@@ -13,11 +13,11 @@ Santa and his friends reduces heart health — so aim wisely and have fun!
 
 ### Movement
 
-Use the left/right arrow keys to move the snowball at the bottom of the screen.
+Use the keyboard for game play.
 
-Press SPACEBAR to throw the snowball.
+Use the **LEFT/RIGHT** arrow keys to move the snowball at the bottom of the screen.
 
-Press P to Play or Q to Quit.
+Press **SPACEBAR** to throw the snowball.
 
 ### Health
 
@@ -56,9 +56,9 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="
 
 ## Game screenshots
 
-**Main menu:**
+**Main menu:****
 
-<img src="assets/images/readme_imgs/welcome_screen_img.png" alt="Frosty: The runaway snowman! Welcome screen" width="400" height="250">
+<img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="250">
 
 **Instruction screen:**
 
@@ -70,11 +70,11 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="
 
 **Naughty screen:**
 
-<img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250">
+<img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty screen" width="400" height="250">
 
 **Times up screen:**
 
-<img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250">
+<img src="assets/images/readme_imgs/times_up_img.png" alt="Frosty: The runaway snowman! Times up!" width="400" height="250">
 
 
 **Game Over:**
