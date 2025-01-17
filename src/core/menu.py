@@ -1,6 +1,6 @@
 import pygame
-from src.config.global_config import SCREEN, WINDOW_WIDTH, BUTTON_COLOUR, BORDER_COLOUR, BUTTON_FONT, BUTTON_WIDTH, \
-    BUTTON_HEIGHT, MENU_SCREEN
+from src.config.global_config import SCREEN, WINDOW_WIDTH, BUTTON_COLOR, MENU_FONT, MENU_SCREEN, \
+    BORDER_COLOR, MENU_COLOR
 from src.core.instructions import InstructionScreen
 from src.utils.utils import Draw
 
@@ -9,52 +9,49 @@ class MenuScreen:
     def __init__(self, scene):
         self.scene = scene
         self.draw = Draw()
-        self.title = "Frosty: The runaway snowman!"
+        self.title = "Frosty: The Runaway Snowman!"
         self.game_state = MENU_SCREEN
         self.instruction_screen = InstructionScreen()
 
+    # Draw rectangle to hold menu options
     @staticmethod
-    def draw_button(x, y, width, height, text):
-        # Draw button rectangle
-        pygame.draw.rect(SCREEN, BUTTON_COLOUR, (x, y, width, height))
-        pygame.draw.rect(SCREEN, BORDER_COLOUR, (x, y, width, height), 4, 10)
+    def draw_menu_box():
+        box_width = 550
+        x = WINDOW_WIDTH // 2 - (box_width // 2)
+        y = 270
+        height = 390
 
-        # Render and center the text
-        text_surface = BUTTON_FONT.render(text, True, (0, 0, 0))
-        text_rect = text_surface.get_rect(center=(x + width // 2, y + height // 2))  # adds text to centre of button
-        SCREEN.blit(text_surface, text_rect)
+        pygame.draw.rect(SCREEN, BUTTON_COLOR, (x, y, box_width, height), 0, 15)
+        pygame.draw.rect(SCREEN, BORDER_COLOR, (x, y, box_width, height), 6, 15)
 
-    # Example usage:
-    def draw_menu_buttons(self):
-        x_center = WINDOW_WIDTH // 2
-        game_length_buttons_y_pos = 250
+    @staticmethod
+    def menu_text():
+        menu_options = (
+            "Choose an option to continue:\n"
+            "[I] Instructions\n"
+            "[P] Play\n"
+            "[C] Credits (coming soon)\n"
+            "[Q] Quit\n"
+        )
+        return menu_options
 
-        centered_button_x = x_center - BUTTON_WIDTH // 2
+    def draw_menu_options(self):
+        y_pos = 300
+        menu_options = self.menu_text()
 
-        menu_y_pos = 350
-        menu_button_text_list = [
-            "I - Instructions",
-            "P - Play",
-            "C - Credits",
-            "Q - Quit"
-        ]
-
-        for button_text in menu_button_text_list:
-            self.draw_button(centered_button_x, menu_y_pos, BUTTON_WIDTH, BUTTON_HEIGHT, button_text)
-            menu_y_pos += 100
-
-        self.draw_button(centered_button_x * 0.5, game_length_buttons_y_pos, BUTTON_WIDTH, BUTTON_HEIGHT,
-                         "S - Short Game")
-        self.draw_button(centered_button_x, game_length_buttons_y_pos, BUTTON_WIDTH, BUTTON_HEIGHT, "M - Medium Game")
-        self.draw_button(centered_button_x * 1.5, game_length_buttons_y_pos, BUTTON_WIDTH, BUTTON_HEIGHT,
-                         "L - Long Game")
+        for line in menu_options.splitlines():
+            text = MENU_FONT.render(line, True, MENU_COLOR)
+            SCREEN.blit(text, (430, y_pos))
+            y_pos += text.get_height() * 1.5  # Moves position of next text below
 
     # draws everything required for menu screen
     def draw_menu_screen(self):
         self.scene.draw_main_scene()
-        self.draw.draw_title(self.title)
         self.scene.draw_frosty(200)
-        self.draw_menu_buttons()
+        self.scene.draw_snow()
+        self.draw.draw_title(self.title)
+        self.draw_menu_box()
+        self.draw_menu_options()
         pygame.display.update()
 
 
