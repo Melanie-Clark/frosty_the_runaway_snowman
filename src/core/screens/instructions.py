@@ -1,13 +1,14 @@
 import pygame
 from src.config.global_config import INSTRUCTIONS_FONT, MENU_COLOR
-from src.core.scene import Scene
-from src.utils.utils import Draw
 
 
 class InstructionScreen:
-    def __init__(self):
-        self.scene = Scene()
-        self.draw = Draw()
+    def __init__(self, screen, game_state, scene, draw):
+        self.screen = screen
+        self.game_state_manager = game_state
+        self.scene = scene
+        self.draw = draw
+
         self.title = "Instructions"
         self.instruction_text = ("FROSTY HAS RUN AWAY!\n\n"
                                  "The aim of the game is to hurl as many snowballs.\n"
@@ -28,6 +29,9 @@ class InstructionScreen:
         self.draw.draw_text(self.instruction_text, INSTRUCTIONS_FONT, MENU_COLOR, 220)
         self.draw.draw_menu_options()
         pygame.display.update()
+
+    def run(self):
+        self.draw_instruction_screen()
 
 
 if __name__ == '__main__':

@@ -1,15 +1,16 @@
 import pygame
 import random
 
-from src.config.global_config import SCREEN
 from abc import ABC, abstractmethod
 
 
 # Base/Parent class for all entities
 class Entity(ABC):
-    def __init__(self, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
+    def __init__(self, screen, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale,
+                 row_index,
                  steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
                  collision_height, x_speed=0, y_speed=0):
+        self.screen = screen
         self.sprite_sheet = sprite_sheet
         self.direction = direction
         self.animation_cooldown = cooldown
@@ -67,7 +68,7 @@ class Entity(ABC):
         if self.direction == "right":
             sprite = pygame.transform.flip(sprite, True, False)
 
-        SCREEN.blit(sprite, (self.x, self.y))
+        self.screen.blit(sprite, (self.x, self.y))
         # # uncomment to debug collisions (puts red box around each sprite):
         # pygame.draw.rect(SCREEN, (255, 0, 0),
         #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,

@@ -1,14 +1,13 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, NAUGHTY_SCREEN, GAME_TEXT_FONT
-from src.core.scene import Scene
-from src.utils.utils import Draw
+from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
 
 
 class NaughtyScreen:
-    def __init__(self):
-        self.scene = Scene()
-        self.draw = Draw()
-        self.game_state = NAUGHTY_SCREEN
+    def __init__(self, screen, game_state, scene, draw):
+        self.screen = screen
+        self.game_state_manager = game_state
+        self.scene = scene
+        self.draw = draw
 
     # text for when health has been depleted and player is put on naughty list
     @staticmethod
@@ -33,6 +32,9 @@ class NaughtyScreen:
         self.draw.draw_text(naughty_text, GAME_TEXT_FONT, FEATURE_COLOR, 230)
         self.draw.draw_menu_options(menu_options)
         pygame.display.update()
+
+    def run(self):
+        self.draw_naughty_screen()
 
 
 if __name__ == "__main__":

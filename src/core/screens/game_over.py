@@ -1,18 +1,18 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, GAME_OVER_SCREEN, SCREEN, GAME_TEXT_FONT
-from src.utils.utils import Draw
+from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
 
 
 class GameOver:
-    def __init__(self, scene, high_score, health, score, timer=None):
+    def __init__(self, screen, game_state, draw, scene, high_score, health, score, timer=None):
+        self.screen = screen
+        self.game_state_manager = game_state
+        self.draw = draw
         self.scene = scene
         self.high_score = high_score
         self.score = score
         self.health = health
         self.timer = timer
-        self.draw = Draw()
         self.title = "Game Over"
-        self.game_state = GAME_OVER_SCREEN
 
     # text for the game over screen
     def game_over_text(self):
@@ -43,7 +43,7 @@ class GameOver:
         for info in game_over_info:
             for line in info.splitlines():
                 text = GAME_TEXT_FONT.render(line, True, FEATURE_COLOR)
-                SCREEN.blit(text, (x_pos, y_pos))
+                self.screen.blit(text, (x_pos, y_pos))
                 y_pos += text.get_height()  # Moves position of next text to line below
             x_pos = 800
             y_pos = 250
@@ -67,6 +67,9 @@ class GameOver:
         target.speed = target.initial_min_speed
         print("Game reset")
         player.reset_player()
+
+    def run(self):
+        self.draw_game_over_screen()
 
 
 if __name__ == "__main__":

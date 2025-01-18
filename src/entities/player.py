@@ -1,16 +1,18 @@
 import pygame
-from src.config.global_config import WINDOW_WIDTH, WINDOW_HEIGHT, GAME_SCREEN
+from src.config.global_config import SCREEN_WIDTH, SCREEN_HEIGHT
 from src.core.sound import Sound
 from src.entities.entity import Entity
 from src.entities.target import Target
 
 
 class Player(Entity):
-    def __init__(self, sprite_sheet, direction="left", cooldown=250, x=WINDOW_WIDTH // 2, y=WINDOW_HEIGHT - 55,
+    def __init__(self, screen, sprite_sheet, direction="left", cooldown=250, x=SCREEN_WIDTH // 2,
+                 y=SCREEN_HEIGHT - 55,
                  sprite_width=500, sprite_height=350, sprite_scale=0.22, row_index=0, steps=3,
                  min_speed=10, max_speed=10, collision_x_offset=5, collision_y_offset=3, collision_width=55,
                  collision_height=55, rotation=270):
-        super().__init__(sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale, row_index,
+        super().__init__(screen, sprite_sheet, direction, cooldown, x, y, sprite_width, sprite_height, sprite_scale,
+                         row_index,
                          steps, min_speed, max_speed, collision_x_offset, collision_y_offset, collision_width,
                          collision_height)
         self.animation_list = self.sprite_sheet.sprite_animation(steps, sprite_width, sprite_height, sprite_scale,
@@ -34,7 +36,7 @@ class Player(Entity):
         if self.y < 0 - self.collision_height:
             self.reset_player()
 
-        self.x = max(0, min(WINDOW_WIDTH - self.collision_width, self.x))
+        self.x = max(0, min(SCREEN_WIDTH - self.collision_width, self.x))
 
     # resets snowball to its initial y-pos and speed
     def reset_player(self):
@@ -65,12 +67,11 @@ class Player(Entity):
         if self_rect.colliderect(entity_rect) and self.collision_state == False:
             self.reset_player()
             self.collision_state = True
-            return self.collision_action(entity, health, score, seconds)
+            self.collision_action(entity, health, score, seconds)
 
         # If no collision, reset collision state
         elif not self_rect.colliderect(entity_rect):
             self.collision_state = False
-        return GAME_SCREEN
 
     def collision_action(self, entity, health, score, seconds):
         if isinstance(entity, Target):
@@ -79,8 +80,7 @@ class Player(Entity):
             entity.reset_target(entity)
         else:
             self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
-            return health.take_damage()
-        return GAME_SCREEN
+            health.take_damage()
 
 
 if __name__ == "__main__":
