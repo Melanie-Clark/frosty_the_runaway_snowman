@@ -4,7 +4,6 @@ class GameLoop:
         self.screen = screen
         self.game_state_manager = game_state
         self.timer_running = timer_running
-
         self.health = health
         self.score = score
         self.scene = scene
