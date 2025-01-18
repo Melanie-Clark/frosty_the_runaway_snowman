@@ -1,80 +1,78 @@
-import sys
 import pygame
 
-from src.core.game_play import GameLoop
-from src.core.instructions import InstructionScreen
-from src.core.menu import MenuScreen
-from src.core.naughty_screen import NaughtyScreen
+from src.core.screens.game_over import GameOver
+from src.core.screens.game_play import GameLoop
+from src.core.screens.instructions import InstructionScreen
+from src.core.screens.menu import MenuScreen
+from src.core.screens.naughty_screen import NaughtyScreen
 from src.core.score.high_score import HighScore
-from src.config.global_config import FPS, GAME_SCREEN, INSTRUCTION_SCREEN, MENU_SCREEN, GAME_OVER_SCREEN, QUIT, \
-    NAUGHTY_SCREEN, TIMES_UP_SCREEN
+from src.config.global_config import FPS, SCREEN_WIDTH, SCREEN_HEIGHT
 from src.core.scene import Scene
 from src.core.sound import Sound
 from src.core.health import Health
 from src.core.score.score import Score
 from src.core.timer import Timer
-from src.core.game_over import GameOver
-from src.core.times_up import TimesUpScreen
+from src.core.screens.times_up import TimesUpScreen
 from src.entities.factory import EntityFactory
-from src.events.event_handler import Events
+from src.events.event_handler import EventHandler
+from src.game_states.game_state_manager import GameStateManager
+from src.utils.utils import Draw
 
 
 class Game:
     # initialises game window and sprite properties
     def __init__(self):
-        self.game_over = None
         pygame.init()  # Initialise pygame
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Frosty: The Runaway Snowman!")
         self.clock = pygame.time.Clock()  # Manages frame rate
+
         self.running = True
         self.timer_running = False
-        self.game_state = MENU_SCREEN
 
-        self.timer = Timer()  # Timer instance
-        self.scene = Scene()  # Scene instance
-        self.health = Health()  # Health instance
-        self.high_score = HighScore()  # High score instance
-        self.score = Score(self.high_score)  # Score instance
-        self.instruction_screen = InstructionScreen()  # Instruction screen instance
-        self.menu_screen = MenuScreen(self.scene)  # Menu instance
-        self.naughty_screen = NaughtyScreen()
-        self.times_up_screen = TimesUpScreen()
-        self.target, self.player, self.all_entities, self.target_and_obstacles = EntityFactory().initialise_entities()
-        self.game_loop = GameLoop(self.game_state, self.health, self.score, self.scene, self.timer,
+        self.game_state_manager = GameStateManager("main_menu")
+
+        self.scene = Scene(self.screen)
+        self.draw = Draw(self.screen)
+        self.health = Health(self.screen, self.game_state_manager)
+        self.timer = Timer(self.screen, self.game_state_manager)
+        self.high_score = HighScore()
+        self.score = Score(self.screen, self.high_score)
+
+        self.target, self.player, self.all_entities, self.target_and_obstacles = EntityFactory(
+            self.screen).initialise_entities()
+
+        self.menu_screen = MenuScreen(self.screen, self.game_state_manager, self.scene, self.draw)
+        self.instruction_screen = InstructionScreen(self.screen, self.game_state_manager, self.scene, self.draw)
+        self.game_play = GameLoop(self.screen, self.game_state_manager, self.timer_running, self.health, self.score,
+                                  self.scene, self.timer,
                                   self.target_and_obstacles, self.player, self.all_entities)
+        self.naughty_screen = NaughtyScreen(self.screen, self.game_state_manager, self.scene, self.draw)
+        self.times_up_screen = TimesUpScreen(self.screen, self.game_state_manager, self.scene, self.draw)
+        self.game_over = GameOver(self.screen, self.game_state_manager, self.draw, self.scene, self.high_score,
+                                  self.health, self.score, self.timer)
+
+        self.states = {
+            "main_menu": self.menu_screen,
+            "instructions": self.instruction_screen,
+            "game_play": self.game_play,
+            "naughty_screen": self.naughty_screen,
+            "times_up": self.times_up_screen,
+            "game_over": self.game_over
+        }
+
+        self.event_handler = EventHandler(self.game_state_manager, self, self.player, self.game_over)
 
     def run(self):
         self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
         Sound.music()  # starts background music
 
         while self.running:
-            if self.game_state == QUIT:
-                pygame.quit()
-                sys.exit()
+            # calls the central event handler for any state
+            self.event_handler.handle_events()
 
-            self.game_state = Events.event_handler(self.game_state, self.player, self.game_over, self)
-
-            if self.game_state == MENU_SCREEN:
-                self.menu_screen.draw_menu_screen()
-            elif self.game_state == INSTRUCTION_SCREEN:
-                self.instruction_screen.draw_instruction_screen()
-
-            elif self.game_state == GAME_SCREEN:
-                if not self.timer_running:
-                    # Resets timer when entering the play screen
-                    self.timer.reset()
-                    self.timer_running = True
-                self.game_state = self.game_loop.game_loop(self.timer_running)
-
-            elif self.game_state == TIMES_UP_SCREEN:
-                self.times_up_screen.draw_times_up_screen()
-                self.game_state = GAME_OVER_SCREEN
-            elif self.game_state == NAUGHTY_SCREEN:
-                self.naughty_screen.draw_naughty_screen()
-            elif self.game_state == GAME_OVER_SCREEN:
-                self.game_over = GameOver(self.scene, self.high_score, self.health, self.score,
-                                          self.timer)  # Game Over instance
-                self.game_over.draw_game_over_screen()
+            # returns current state and runs that state
+            self.states[self.game_state_manager.get_state()].run()
 
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second

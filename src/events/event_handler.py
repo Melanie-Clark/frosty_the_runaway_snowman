@@ -1,56 +1,56 @@
+import sys
 import pygame
-from src.config.global_config import INSTRUCTION_SCREEN, GAME_OVER_SCREEN, NAUGHTY_SCREEN, MENU_SCREEN, \
-    QUIT, GAME_SCREEN
 
 
-class Events:
+class EventHandler:
+    def __init__(self, game_state_manager, game, player, game_over):
+        self.game_state_manager = game_state_manager
+        self.game_play = game
+        self.game_over = game_over
+        self.player = player
 
-    @staticmethod
-    def event_handler(game_state, instance, game_over_instance, game_instance):
+    def handle_events(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return QUIT
+            if event.type == pygame.QUIT or ((event.type == pygame.KEYDOWN) and (event.key == pygame.K_q)):
+                pygame.quit()
+                sys.exit()
+
             if event.type == pygame.KEYDOWN:  # action once per key press
-                if event.key == pygame.K_q:  # added so that quit can be pressed during play
-                    return QUIT
-
-                elif (game_state == MENU_SCREEN) or (game_state == INSTRUCTION_SCREEN):
+                if (self.game_state_manager.get_state() == "main_menu") or (
+                        self.game_state_manager.get_state() == "instructions"):
                     if event.key == pygame.K_p:
-                        return GAME_SCREEN
+                        self.game_state_manager.set_state("game_play")
 
-                    if game_state == MENU_SCREEN:
+                    if self.game_state_manager.get_state() == "main_menu":
                         if event.key == pygame.K_i:
-                            return INSTRUCTION_SCREEN
+                            self.game_state_manager.set_state("instructions")
                         # if event.key == pygame.K_c: # credits placeholder
-                    if game_state == INSTRUCTION_SCREEN:
+                    if self.game_state_manager.get_state() == "instructions":
                         if event.key == pygame.K_m:
-                            return MENU_SCREEN
+                            self.game_state_manager.set_state("main_menu")
 
-                elif game_state == GAME_SCREEN:
+                elif self.game_state_manager.get_state() == "game_play":
                     if event.key == pygame.K_SPACE:
-                        instance.snowball_active = True  # set state to be able to stop item moving left or right when shooting up
+                        self.player.snowball_active = True  # set state to be able to stop item moving left or right when shooting up
 
-                elif game_state == NAUGHTY_SCREEN:
+                elif self.game_state_manager.get_state() == "naughty_screen":
                     if event.key == pygame.K_RETURN:
-                        return GAME_OVER_SCREEN
+                        self.game_state_manager.set_state("game_over")
 
-                elif game_state == GAME_OVER_SCREEN:
+                elif self.game_state_manager.get_state() == "game_over":
                     if event.key == pygame.K_p or event.key == pygame.K_m:
-                        game_over_instance.reset_game(game_instance.target, game_instance.player)
+                        self.game_over.reset_game(self.game_play.target, self.game_play.player)
                         if event.key == pygame.K_p:
-                            return GAME_SCREEN
+                            self.game_state_manager.set_state("game_play")
                         if event.key == pygame.K_m:
-                            return MENU_SCREEN
+                            self.game_state_manager.set_state("main_menu")
 
-
-        if game_state == GAME_SCREEN:
+        if self.game_state_manager.get_state() == "game_play":
             keys = pygame.key.get_pressed()  # Continuous movement when key held down
-            if keys[pygame.K_LEFT] and not instance.snowball_active:  # stops snowball moving once thrown
-                instance.x -= instance.speed
-            elif keys[pygame.K_RIGHT] and not instance.snowball_active:
-                instance.x += instance.speed
-
-        return game_state
+            if keys[pygame.K_LEFT] and not self.player.snowball_active:  # stops snowball moving once thrown
+                self.player.x -= self.player.speed
+            elif keys[pygame.K_RIGHT] and not self.player.snowball_active:
+                self.player.x += self.player.speed
 
 
 if __name__ == "__main__":

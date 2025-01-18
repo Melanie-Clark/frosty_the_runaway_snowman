@@ -1,14 +1,13 @@
 import pygame
 
-from src.config.global_config import SCREEN, GAME_SCREEN, NAUGHTY_SCREEN
-from src.core.naughty_screen import NaughtyScreen
-
 
 class Health:
-    def __init__(self, max_health=5):
+    def __init__(self, screen, game_state, max_health=5):
+        self.screen = screen
+        self.game_state_manager = game_state
+
         self.max_health = max_health
         self.current_health = max_health
-        self.naughty_screen = NaughtyScreen()
 
     # draws number of health hearts remaining on game screen in top-left corner
     def draw(self):
@@ -16,15 +15,14 @@ class Health:
         heart_health = pygame.transform.scale(heart_health, (50, 50))
         x, y = (10, 10)
         for num in range(1, self.current_health + 1):
-            SCREEN.blit(heart_health, ((num * 15) + x, y))
+            self.screen.blit(heart_health, ((num * 15) + x, y))
 
     # health reduces by one when an obstacle has been hit
     def take_damage(self, damage=1):
         self.current_health -= damage
         print('Remaining health:', self.current_health)
         if self.current_health == 0:
-            return NAUGHTY_SCREEN
-        return GAME_SCREEN
+            self.game_state_manager.set_state("naughty_screen")
 
 
 if __name__ == "__main__":
