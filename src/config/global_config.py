@@ -3,9 +3,8 @@ import pygame
 pygame.font.init()  # Initialises the font module
 
 # screen configuration
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
-SCREEN = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
 FPS = 60
 
 # UI font details
@@ -27,13 +26,3 @@ TITLE_HEIGHT = 10
 # Button standards
 BUTTON_COLOR = (240, 255, 255)
 BORDER_COLOR = (34, 139, 34)
-
-# game states - text for debugging
-MENU_SCREEN = "Menu Screen"
-INSTRUCTION_SCREEN = "Instructions"
-GAME_SCREEN = "In play"
-
-NAUGHTY_SCREEN = "Naughty"
-TIMES_UP_SCREEN = "Out of time"
-GAME_OVER_SCREEN = "Game Over"
-QUIT = "Quit"

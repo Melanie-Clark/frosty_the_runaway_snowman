@@ -1,6 +1,6 @@
 import random
 
-from src.config.global_config import WINDOW_WIDTH
+from src.config.global_config import SCREEN_WIDTH
 from src.entities.obstacle import Obstacle, FlyingObstacle
 from src.entities.player import Player
 from src.entities.sprites import AnimatedSprite
@@ -8,9 +8,9 @@ from src.entities.target import Target
 
 
 class EntityFactory:
-
     # Loads spritesheets
-    def __init__(self):
+    def __init__(self, screen):
+        self.screen = screen
         self.player = None
 
     @staticmethod
@@ -26,44 +26,44 @@ class EntityFactory:
     # initialises all entities
     def initialise_entities(self):
         bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite = self.initialise_spritesheets()
-        self.player = Player(snowball_sprite)
+        self.player = Player(self.screen, snowball_sprite)
 
         sprite_width = {"reindeer": 128, "elf": 32, "red_santa": 64, "bunny": 55, "snowman": 93.5}
         sprite_height = {"reindeer": 128, "elf": 64, "red_santa": 64, "bunny": 74, "snowman": 140}
 
-        random_x_position = random.randint(0, WINDOW_WIDTH)
+        random_x_position = random.randint(0, SCREEN_WIDTH)
 
-        bunny = Obstacle(bunny_sprite, random.choice(["left", "right"]), 150,
-                         random.randint(0 - sprite_width["bunny"], WINDOW_WIDTH + sprite_width["bunny"]),
+        bunny = Obstacle(self.screen, bunny_sprite, random.choice(["left", "right"]), 150,
+                         random.randint(0 - sprite_width["bunny"], SCREEN_WIDTH + sprite_width["bunny"]),
                          400, 500,
                          sprite_width["bunny"], sprite_height["bunny"],
                          2, 2, 4, 2, 5,
                          10, 55, 92, 90)
 
-        elf_group = [(Obstacle(elf_sprite, random.choice(["left", "right"]), 100,
-                               random.randint(0 - sprite_width["elf"], WINDOW_WIDTH + sprite_width["elf"]),
+        elf_group = [(Obstacle(self.screen, elf_sprite, random.choice(["left", "right"]), 100,
+                               random.randint(0 - sprite_width["elf"], SCREEN_WIDTH + sprite_width["elf"]),
                                200, 475,
                                sprite_width["elf"], sprite_height["elf"],
                                2, 2, 6, 3, 6,
                                8, 26, 46, 102))
                      for _ in range(3)]
 
-        red_santa = Obstacle(red_santa_sprite, random.choice(["left", "right"]), 75,
-                             random.randint(0 - sprite_width["red_santa"], WINDOW_WIDTH + sprite_width["red_santa"]),
+        red_santa = Obstacle(self.screen, red_santa_sprite, random.choice(["left", "right"]), 75,
+                             random.randint(0 - sprite_width["red_santa"], SCREEN_WIDTH + sprite_width["red_santa"]),
                              100, 425,
                              sprite_width["red_santa"], sprite_height["red_santa"],
                              1.75, 2, 4, 3, 5,
                              30, 5, 55, 108)
 
         reindeer_group = [
-            (FlyingObstacle(reindeer_sprite, "left", 200,
+            (FlyingObstacle(self.screen, reindeer_sprite, "left", 200,
                             random_x_position + (i * sprite_width["reindeer"]), -20,
                             sprite_width["reindeer"], sprite_height["reindeer"],
                             1, 2, 2, 3, 3,
                             20, 18, 100, 110))
             for i in range(4)]
 
-        target = Target(frosty_sprite, random.choice(["left", "right"]), 150,
+        target = Target(self.screen, frosty_sprite, random.choice(["left", "right"]), 150,
                         random_x_position, 200, 400,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,

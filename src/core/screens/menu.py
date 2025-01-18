@@ -1,28 +1,24 @@
 import pygame
-from src.config.global_config import SCREEN, WINDOW_WIDTH, BUTTON_COLOR, MENU_FONT, MENU_SCREEN, \
-    BORDER_COLOR, MENU_COLOR
-from src.core.instructions import InstructionScreen
-from src.utils.utils import Draw
+from src.config.global_config import SCREEN_WIDTH, BUTTON_COLOR, MENU_FONT, BORDER_COLOR, MENU_COLOR
 
 
 class MenuScreen:
-    def __init__(self, scene):
+    def __init__(self, screen, game_state, scene, draw):
+        self.screen = screen
+        self.game_state_manager = game_state
         self.scene = scene
-        self.draw = Draw()
+        self.draw = draw
         self.title = "Frosty: The Runaway Snowman!"
-        self.game_state = MENU_SCREEN
-        self.instruction_screen = InstructionScreen()
 
     # Draw rectangle to hold menu options
-    @staticmethod
-    def draw_menu_box():
+    def draw_menu_box(self):
         box_width = 550
-        x = WINDOW_WIDTH // 2 - (box_width // 2)
+        x = SCREEN_WIDTH // 2 - (box_width // 2)
         y = 270
         height = 390
 
-        pygame.draw.rect(SCREEN, BUTTON_COLOR, (x, y, box_width, height), 0, 15)
-        pygame.draw.rect(SCREEN, BORDER_COLOR, (x, y, box_width, height), 6, 15)
+        pygame.draw.rect(self.screen, BUTTON_COLOR, (x, y, box_width, height), 0, 15)
+        pygame.draw.rect(self.screen, BORDER_COLOR, (x, y, box_width, height), 6, 15)
 
     @staticmethod
     def menu_text():
@@ -41,7 +37,7 @@ class MenuScreen:
 
         for line in menu_options.splitlines():
             text = MENU_FONT.render(line, True, MENU_COLOR)
-            SCREEN.blit(text, (430, y_pos))
+            self.screen.blit(text, (430, y_pos))
             y_pos += text.get_height() * 1.5  # Moves position of next text below
 
     # draws everything required for menu screen
@@ -53,6 +49,9 @@ class MenuScreen:
         self.draw_menu_box()
         self.draw_menu_options()
         pygame.display.update()
+
+    def run(self):
+        self.draw_menu_screen()
 
 
 if __name__ == "__main__":

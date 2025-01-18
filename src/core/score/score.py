@@ -1,11 +1,11 @@
-from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, SCREEN
+from src.config.global_config import FEATURE_COLOR, FEATURE_FONT
 from src.core.scene import Scene
-from src.core.score.high_score import HighScore
 
 
 # keep track of players score
 class Score:
-    def __init__(self, high_score, score=0):
+    def __init__(self, screen, high_score, score=0):
+        self.screen = screen
         self.score = score
         self.high_score = high_score
         self.incremental_score = score
@@ -21,8 +21,8 @@ class Score:
     def draw(self):
         score_text = FEATURE_FONT.render(f"Score: {self.incremental_score}", False, FEATURE_COLOR)
         target_image = Scene.load_frosty(1)
-        SCREEN.blit(target_image, (700, 5))
-        SCREEN.blit(score_text, (500, 5))
+        self.screen.blit(target_image, (700, 5))
+        self.screen.blit(score_text, (500, 5))
 
     # calculates total score based on snowball hits and health remaining
     def total_score(self, health):

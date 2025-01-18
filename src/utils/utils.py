@@ -1,21 +1,22 @@
-from src.config.global_config import WINDOW_WIDTH, SCREEN, TITLE_FONT, TITLE_HEIGHT, \
-    MENU_COLOR, FEATURE_COLOR, INSTRUCTIONS_FONT
+from src.config.global_config import SCREEN_WIDTH, TITLE_FONT, TITLE_HEIGHT, MENU_COLOR, FEATURE_COLOR, \
+    INSTRUCTIONS_FONT
 
 
 # class available for use across the game project
 class Draw:
-    @staticmethod
-    def draw_title(title):
+    def __init__(self, screen):
+        self.screen = screen
+
+    def draw_title(self, title):
         # render creates a surface (graphical object) for text to be displayed
         title_font = TITLE_FONT.render(title, False, FEATURE_COLOR)  # antialias (TRUE smooth text)
         # draws rendered text onto screen (SCREEN)
-        SCREEN.blit(title_font, (WINDOW_WIDTH // 2 - title_font.get_width() // 2, TITLE_HEIGHT))
+        self.screen.blit(title_font, (SCREEN_WIDTH // 2 - title_font.get_width() // 2, TITLE_HEIGHT))
 
-    @staticmethod
-    def draw_text(text, font, color, y_pos):
+    def draw_text(self, text, font, color, y_pos):
         for line in text.splitlines():
             text = font.render(line, True, color)
-            SCREEN.blit(text, (WINDOW_WIDTH // 2 - text.get_width() // 2, y_pos))
+            self.screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, y_pos))
             y_pos += text.get_height()  # Moves position of next text to the line below
 
     # draws menu options for welcome and game over screens
