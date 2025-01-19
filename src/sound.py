@@ -9,5 +9,5 @@ class Sound:
 
     @staticmethod
     def music():
-        pygame.mixer.music.load("../assets/sounds/snowtime_soundtrack.mp3")
+        pygame.mixer.music.load("assets/sounds/snowtime_soundtrack.mp3")
         pygame.mixer.music.play(-1)  # -1 loops infinitely.

@@ -1,6 +1,6 @@
 import pygame
 from src.config.global_config import SCREEN_WIDTH, SCREEN_HEIGHT
-from src.core.sound import Sound
+from src.sound import Sound
 from src.entities.entity import Entity
 from src.entities.target import Target
 
@@ -75,11 +75,11 @@ class Player(Entity):
 
     def collision_action(self, entity, health, score, seconds):
         if isinstance(entity, Target):
-            self.sound.sound_effect("../assets/sounds/ouch.mp3")
+            self.sound.sound_effect("assets/sounds/ouch.mp3")
             score.increment_score(seconds)
             entity.reset_target(entity)
         else:
-            self.sound.sound_effect("../assets/sounds/snowball_hit.mp3")
+            self.sound.sound_effect("assets/sounds/snowball_hit.mp3")
             health.take_damage()
 
 
