@@ -15,7 +15,7 @@ Click below to see the game in action!
 
 <a href="https://www.youtube.com/watch?v=-lIlELm_0i8
 " target="_blank"><img src="http://img.youtube.com/vi/-lIlELm_0i8/0.jpg"
-alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="400" border="10" /></a>
+alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="360" border="10" /></a>
 
 ## Game screenshots
 
