@@ -3,21 +3,22 @@ from src.config.global_config import SCREEN_WIDTH, FEATURE_COLOR, FEATURE_FONT
 
 
 class Timer:
-    def __init__(self, screen, game_state, timer=30):
+    def __init__(self, screen, game_state, timer_running, timer=30):
         self.screen = screen
         self.game_state_manager = game_state
 
         self.start_ticks = pygame.time.get_ticks()  # Starting tick
         self.max_time = timer
         self.timer = timer
+        self.timer_running = timer_running
 
-    def countdown_timer(self, timer_running):
-        if timer_running:
+    def countdown_timer(self):
+        if self.timer_running:
             # elapsed time
             seconds = self.timer - (pygame.time.get_ticks() - self.start_ticks) // 1000
             self.draw_timer(seconds)
 
-            if seconds < 0:
+            if seconds <= 0:
                 self.game_state_manager.set_state("times_up")
                 return seconds
             else:
@@ -34,7 +35,15 @@ class Timer:
         countdown_rect.topright = (SCREEN_WIDTH - 10, 0)  # Positions rectangle in top-right corner
         self.screen.blit(countdown, countdown_rect)
 
-    # resets timer ticks
+    # gets the current timer running True/False
+    def get_state(self):
+        return self.timer_running
+
+    # sets the current timer running to True/False
+    def set_state(self, state):
+        self.timer_running = state
+
+    # resets timer
     def reset(self):
         self.start_ticks = pygame.time.get_ticks()
 

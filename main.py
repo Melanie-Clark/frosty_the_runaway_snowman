@@ -26,16 +26,14 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption("Frosty: The Runaway Snowman!")
         self.clock = pygame.time.Clock()  # Manages frame rate
-
         self.running = True
-        self.timer_running = False
 
         self.game_state_manager = GameStateManager("main_menu")
 
         self.scene = Scene(self.screen)
         self.draw = Draw(self.screen)
         self.health = Health(self.screen, self.game_state_manager)
-        self.timer = Timer(self.screen, self.game_state_manager)
+        self.timer = Timer(self.screen, self.game_state_manager, False)
 
         self.high_score = HighScore(self.screen, self.game_state_manager, self.scene, self.draw)
         self.score = Score(self.screen, self.high_score)
@@ -45,9 +43,8 @@ class Game:
 
         self.menu_screen = MenuScreen(self.screen, self.game_state_manager, self.scene, self.draw)
         self.instruction_screen = InstructionScreen(self.screen, self.game_state_manager, self.scene, self.draw)
-        self.game_play = GameLoop(self.screen, self.game_state_manager, self.timer_running, self.health, self.score,
-                                  self.scene, self.timer,
-                                  self.target_and_obstacles, self.player, self.all_entities)
+        self.game_play = GameLoop(self.screen, self.game_state_manager, self.health, self.score,
+                                  self.scene, self.timer, self.target_and_obstacles, self.player, self.all_entities)
         self.naughty_screen = NaughtyScreen(self.screen, self.game_state_manager, self.scene, self.draw)
         self.times_up_screen = TimesUpScreen(self.screen, self.game_state_manager, self.scene, self.draw)
         self.game_over = GameOver(self.screen, self.game_state_manager, self.draw, self.scene, self.high_score,
@@ -63,7 +60,7 @@ class Game:
             "game_over": self.game_over
         }
 
-        self.event_handler = EventHandler(self.game_state_manager, self, self.player, self.game_over)
+        self.event_handler = EventHandler(self.game_state_manager, self, self.player, self.game_over, self.timer)
 
     def run(self):
         self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
