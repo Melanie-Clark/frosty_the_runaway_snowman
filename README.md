@@ -9,6 +9,38 @@ But be careful...each time you hit Frosty, he gets faster!
 👀 WATCH OUT! 👀 \
 Santa and his friends reduces heart health — so aim wisely and have fun!
 
+## Game demo
+
+Click below to see the game in action!
+
+<a href="https://www.youtube.com/watch?v=0D62W5GX_c0
+" target="_blank"><img src="http://img.youtube.com/vi/-lIlELm_0i8/0.jpg"
+alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="400" border="10" /></a>
+
+## Game screenshots
+
+<table bgcolor="#00000F">
+    <tbody>
+        <tr>	
+            <th>Main menu</th>
+            <th>Instructions</th></tr>
+        <tr>         
+            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250"></td></tr>
+        <tr>	
+            <th>Gameplay</th>
+            <th>High Score</th></tr>
+        <tr>         
+            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="250"></td></tr>
+        <tr>
+            <th>Naughty Naughty!</th>
+            <th>Game Over</th></tr>            
+        <tr>
+            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="400" height="250"></td></tr>
+</tbody></table>
+
 ## Gameplay Mechanics:
 
 ### Movement
@@ -46,41 +78,6 @@ Earn **1 bonus point** for every remaining second on the 10th hit.
 **TOTAL SCORE:**
 **Total Score = Score + Health Bonus + Time Bonus**
 
-## Game demo
-
-Click below to see the game in action!
-
-<a href="https://www.youtube.com/watch?v=0D62W5GX_c0
-" target="_blank"><img src="http://img.youtube.com/vi/0D62W5GX_c0/0.jpg"
-alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="400" border="10" /></a>
-
-## Game screenshots
-
-
-<table bgcolor="#00000F">
-    <tbody>
-        <tr>	
-            <th>Main menu</th>
-            <th>Instructions</th></tr>
-        <tr>         
-            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="250"></td>
-            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250"></td></tr>
-        <tr>	
-            <th>Gameplay</th>
-            <th>High Score</th></tr>
-        <tr>         
-            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="400" height="250"></td>
-            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="250"></td></tr>
-        <tr>
-            <th>Naughty Naughty!</th>
-            <th>Game Over</th></tr>            
-        <tr>
-            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="400" height="250"></td>
-            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="400" height="250"></td></tr>
-</tbody></table>
-
-
-
 ## Set-up
 
 To ensure the game runs smoothly, follow the configuration steps below:
@@ -102,4 +99,5 @@ Run the `main.py` python file to start the game and snowball Frosty the runaway 
 - Bunny spritesheet: [itch.io-HRedBird](https://hredbird.itch.io/bunny-sprite-sheet)
 - Heart health: [Wikipedia](https://en.m.wikipedia.org/wiki/File:Heart_left-highlight_jon_01.svg)
 - Music: [itch.io-FablefLy Music](https://fablefly-music.itch.io/its-snowtime)
-- Snowball hit: [piixabay-Alex_Jauk](https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=279699)
+- Snowball
+  hit: [piixabay-Alex_Jauk](https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=279699)
