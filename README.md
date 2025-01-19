@@ -68,7 +68,7 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="400" border="
             <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="280"></td>
             <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="280"></td></tr>
         <tr>
-            <th>Game Play</th>
+            <th>Gameplay</th>
             <th>Naughty Naughty!</th>
             <th>Game Over</th></tr>            
         <tr>
