@@ -2,6 +2,7 @@ import pygame
 import random
 
 from src.config.global_config import SCREEN_WIDTH, SCREEN_HEIGHT
+from src.config.utils import AssetRoot
 
 
 # Game window set-up and background
@@ -52,8 +53,8 @@ class Scene:
     # loads target character
     @staticmethod
     def load_frosty(scale=4):
-        target_image = pygame.image.load("assets/images/game_play_imgs/frosty.png").convert_alpha()
-        target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
+        target_image = AssetRoot().load_image("game_play_imgs", "frosty.png")
+        target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))  # Scale image
         return target_image
 
     # draws character left and right side of text

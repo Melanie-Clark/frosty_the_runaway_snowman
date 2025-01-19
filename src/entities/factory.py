@@ -12,15 +12,15 @@ class EntityFactory:
     def __init__(self, screen):
         self.screen = screen
         self.player = None
+        self.animated_sprite = AnimatedSprite
 
-    @staticmethod
-    def initialise_spritesheets():
-        bunny_sprite = AnimatedSprite("assets/sprite_sheets/bunny_sprite_sheet.png")
-        elf_sprite = AnimatedSprite("assets/sprite_sheets/elf_sprite_sheet.png")
-        reindeer_sprite = AnimatedSprite("assets/sprite_sheets/reindeer_sprite_sheet.png")
-        red_santa_sprite = AnimatedSprite("assets/sprite_sheets/red_santa_sprite_sheet.png")
-        frosty_sprite = AnimatedSprite("assets/sprite_sheets/frosty_sprite_sheet.png", True)
-        snowball_sprite = AnimatedSprite("assets/sprite_sheets/snowball_sprite_sheet.png")
+    def initialise_spritesheets(self):
+        bunny_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("bunny_sprite_sheet.png"))
+        elf_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("elf_sprite_sheet.png"))
+        reindeer_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("reindeer_sprite_sheet.png"))
+        red_santa_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("red_santa_sprite_sheet.png"))
+        frosty_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("frosty_sprite_sheet.png"), True)
+        snowball_sprite = AnimatedSprite(self.animated_sprite.get_sprite_sheet_path("snowball_sprite_sheet.png"))
         return bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite
 
     # initialises all entities
@@ -67,7 +67,7 @@ class EntityFactory:
                         random_x_position, 200, 400,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
-                        6, 5, 60, 85)
+                        6, 5, 50, 85)
 
         obstacles = [*reindeer_group, *elf_group, red_santa, bunny]
         all_entities = obstacles + [target, self.player]
