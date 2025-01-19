@@ -1,11 +1,11 @@
 import pygame
 from src.config.global_config import INSTRUCTIONS_FONT, MENU_COLOR
+from src.screens.base_screen import BaseScreen
 
 
-class InstructionScreen:
-    def __init__(self, screen, game_state, scene, draw):
-        self.screen = screen
-        self.game_state_manager = game_state
+class InstructionScreen(BaseScreen):
+    def __init__(self, screen, game_state_manager, scene, draw):
+        super().__init__(screen, game_state_manager)
         self.scene = scene
         self.draw = draw
 

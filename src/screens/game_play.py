@@ -1,8 +1,10 @@
-class GameLoop:
-    def __init__(self, screen, game_state, timer_running, health, score, scene, timer, target_and_obstacles, player,
+from src.screens.base_screen import BaseScreen
+
+
+class GameLoop(BaseScreen):
+    def __init__(self, screen, game_state_manager, timer_running, health, score, scene, timer, target_and_obstacles, player,
                  all_entities):
-        self.screen = screen
-        self.game_state_manager = game_state
+        super().__init__(screen, game_state_manager)
         self.timer_running = timer_running
         self.health = health
         self.score = score

@@ -1,11 +1,11 @@
 import pygame
 from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
+from src.screens.base_screen import BaseScreen
 
 
-class NaughtyScreen:
-    def __init__(self, screen, game_state, scene, draw):
-        self.screen = screen
-        self.game_state_manager = game_state
+class NaughtyScreen(BaseScreen):
+    def __init__(self, screen, game_state_manager, scene, draw):
+        super().__init__(screen, game_state_manager)
         self.scene = scene
         self.draw = draw
 

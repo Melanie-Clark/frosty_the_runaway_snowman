@@ -1,11 +1,11 @@
 import pygame
 from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
+from src.screens.base_screen import BaseScreen
 
 
-class GameOver:
-    def __init__(self, screen, game_state, draw, scene, high_score, health, score, timer=None):
-        self.screen = screen
-        self.game_state_manager = game_state
+class GameOver(BaseScreen):
+    def __init__(self, screen, game_state_manager, draw, scene, high_score, health, score, timer=None):
+        super().__init__(screen, game_state_manager)
         self.draw = draw
         self.scene = scene
         self.high_score = high_score
@@ -16,14 +16,15 @@ class GameOver:
 
     # text for the game over screen
     def game_over_text(self):
-        total_score, time_bonus, high_score, new_high_score = self.score.total_score(self.health)
+        total_score, time_bonus, high_score = self.score.total_score(self.health)
+        high_score_text = self.high_score.get_high_score_text()
 
         game_over_text = (
             f"Score:\n"
             f"Health bonus:\n"
             f"Time bonus:\n"
             f"TOTAL:\n\n"
-            f"{new_high_score}High score:"
+            f"{high_score_text}High score:"
         )
 
         game_over_values = (

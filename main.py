@@ -1,22 +1,22 @@
 import pygame
 
-from src.core.screens.game_over import GameOver
-from src.core.screens.game_play import GameLoop
-from src.core.screens.instructions import InstructionScreen
-from src.core.screens.menu import MenuScreen
-from src.core.screens.naughty_screen import NaughtyScreen
-from src.core.score.high_score import HighScore
+from src.screens.game_over import GameOver
+from src.screens.game_play import GameLoop
+from src.screens.instructions import InstructionScreen
+from src.screens.menu import MenuScreen
+from src.screens.naughty_screen import NaughtyScreen
+from src.screens.high_score import HighScore
 from src.config.global_config import FPS, SCREEN_WIDTH, SCREEN_HEIGHT
-from src.core.scene import Scene
-from src.core.sound import Sound
-from src.core.health import Health
-from src.core.score.score import Score
-from src.core.timer import Timer
-from src.core.screens.times_up import TimesUpScreen
+from src.scene import Scene
+from src.sound import Sound
+from src.health import Health
+from src.score.score import Score
+from src.timer import Timer
+from src.screens.times_up import TimesUpScreen
 from src.entities.factory import EntityFactory
-from src.events.event_handler import EventHandler
-from src.game_states.game_state_manager import GameStateManager
-from src.utils.utils import Draw
+from src.config.event_handler import EventHandler
+from src.config.game_state_manager import GameStateManager
+from src.config.utils import Draw
 
 
 class Game:
@@ -36,7 +36,8 @@ class Game:
         self.draw = Draw(self.screen)
         self.health = Health(self.screen, self.game_state_manager)
         self.timer = Timer(self.screen, self.game_state_manager)
-        self.high_score = HighScore()
+
+        self.high_score = HighScore(self.screen, self.game_state_manager, self.scene, self.draw)
         self.score = Score(self.screen, self.high_score)
 
         self.target, self.player, self.all_entities, self.target_and_obstacles = EntityFactory(
@@ -55,6 +56,7 @@ class Game:
         self.states = {
             "main_menu": self.menu_screen,
             "instructions": self.instruction_screen,
+            "high_score": self.high_score,
             "game_play": self.game_play,
             "naughty_screen": self.naughty_screen,
             "times_up": self.times_up_screen,

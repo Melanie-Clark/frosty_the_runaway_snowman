@@ -1,11 +1,11 @@
 import pygame
 from src.config.global_config import SCREEN_WIDTH, BUTTON_COLOR, MENU_FONT, BORDER_COLOR, MENU_COLOR
+from src.screens.base_screen import BaseScreen
 
 
-class MenuScreen:
-    def __init__(self, screen, game_state, scene, draw):
-        self.screen = screen
-        self.game_state_manager = game_state
+class MenuScreen(BaseScreen):
+    def __init__(self, screen, game_state_manager, scene, draw):
+        super().__init__(screen, game_state_manager)
         self.scene = scene
         self.draw = draw
         self.title = "Frosty: The Runaway Snowman!"
@@ -26,7 +26,7 @@ class MenuScreen:
             "Choose an option to continue:\n"
             "[I] Instructions\n"
             "[P] Play\n"
-            "[C] Credits (coming soon)\n"
+            "[H] High Score\n"
             "[Q] Quit\n"
         )
         return menu_options
