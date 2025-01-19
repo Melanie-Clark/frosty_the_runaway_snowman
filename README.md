@@ -13,7 +13,7 @@ Santa and his friends reduces heart health — so aim wisely and have fun!
 
 Click below to see the game in action!
 
-<a href="https://www.youtube.com/watch?v=0D62W5GX_c0
+<a href="https://www.youtube.com/watch?v=-lIlELm_0i8
 " target="_blank"><img src="http://img.youtube.com/vi/-lIlELm_0i8/0.jpg"
 alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="400" border="10" /></a>
 
