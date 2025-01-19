@@ -70,7 +70,7 @@ class Entity(ABC):
 
         self.screen.blit(sprite, (self.x, self.y))
         # # uncomment to debug collisions (puts red box around each sprite):
-        # pygame.draw.rect(SCREEN, (255, 0, 0),
+        # pygame.draw.rect(self.screen, (255, 0, 0),
         #                  pygame.Rect(self.x + self.collision_x_offset, self.y + self.collision_y_offset,
         #                              self.collision_width, self.collision_height), 2)
 
