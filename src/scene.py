@@ -52,7 +52,7 @@ class Scene:
     # loads target character
     @staticmethod
     def load_frosty(scale=4):
-        target_image = pygame.image.load("../assets/images/game_play_imgs/frosty.png").convert_alpha()
+        target_image = pygame.image.load("assets/images/game_play_imgs/frosty.png").convert_alpha()
         target_image = pygame.transform.scale(target_image, ((50 * scale), (65 * scale)))
         return target_image
 

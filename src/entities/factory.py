@@ -15,12 +15,12 @@ class EntityFactory:
 
     @staticmethod
     def initialise_spritesheets():
-        bunny_sprite = AnimatedSprite("../assets/sprite_sheets/bunny_sprite_sheet.png")
-        elf_sprite = AnimatedSprite("../assets/sprite_sheets/elf_sprite_sheet.png")
-        reindeer_sprite = AnimatedSprite("../assets/sprite_sheets/reindeer_sprite_sheet.png")
-        red_santa_sprite = AnimatedSprite("../assets/sprite_sheets/red_santa_sprite_sheet.png")
-        frosty_sprite = AnimatedSprite("../assets/sprite_sheets/frosty_sprite_sheet.png", True)
-        snowball_sprite = AnimatedSprite("../assets/sprite_sheets/snowball_sprite_sheet.png")
+        bunny_sprite = AnimatedSprite("assets/sprite_sheets/bunny_sprite_sheet.png")
+        elf_sprite = AnimatedSprite("assets/sprite_sheets/elf_sprite_sheet.png")
+        reindeer_sprite = AnimatedSprite("assets/sprite_sheets/reindeer_sprite_sheet.png")
+        red_santa_sprite = AnimatedSprite("assets/sprite_sheets/red_santa_sprite_sheet.png")
+        frosty_sprite = AnimatedSprite("assets/sprite_sheets/frosty_sprite_sheet.png", True)
+        snowball_sprite = AnimatedSprite("assets/sprite_sheets/snowball_sprite_sheet.png")
         return bunny_sprite, elf_sprite, reindeer_sprite, red_santa_sprite, frosty_sprite, snowball_sprite
 
     # initialises all entities

@@ -17,21 +17,25 @@ class EventHandler:
 
             if event.type == pygame.KEYDOWN:  # action once per key press
                 if (self.game_state_manager.get_state() == "main_menu") or (
-                        self.game_state_manager.get_state() == "instructions"):
+                        self.game_state_manager.get_state() == "instructions") or (
+                        self.game_state_manager.get_state() == "high_score"):
                     if event.key == pygame.K_p:
                         self.game_state_manager.set_state("game_play")
 
                     if self.game_state_manager.get_state() == "main_menu":
                         if event.key == pygame.K_i:
                             self.game_state_manager.set_state("instructions")
-                        # if event.key == pygame.K_c: # credits placeholder
-                    if self.game_state_manager.get_state() == "instructions":
+                        if event.key == pygame.K_h:
+                            self.game_state_manager.set_state("high_score")
+                    else:
                         if event.key == pygame.K_m:
                             self.game_state_manager.set_state("main_menu")
 
+
                 elif self.game_state_manager.get_state() == "game_play":
                     if event.key == pygame.K_SPACE:
-                        self.player.snowball_active = True  # set state to be able to stop item moving left or right when shooting up
+                        # set state to be able to stop item moving left or right when shooting up
+                        self.player.snowball_active = True
 
                 elif self.game_state_manager.get_state() == "naughty_screen":
                     if event.key == pygame.K_RETURN:

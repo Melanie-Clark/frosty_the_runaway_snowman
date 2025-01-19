@@ -1,5 +1,5 @@
 from src.config.global_config import FEATURE_COLOR, FEATURE_FONT
-from src.core.scene import Scene
+from src.scene import Scene
 
 
 # keep track of players score
@@ -33,8 +33,8 @@ class Score:
 
         total_score = self.incremental_score + health.current_health + bonus
         print("Total score:", total_score)
-        high_score, new_high_score = self.high_score.check_high_score(total_score)
-        return total_score, bonus, high_score, new_high_score
+        high_score = self.high_score.check_high_score(total_score)
+        return total_score, bonus, high_score
 
     # resets time_bonus for play again
     def reset_time_bonus(self):
