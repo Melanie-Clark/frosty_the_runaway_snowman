@@ -1,12 +1,12 @@
 import pygame
 from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT, SCREEN_HEIGHT
+from src.screens.base_screen import BaseScreen
 
 
 # screen for when time has run out (0 seconds)
-class TimesUpScreen:
-    def __init__(self, screen, game_state, scene, draw):
-        self.screen = screen
-        self.game_state_manager = game_state
+class TimesUpScreen(BaseScreen):
+    def __init__(self, screen, game_state_manager, scene, draw):
+        super().__init__(screen, game_state_manager)
         self.scene = scene
         self.draw = draw
 
