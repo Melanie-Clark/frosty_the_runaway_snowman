@@ -63,20 +63,20 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="400" border="
             <th>Main menu</th>
             <th>Instructions</th></tr>
         <tr>         
-            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="260"></td>
-            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="260"></td></tr>
+            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="250"></td></tr>
         <tr>	
             <th>Gameplay</th>
             <th>High Score</th></tr>
         <tr>         
-            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="400" height="260"></td>
-            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="260"></td></tr>
+            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="250"></td></tr>
         <tr>
             <th>Naughty Naughty!</th>
             <th>Game Over</th></tr>            
         <tr>
-            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="400" height="260"></td>
-            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="400" height="260"></td></tr>
+            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="400" height="250"></td>
+            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="400" height="250"></td></tr>
 </tbody></table>
 
 
