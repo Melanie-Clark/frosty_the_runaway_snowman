@@ -3,11 +3,12 @@ import pygame
 
 
 class EventHandler:
-    def __init__(self, game_state_manager, game, player, game_over):
+    def __init__(self, game_state_manager, game, player, game_over, timer):
         self.game_state_manager = game_state_manager
         self.game_play = game
         self.game_over = game_over
         self.player = player
+        self.timer = timer
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -20,6 +21,7 @@ class EventHandler:
                         self.game_state_manager.get_state() == "instructions") or (
                         self.game_state_manager.get_state() == "high_score"):
                     if event.key == pygame.K_p:
+                        self.timer.set_state(False)
                         self.game_state_manager.set_state("game_play")
 
                     if self.game_state_manager.get_state() == "main_menu":
