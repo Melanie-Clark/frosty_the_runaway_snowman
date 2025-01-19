@@ -52,7 +52,7 @@ Click below to see the game in action!
 
 <a href="https://www.youtube.com/watch?v=0D62W5GX_c0
 " target="_blank"><img src="http://img.youtube.com/vi/0D62W5GX_c0/0.jpg"
-alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="10" /></a>
+alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="400" border="10" /></a>
 
 ## Game screenshots
 
@@ -61,20 +61,22 @@ alt="Frosty: The runaway snowman! Pygame Demo" width="400" height="300" border="
     <tbody>
         <tr>	
             <th>Main menu</th>
-            <th>Instructions</th>
+            <th>Instructions</th></tr>
+        <tr>         
+            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="400" height="260"></td>
+            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="400" height="260"></td></tr>
+        <tr>	
+            <th>Gameplay</th>
             <th>High Score</th></tr>
         <tr>         
-            <td><img src="assets/images/readme_imgs/main_menu_img.png" alt="Frosty: The runaway snowman! Main menu" width="300" height="200"></td>
-            <td><img src="assets/images/readme_imgs/instruction_screen_img.png" alt="Frosty: The runaway snowman! Instructions" width="300" height="200"></td>
-            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="300" height="200"></td></tr>
+            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="400" height="260"></td>
+            <td><img src="assets/images/readme_imgs/high_score_img.png" alt="Frosty: The runaway snowman! High Score" width="400" height="260"></td></tr>
         <tr>
-            <th>Game Play</th>
             <th>Naughty Naughty!</th>
             <th>Game Over</th></tr>            
         <tr>
-            <td><img src="assets/images/readme_imgs/game_play_img.png" alt="Frosty: The runaway snowman! Gameplay" width="300" height="200"></td>
-            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="300" height="200"></td>
-            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="300" height="200"></td></tr>
+            <td><img src="assets/images/readme_imgs/naughty_screen_img.png" alt="Frosty: The runaway snowman! Naughty Naughty screen" width="400" height="260"></td>
+            <td><img src="assets/images/readme_imgs/game_over_img.png" alt="Frosty: The runaway snowman! Game Over" width="400" height="260"></td></tr>
 </tbody></table>
 
 
