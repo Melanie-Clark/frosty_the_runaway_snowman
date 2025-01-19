@@ -13,13 +13,14 @@ class HighScore(BaseScreen):
         self.draw = draw
         self.title = "Frosty: The Runaway Snowman!"
         self.directory = "src/score"
-        self.filename = "../score/high_scores.csv"
+        self.filename = "high_scores.csv"
         self.file_path = os.path.join(self.directory, self.filename)  # Construct the full path to the specific file
         self.field_names = ["High Score", "Level"]
         self.high_score_text = ""
 
     # Check if the file already exists in the directory
     def check_score_filepath(self):
+        os.makedirs(self.directory, exist_ok=True)  # Creates directory if it doesn't exist
         if not os.path.exists(self.file_path):
             self.create_high_score_file()
 
