@@ -22,7 +22,7 @@ class GameOver(BaseScreen):
         game_over_text = (
             f"Score:\n"
             f"Health bonus:\n"
-            f"Time bonus:\n"
+            f"Time bonus (10 hits):\n"
             f"TOTAL:\n\n"
             f"{high_score_text}High score:"
         )
@@ -38,7 +38,7 @@ class GameOver(BaseScreen):
         return [game_over_text, game_over_values]
 
     def draw_text(self):
-        x_pos = 400
+        x_pos = 380
         y_pos = 250
         game_over_info = self.game_over_text()
         for info in game_over_info:

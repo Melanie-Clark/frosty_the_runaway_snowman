@@ -23,7 +23,7 @@ class Target(Entity):
 
     def check_sprite_position(self):
         # Resets if target moves off-screen
-        if self.x > SCREEN_WIDTH or self.x < -self.sprite_width:
+        if self.x > SCREEN_WIDTH or self.x < -(self.sprite_width *2):
             if self.direction == "left":
                 self.direction = "right"
             else:
@@ -32,7 +32,7 @@ class Target(Entity):
             if self.x > SCREEN_WIDTH:
                 self.x = SCREEN_WIDTH  # Resets to left edge
                 # if target goes off-screen, it returns from the same side
-            elif self.x < -self.sprite_width:
+            elif self.x < -(self.sprite_width *2):
                 self.x = -self.sprite_width
             self.y = self._get_random_y()
 
