@@ -1,3 +1,4 @@
+import os
 import sys
 import pygame
 
@@ -13,8 +14,13 @@ class EventHandler:
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or ((event.type == pygame.KEYDOWN) and (event.key == pygame.K_q)):
-                pygame.quit()
-                sys.exit()
+                # Check if running in browser environment (application can't technically quit and close in browser
+                if "PYGBAG" in os.environ:
+                    print("Quit requested in browser! Please manually reload the game.")
+                    self.game_state_manager.set_state("reload")
+                else:
+                    pygame.quit()
+                    sys.exit()
 
             if event.type == pygame.KEYDOWN:  # action once per key press
                 if (self.game_state_manager.get_state() == "main_menu") or (
@@ -50,6 +56,10 @@ class EventHandler:
                             self.game_state_manager.set_state("game_play")
                         if event.key == pygame.K_m:
                             self.game_state_manager.set_state("main_menu")
+
+                elif self.game_state_manager.get_state() == "reload":
+                    if event.key == pygame.K_RETURN:
+                        self.game_state_manager.set_state("main_menu")
 
         if self.game_state_manager.get_state() == "game_play":
             keys = pygame.key.get_pressed()  # Continuous movement when key held down
