@@ -67,7 +67,7 @@ class EntityFactory:
                         random_x_position, 200, 400,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
-                        6, 5, 60, 85)
+                        6, 5, 56, 85)
 
         obstacles = [*reindeer_group, *elf_group, red_santa, bunny]
         all_entities = obstacles + [target, self.player]
