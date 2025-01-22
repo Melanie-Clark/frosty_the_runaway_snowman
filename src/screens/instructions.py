@@ -10,10 +10,10 @@ class InstructionScreen(BaseScreen):
         self.draw = draw
 
         self.title = "Instructions"
-        self.instruction_text = ("FROSTY HAS RUN AWAY!\n\n"
-                                 "The aim of the game is to hurl as many snowballs.\n"
-                                 "at Frosty before the time runs out.\n\n"
+        self.instruction_text = ("The aim of the game is to hurl as many snowballs at\n"
+                                 "Frosty the runaway snowman before the time runs out.\n\n"
                                  "But be careful...each time you hit Frosty, he gets faster!\n"
+                                 "But hit Frosty 10 times for an extra Time Bonus!\n\n"
                                  "Watch out...Santa and his friends reduces your health!\n\n"
                                  "Use the LEFT/RIGHT arrow keys to move the\n"
                                  "snowball at the bottom of the screen.\n\n"
