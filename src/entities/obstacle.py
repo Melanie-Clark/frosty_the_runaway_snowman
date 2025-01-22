@@ -21,14 +21,14 @@ class Obstacle(Entity):
 
     def check_sprite_position(self):
         # Resets if entity moves off-screen
-        if self.x > SCREEN_WIDTH or self.x < -self.sprite_width:
+        if self.x > SCREEN_WIDTH or self.x < -(self.sprite_width * 2):
             self.y = self._get_random_y()
             self.direction = random.choice(["left", "right"])
             self.speed = self.get_random_speed()
 
             if self.x > SCREEN_WIDTH:
-                self.x = -self.sprite_width  # Resets to left edge
-            elif self.x < -self.sprite_width:
+                self.x = -(self.sprite_width * 2)  # Resets to left edge
+            elif self.x < -(self.sprite_width * 2):
                 self.x = SCREEN_WIDTH
 
 
@@ -42,7 +42,7 @@ class FlyingObstacle(Entity):
 
     def check_sprite_position(self):
         # Resets if obstacle moves off-screen
-        if self.x < 0 - (self.sprite_width * 2):
+        if self.x < -(self.sprite_width * 2):
             self.x = SCREEN_WIDTH + (self.sprite_width * 3)  # Resets to right side of screen
 
 
