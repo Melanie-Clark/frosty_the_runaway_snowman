@@ -75,11 +75,13 @@ class Player(Entity):
 
     def collision_action(self, entity, health, score, seconds):
         if isinstance(entity, Target):
-            self.sound.sound_effect("assets/sounds/ouch.mp3")
+            sound_path = self.sound.get_sound_path("ouch.ogg")
+            self.sound.sound_effect(sound_path)
             score.increment_score(seconds)
             entity.reset_target(entity)
         else:
-            self.sound.sound_effect("assets/sounds/snowball_hit.mp3")
+            sound_path = self.sound.get_sound_path("snowball_hit.ogg")
+            self.sound.sound_effect(sound_path)
             health.take_damage()
 
 

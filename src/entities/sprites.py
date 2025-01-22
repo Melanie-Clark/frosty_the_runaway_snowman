@@ -1,4 +1,7 @@
 import pygame
+import os
+
+from src.config.utils import AssetRoot
 
 
 class AnimatedSprite:
@@ -6,6 +9,12 @@ class AnimatedSprite:
         self.sprite_sheet = pygame.image.load(sprite_sheet).convert_alpha()
         self.flipped = flipped
 
+    @staticmethod
+    def get_sprite_sheet_path(filename):
+        project_root = AssetRoot().get_project_root()  # Gets project root directory
+        sprite_sheet_path = os.path.join(project_root, "assets", "sprite_sheets",
+                                         filename)  # Constructs full path to sprite_sheet
+        return sprite_sheet_path
     # loads and scales single sprite
     def get_sprite(self, frame, y, width, height, scale, rotation):
         sprite = self.sprite_sheet.subsurface(
