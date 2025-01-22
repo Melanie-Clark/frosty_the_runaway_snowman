@@ -1,4 +1,5 @@
 import pygame
+import asyncio  # required for pygbag conversion to downloadable file
 
 from src.screens.game_over import GameOver
 from src.screens.game_play import GameLoop
@@ -62,7 +63,8 @@ class Game:
 
         self.event_handler = EventHandler(self.game_state_manager, self, self.player, self.game_over, self.timer)
 
-    def run(self):
+    # async required for pygbag conversion to downloadable file - defines an asynchronous coroutine
+    async def main(self):
         self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
         Sound.music()  # starts background music
 
@@ -76,7 +78,10 @@ class Game:
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
 
+        # required for pygbag conversion to downloadable file - pauses execution until the awaited coroutine or task is completed.
+        await asyncio.sleep(0)
+
 
 if __name__ == "__main__":
     game = Game()
-    game.run()
+    asyncio.run(game.main())  # required for pygbag conversion to downloadable file

@@ -17,18 +17,18 @@ class Obstacle(Entity):
 
     # protected helper method for use in this class only
     def _get_random_y(self):
-        return random.uniform(self.min_y_range, self.max_y_range)
+        return random.randint(self.min_y_range, self.max_y_range)
 
     def check_sprite_position(self):
         # Resets if entity moves off-screen
-        if self.x > SCREEN_WIDTH or self.x < -(self.sprite_width * 2):
+        if self.x > SCREEN_WIDTH or self.x < -self.sprite_width * 2:
             self.y = self._get_random_y()
             self.direction = random.choice(["left", "right"])
             self.speed = self.get_random_speed()
 
             if self.x > SCREEN_WIDTH:
-                self.x = -(self.sprite_width * 2)  # Resets to left edge
-            elif self.x < -(self.sprite_width * 2):
+                self.x = -self.sprite_width * 2  # Resets to left edge
+            elif self.x < -self.sprite_width * 2:
                 self.x = SCREEN_WIDTH
 
 

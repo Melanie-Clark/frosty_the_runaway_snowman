@@ -19,11 +19,11 @@ class Target(Entity):
 
     # protected helper method for use in this class only
     def _get_random_y(self):
-        return random.uniform(self.min_y_range, self.max_y_range)
+        return random.randint(self.min_y_range, self.max_y_range)
 
     def check_sprite_position(self):
         # Resets if target moves off-screen
-        if self.x > SCREEN_WIDTH or self.x < -(self.sprite_width *2):
+        if self.x > SCREEN_WIDTH or self.x < 0-self.sprite_width * 2:
             if self.direction == "left":
                 self.direction = "right"
             else:
@@ -32,14 +32,14 @@ class Target(Entity):
             if self.x > SCREEN_WIDTH:
                 self.x = SCREEN_WIDTH  # Resets to left edge
                 # if target goes off-screen, it returns from the same side
-            elif self.x < -(self.sprite_width *2):
-                self.x = -self.sprite_width
+            elif self.x < 0-self.sprite_width * 2:
+                self.x = 0-self.sprite_width
             self.y = self._get_random_y()
 
     def reset_target(self, entity):
         # resets target to disappear and re-enter from left or right side, increases speed
-        entity.x = random.choice((-self.sprite_width, SCREEN_WIDTH + self.sprite_width))
-        entity.y = random.uniform(entity.min_y_range, entity.max_y_range)
+        entity.x = random.choice((0-self.sprite_width, SCREEN_WIDTH + self.sprite_width))
+        entity.y = random.randint(entity.min_y_range, entity.max_y_range)
         entity.speed += 0.65
 
 
