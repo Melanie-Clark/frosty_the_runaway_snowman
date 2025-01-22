@@ -1,4 +1,5 @@
 import pygame
+import asyncio  # required for pygbag conversion to downloadable file
 
 from src.screens.game_over import GameOver
 from src.screens.game_play import GameLoop
@@ -8,6 +9,7 @@ from src.screens.naughty_screen import NaughtyScreen
 from src.screens.high_score import HighScore
 from src.config.global_config import FPS, SCREEN_WIDTH, SCREEN_HEIGHT
 from src.scene import Scene
+from src.screens.reload import Reload
 from src.sound import Sound
 from src.health import Health
 from src.score.score import Score
@@ -49,6 +51,7 @@ class Game:
         self.times_up_screen = TimesUpScreen(self.screen, self.game_state_manager, self.scene, self.draw)
         self.game_over = GameOver(self.screen, self.game_state_manager, self.draw, self.scene, self.high_score,
                                   self.health, self.score, self.timer)
+        self.reload = Reload(self.screen, self.game_state_manager, self.scene, self.draw)
 
         self.states = {
             "main_menu": self.menu_screen,
@@ -57,12 +60,14 @@ class Game:
             "game_play": self.game_play,
             "naughty_screen": self.naughty_screen,
             "times_up": self.times_up_screen,
-            "game_over": self.game_over
+            "game_over": self.game_over,
+            "reload": self.reload
         }
 
         self.event_handler = EventHandler(self.game_state_manager, self, self.player, self.game_over, self.timer)
 
-    def run(self):
+    # async required for pygbag conversion to downloadable file - defines an asynchronous coroutine
+    async def main(self):
         self.high_score.check_score_filepath()  # checks if high score file exists. If not, calls create function
         Sound.music()  # starts background music
 
@@ -76,7 +81,10 @@ class Game:
             pygame.display.update()  # flip refreshes entire display surface / update - partial updates for performance
             self.clock.tick(FPS)  # Limit to 60 frames per second
 
+            # required for pygbag conversion to downloadable file - pauses execution until the awaited coroutine or task is completed.
+            await asyncio.sleep(0)
+
 
 if __name__ == "__main__":
     game = Game()
-    game.run()
+    asyncio.run(game.main())  # required for pygbag conversion to downloadable file
