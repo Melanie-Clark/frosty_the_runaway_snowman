@@ -3,6 +3,7 @@
 
 Frosty the snowman has run away and is on the loose!
 
+
 The aim of the game is to throw snowballs at Frosty before the time runs out.
 
 But be careful...each time you hit Frosty, he gets faster! But hitting him 10 times will score you an extra Time Bonus!
