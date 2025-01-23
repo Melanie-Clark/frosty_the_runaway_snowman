@@ -1,7 +1,6 @@
 # Frosty: The Runaway Snowman!
 
 <p style="text-align: left;">
-  <img src="assets/images/game_play_imgs/frosty.png" alt="Frosty on the left" width="44" height="60" style="vertical-align: middle; margin-right: 10px;">
   <span style="font-size: 24px; font-weight: bold;">Frosty the snowman has run away and is on the loose!</span>
   <img src="assets/images/game_play_imgs/frosty.png" alt="Frosty on the right" width="44" height="60" style="vertical-align: middle; margin-left: 10px;">
 </p>
