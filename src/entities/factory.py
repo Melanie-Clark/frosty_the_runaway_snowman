@@ -45,7 +45,7 @@ class EntityFactory:
                                SCREEN_HEIGHT // 3.9, SCREEN_HEIGHT // 1.75,
                                sprite_width["elf"], sprite_height["elf"],
                                2, 2, 6, 3, 6,
-                               8, 26, 46, 102))
+                               8, 26, 42, 102))
                      for _ in range(3)]
 
         red_santa = Obstacle(self.screen, red_santa_sprite, random.choice(["left", "right"]), 75,
@@ -67,7 +67,7 @@ class EntityFactory:
                         random_x_position, SCREEN_HEIGHT // 3.6, SCREEN_HEIGHT // 1.8,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
-                        6, 5, 50, 85)
+                        6, 5, 48, 85)
 
         obstacles = [*reindeer_group, *elf_group, red_santa, bunny]
         all_entities = obstacles + [target, self.player]
