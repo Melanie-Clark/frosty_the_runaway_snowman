@@ -3,7 +3,7 @@ from src.config.global_config import SCREEN_WIDTH, FEATURE_COLOR, FEATURE_FONT
 
 
 class Timer:
-    def __init__(self, screen, game_state, timer_running, timer=2):
+    def __init__(self, screen, game_state, timer_running, timer=30):
         self.screen = screen
         self.game_state_manager = game_state
 

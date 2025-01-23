@@ -1,3 +1,4 @@
+import os
 import pygame
 from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT, SCREEN_HEIGHT
 from src.screens.base_screen import BaseScreen
@@ -10,18 +11,17 @@ class TimesUpScreen(BaseScreen):
         self.scene = scene
         self.draw = draw
 
-    @staticmethod
-    def times_up_text():
-        times_up = "Times Up!"
-        return times_up
-
     def draw_times_up_screen(self):
-        print("Times Up!")
-        self.scene.draw_main_scene()
-        times_up = self.times_up_text()
-        self.draw.draw_text(times_up, GAME_TEXT_FONT, FEATURE_COLOR, SCREEN_HEIGHT // 2)
-        pygame.display.update()
-        pygame.time.delay(1000)
+        # if play in browser, bypasses Times Up screen due to delay issue
+        if "PYGBAG" in os.environ:
+            self.game_state_manager.set_state("game_over")
+        else:
+            text = "Times Up!"
+            print(text)
+            self.scene.draw_main_scene()
+            self.draw.draw_text(text, GAME_TEXT_FONT, FEATURE_COLOR, SCREEN_HEIGHT // 2)
+            pygame.display.update()
+            pygame.time.delay(1000)
 
     def run(self):
         self.draw_times_up_screen()
