@@ -14,7 +14,7 @@ class MenuScreen(BaseScreen):
     def draw_menu_box(self):
         box_width = SCREEN_WIDTH // 2.3
         x = SCREEN_WIDTH // 2 - (box_width // 2)
-        y = SCREEN_HEIGHT // 2.8
+        y = SCREEN_HEIGHT // 2.6
         height = SCREEN_HEIGHT // 2.1
 
         pygame.draw.rect(self.screen, BUTTON_COLOR, (x, y, box_width, height), 0, 15)
@@ -32,7 +32,7 @@ class MenuScreen(BaseScreen):
         return menu_options
 
     def draw_menu_options(self):
-        y_pos = SCREEN_HEIGHT // 2.65
+        y_pos = SCREEN_HEIGHT // 2.45
         menu_options = self.menu_text()
 
         for line in menu_options.splitlines():
