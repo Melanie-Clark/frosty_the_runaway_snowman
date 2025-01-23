@@ -19,6 +19,8 @@ Click below to see the game in action!
 " target="_blank"><img src="http://img.youtube.com/vi/q5vUsj5pjaY/0.jpg"
 alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="360" border="10" /></a>
 
+To play the game in browser go to https://codermel.itch.io/frosty-the-runaway-snowman.
+
 ## Game screenshots
 
 <table bgcolor="#00000F">
