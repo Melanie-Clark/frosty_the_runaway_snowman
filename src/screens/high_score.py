@@ -2,7 +2,7 @@ import pygame
 import csv
 import os
 
-from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, SCREEN_HEIGHT
+from src.config.global_config import FEATURE_COLOR, FEATURE_FONT, SCREEN_HEIGHT, SCREEN_WIDTH
 from src.screens.base_screen import BaseScreen
 
 
@@ -74,7 +74,7 @@ class HighScore(BaseScreen):
     # draws everything required for menu screen
     def draw_screen(self):
         self.scene.draw_main_scene()
-        self.scene.draw_frosty(200)
+        self.scene.draw_frosty(SCREEN_WIDTH // 6.4)
         self.scene.draw_snow()
         self.draw.draw_title(self.title)
         self.draw_text()

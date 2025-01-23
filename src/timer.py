@@ -11,6 +11,7 @@ class Timer:
         self.max_time = timer
         self.timer = timer
         self.timer_running = timer_running
+        self.seconds = None
 
     def countdown_timer(self):
         if self.timer_running:
@@ -20,13 +21,7 @@ class Timer:
 
             if seconds <= 0:
                 self.game_state_manager.set_state("times_up")
-                return seconds
-            else:
-                self.game_state_manager.set_state("game_play")
-                return seconds
-        else:
-            self.game_state_manager.set_state("game_play")
-            return 0
+
 
     # draws time remaining to screen as it countdowns
     def draw_timer(self, seconds):

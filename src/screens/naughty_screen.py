@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
+from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT, SCREEN_HEIGHT
 from src.screens.base_screen import BaseScreen
 
 
@@ -29,7 +29,7 @@ class NaughtyScreen(BaseScreen):
         self.scene.draw_main_scene()
         title, naughty_text, menu_options = self.naughty_text()
         self.draw.draw_title(title)
-        self.draw.draw_text(naughty_text, GAME_TEXT_FONT, FEATURE_COLOR, 230)
+        self.draw.draw_text(naughty_text, GAME_TEXT_FONT, FEATURE_COLOR, SCREEN_HEIGHT // 3.13)
         self.draw.draw_menu_options(menu_options)
         pygame.display.update()
 

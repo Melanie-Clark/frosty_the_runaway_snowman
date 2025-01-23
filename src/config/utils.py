@@ -1,4 +1,3 @@
-# class available for use across the game project
 import os
 import sys
 import pygame
@@ -6,7 +5,7 @@ import pygame
 from pathlib import Path
 
 from src.config.global_config import SCREEN_WIDTH, TITLE_FONT, TITLE_HEIGHT, MENU_COLOR, FEATURE_COLOR, \
-    INSTRUCTIONS_FONT
+    INSTRUCTIONS_FONT, SCREEN_HEIGHT
 
 
 # class available for use across the game project
@@ -28,24 +27,7 @@ class Draw:
 
     # draws menu options for welcome and game over screens
     def draw_menu_options(self, menu_options="[M] Main menu   [P] Play   [Q] Quit"):
-        self.draw_text(menu_options, INSTRUCTIONS_FONT, MENU_COLOR, 660)
-
-
-class AssetRoot:
-    # gets project root directory
-    @staticmethod
-    def get_project_root():
-        return Path(sys.path[0])
-
-    def load_image(self, images_sub_folder, filename):
-        project_root = self.get_project_root()  # Get the project root directory
-        image_path = os.path.join(project_root, "assets", "images", images_sub_folder,
-                                  filename)  # Construct full path to image
-        return pygame.image.load(image_path).convert_alpha()
-
-
-if __name__ == "__main__":
-    pass
+        self.draw_text(menu_options, INSTRUCTIONS_FONT, MENU_COLOR, SCREEN_HEIGHT // 1.1)
 
 
 class AssetRoot:

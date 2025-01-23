@@ -1,6 +1,6 @@
 import random
 
-from src.config.global_config import SCREEN_WIDTH
+from src.config.global_config import SCREEN_WIDTH, SCREEN_HEIGHT
 from src.entities.obstacle import Obstacle, FlyingObstacle
 from src.entities.player import Player
 from src.entities.sprites import AnimatedSprite
@@ -35,14 +35,14 @@ class EntityFactory:
 
         bunny = Obstacle(self.screen, bunny_sprite, random.choice(["left", "right"]), 150,
                          random.randint(0 - sprite_width["bunny"], SCREEN_WIDTH + sprite_width["bunny"]),
-                         400, 500,
+                         SCREEN_HEIGHT // 1.8, SCREEN_HEIGHT // 1.46,
                          sprite_width["bunny"], sprite_height["bunny"],
                          2, 2, 4, 2, 5,
                          10, 55, 92, 90)
 
         elf_group = [(Obstacle(self.screen, elf_sprite, random.choice(["left", "right"]), 100,
                                random.randint(0 - sprite_width["elf"], SCREEN_WIDTH + sprite_width["elf"]),
-                               200, 475,
+                               SCREEN_HEIGHT // 3.9, SCREEN_HEIGHT // 1.75,
                                sprite_width["elf"], sprite_height["elf"],
                                2, 2, 6, 3, 6,
                                8, 26, 46, 102))
@@ -50,7 +50,7 @@ class EntityFactory:
 
         red_santa = Obstacle(self.screen, red_santa_sprite, random.choice(["left", "right"]), 75,
                              random.randint(0 - sprite_width["red_santa"], SCREEN_WIDTH + sprite_width["red_santa"]),
-                             100, 425,
+                             SCREEN_HEIGHT // 7.2, SCREEN_HEIGHT // 1.69,
                              sprite_width["red_santa"], sprite_height["red_santa"],
                              1.75, 2, 4, 3, 5,
                              30, 5, 55, 108)
@@ -64,7 +64,7 @@ class EntityFactory:
             for i in range(4)]
 
         target = Target(self.screen, frosty_sprite, random.choice(["left", "right"]), 150,
-                        random_x_position, 200, 400,
+                        random_x_position, SCREEN_HEIGHT // 3.6, SCREEN_HEIGHT // 1.8,
                         sprite_width["snowman"], sprite_height["snowman"],
                         0.75, 1, 5, 2, 2,
                         6, 5, 50, 85)

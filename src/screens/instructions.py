@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import INSTRUCTIONS_FONT, MENU_COLOR
+from src.config.global_config import INSTRUCTIONS_FONT, MENU_COLOR, SCREEN_WIDTH, SCREEN_HEIGHT
 from src.screens.base_screen import BaseScreen
 
 
@@ -24,9 +24,9 @@ class InstructionScreen(BaseScreen):
     def draw_instruction_screen(self):
         self.scene.draw_main_scene()
         self.draw.draw_title(self.title)
-        self.scene.draw_frosty(200)
+        self.scene.draw_frosty(SCREEN_WIDTH // 6.4)
         self.scene.draw_snow()
-        self.draw.draw_text(self.instruction_text, INSTRUCTIONS_FONT, MENU_COLOR, 220)
+        self.draw.draw_text(self.instruction_text, INSTRUCTIONS_FONT, MENU_COLOR, SCREEN_HEIGHT // 3.3)
         self.draw.draw_menu_options()
         pygame.display.update()
 

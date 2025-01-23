@@ -38,7 +38,7 @@ class Game:
         self.timer = Timer(self.screen, self.game_state_manager, False)
 
         self.high_score = HighScore(self.screen, self.game_state_manager, self.scene, self.draw)
-        self.score = Score(self.screen, self.high_score)
+        self.score = Score(self.screen, self.high_score, self.timer.seconds)
 
         self.target, self.player, self.all_entities, self.target_and_obstacles = EntityFactory(
             self.screen).initialise_entities()
