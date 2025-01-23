@@ -1,4 +1,8 @@
-# Frosty: The Runaway Snowman!
+<p style="text-align: left;">
+  <img src="assets/images/game_play_imgs/frosty.png" alt="Frosty on the left" width="44" height="60" style="vertical-align: middle; margin-right: 10px;">
+  <span style="font-size: 24px; font-weight: bold;">Frosty: The Runaway Snowman!</span>
+  <img src="assets/images/game_play_imgs/frosty.png" alt="Frosty on the right" width="44" height="60" style="vertical-align: middle; margin-left: 10px;">
+</p>
 
 Frosty the snowman has run away and is on the loose!
 
@@ -13,8 +17,8 @@ Santa and his friends reduces heart health — so aim wisely and have fun!
 
 Click below to see the game in action!
 
-<a href="https://www.youtube.com/watch?v=-lIlELm_0i8
-" target="_blank"><img src="http://img.youtube.com/vi/-lIlELm_0i8/0.jpg"
+<a href="https://www.youtube.com/watch?v=q5vUsj5pjaY
+" target="_blank"><img src="http://img.youtube.com/vi/q5vUsj5pjaY/0.jpg"
 alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="360" border="10" /></a>
 
 ## Game screenshots
