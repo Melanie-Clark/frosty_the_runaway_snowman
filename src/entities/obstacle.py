@@ -17,7 +17,7 @@ class Obstacle(Entity):
 
     # protected helper method for use in this class only
     def _get_random_y(self):
-        return random.randint(self.min_y_range, self.max_y_range)
+        return random.uniform(self.min_y_range, self.max_y_range) # uniform allows a random float
 
     def check_sprite_position(self):
         # Resets if entity moves off-screen

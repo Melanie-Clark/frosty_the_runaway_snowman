@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import SCREEN_WIDTH, BUTTON_COLOR, MENU_FONT, BORDER_COLOR, MENU_COLOR
+from src.config.global_config import SCREEN_WIDTH, BUTTON_COLOR, MENU_FONT, BORDER_COLOR, MENU_COLOR, SCREEN_HEIGHT
 from src.screens.base_screen import BaseScreen
 
 
@@ -12,10 +12,10 @@ class MenuScreen(BaseScreen):
 
     # Draw rectangle to hold menu options
     def draw_menu_box(self):
-        box_width = 550
+        box_width = SCREEN_WIDTH // 2.3
         x = SCREEN_WIDTH // 2 - (box_width // 2)
-        y = 270
-        height = 390
+        y = SCREEN_HEIGHT // 2.8
+        height = SCREEN_HEIGHT // 2.1
 
         pygame.draw.rect(self.screen, BUTTON_COLOR, (x, y, box_width, height), 0, 15)
         pygame.draw.rect(self.screen, BORDER_COLOR, (x, y, box_width, height), 6, 15)
@@ -32,18 +32,18 @@ class MenuScreen(BaseScreen):
         return menu_options
 
     def draw_menu_options(self):
-        y_pos = 300
+        y_pos = SCREEN_HEIGHT // 2.65
         menu_options = self.menu_text()
 
         for line in menu_options.splitlines():
             text = MENU_FONT.render(line, True, MENU_COLOR)
-            self.screen.blit(text, (430, y_pos))
+            self.screen.blit(text, (SCREEN_WIDTH // 3, y_pos))
             y_pos += text.get_height() * 1.5  # Moves position of next text below
 
     # draws everything required for menu screen
     def draw_menu_screen(self):
         self.scene.draw_main_scene()
-        self.scene.draw_frosty(200)
+        self.scene.draw_frosty(SCREEN_WIDTH // 6.4)
         self.scene.draw_snow()
         self.draw.draw_title(self.title)
         self.draw_menu_box()

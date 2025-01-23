@@ -1,5 +1,5 @@
 import pygame
-from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT
+from src.config.global_config import FEATURE_COLOR, GAME_TEXT_FONT, SCREEN_WIDTH, SCREEN_HEIGHT
 from src.screens.base_screen import BaseScreen
 
 
@@ -38,16 +38,16 @@ class GameOver(BaseScreen):
         return [game_over_text, game_over_values]
 
     def draw_text(self):
-        x_pos = 380
-        y_pos = 250
+        x_pos = SCREEN_WIDTH // 3.3
+        y_pos = SCREEN_HEIGHT // 2.88
         game_over_info = self.game_over_text()
         for info in game_over_info:
             for line in info.splitlines():
                 text = GAME_TEXT_FONT.render(line, True, FEATURE_COLOR)
                 self.screen.blit(text, (x_pos, y_pos))
                 y_pos += text.get_height()  # Moves position of next text to line below
-            x_pos = 800
-            y_pos = 250
+            x_pos = SCREEN_WIDTH // 1.5
+            y_pos = SCREEN_HEIGHT // 2.88
 
     def draw_game_over_screen(self):
         print("Game Over")
