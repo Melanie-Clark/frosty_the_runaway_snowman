@@ -21,19 +21,19 @@ class GameLoop(BaseScreen):
             entity.draw()
             entity.update_frame()
 
-    def check_collision(self, target_and_obstacles, player, seconds):
+    def check_collision(self, target_and_obstacles, player):
         # checks collision for any obstacle or target
         for entity in target_and_obstacles:
-            player.check_collision(entity, self.health, self.score, seconds)
+            player.check_collision(entity, self.health, self.score)
 
     def game_loop(self):
         self.scene.draw_main_scene()
         self.score.draw()
         self.health.draw()
-        seconds = self.timer.countdown_timer()
+        self.timer.countdown_timer()
 
         if self.game_state_manager.get_state() == "game_play":
-            self.check_collision(self.target_and_obstacles, self.player, seconds)
+            self.check_collision(self.target_and_obstacles, self.player)
             self.update_entities(self.all_entities)
 
     def run(self):
