@@ -3,7 +3,6 @@
 
 Frosty the snowman has run away and is on the loose!
 
-
 The aim of the game is to throw snowballs at Frosty before the time runs out.
 
 But be careful...each time you hit Frosty, he gets faster! But hitting him 10 times will score you an extra Time Bonus!
@@ -15,8 +14,8 @@ Santa and his friends reduces heart health — so aim wisely and have fun!
 
 Click below to see the game in action!
 
-<a href="https://www.youtube.com/watch?v=q5vUsj5pjaY
-" target="_blank"><img src="http://img.youtube.com/vi/q5vUsj5pjaY/0.jpg"
+<a href="https://www.youtube.com/watch?v=AzadleUs6Uo
+" target="_blank"><img src="http://img.youtube.com/vi/AzadleUs6Uo/0.jpg"
 alt="Frosty: The runaway snowman! Pygame Demo" width="440" height="360" border="10" /></a>
 
 To play the game in browser go to https://codermel.itch.io/frosty-the-runaway-snowman.
