@@ -21,7 +21,15 @@ class Timer:
 
             if seconds <= 0:
                 self.game_state_manager.set_state("times_up")
+            self.set_seconds(seconds)
 
+    # gets the remaining seconds
+    def get_seconds(self):
+        return self.seconds
+
+    # gets the remaining seconds
+    def set_seconds(self, seconds):
+        self.seconds = seconds
 
     # draws time remaining to screen as it countdowns
     def draw_timer(self, seconds):

@@ -4,19 +4,18 @@ from src.scene import Scene
 
 # keep track of players score
 class Score:
-    def __init__(self, screen, high_score, seconds, score=0):
+    def __init__(self, screen, high_score, timer, score=0):
         self.screen = screen
         self.score = score
         self.high_score = high_score
-        self.seconds = seconds
+        self.timer = timer
         self.incremental_score = score
-        self.time_bonus = None
-
+        self.time_bonus = 0
 
     def increment_score(self):
         self.incremental_score += 1
         if self.incremental_score == 10:
-            self.time_bonus = self.seconds
+            self.time_bonus = self.timer.get_seconds()
         print("Score:", self.incremental_score, "Time bonus:", self.time_bonus)
 
     # draws score to screen
